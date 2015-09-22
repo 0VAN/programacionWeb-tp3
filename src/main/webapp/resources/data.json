@@ -1,0 +1,37 @@
+{
+  "ventas": [
+    {
+      "numero": "123",
+      "monto_total": "500",
+      "nombre_cliente": "Nabil",
+      "ruc_cliente": "789",
+      "fecha": "08152015"
+    },
+    {
+      "numero": "456",
+      "monto_total": "1200",
+      "nombre_cliente": "Saul",
+      "ruc_cliente": "897",
+      "fecha": "01022015"
+    },
+    {
+      "numero": "852",
+      "monto_total": "70000",
+      "nombre_cliente": "Nora",
+      "ruc_cliente": "814",
+      "fecha": "09092015"
+    },
+    {
+      "numero": "477",
+      "monto_total": "963",
+      "nombre_cliente": "Zara",
+      "ruc_cliente": "321",
+      "fecha": "08152015"
+    }
+  ],
+  "meta": {
+    "total": "200",
+    "total_pages": "10",
+    "page_size": "20"
+  }
+}
