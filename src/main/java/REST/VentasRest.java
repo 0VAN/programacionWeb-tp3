@@ -7,6 +7,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import EJB.VentasService;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
 
 
 import java.io.InputStream;
@@ -18,10 +21,22 @@ import java.io.InputStream;
 @Path("/ventas")
 public class VentasRest {
 
-    private final JsonFactory jfactory = new JsonFactory();
-    private JsonParser jsonParser = jfactory.createJsonParser(is);
+    private JsonFactory jfactory;
+    private JsonParser jParser;
+
+    // datos clientes.json
     private String nombre;
     private String cedula;
+
+    // datos compras.json
+    private String fecha;
+    private String proveedor;
+    private String descripcion;
+    private String precio;
+    private String stock;
+    private String cantidad;
+
+    // datos ventas.json
 
     @EJB
     VentasService ventasService;
@@ -50,31 +65,114 @@ public class VentasRest {
     @Path("/uploadFileClientes")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadFile(@FormDataParam("file") InputStream is) {
+        jfactory = new JsonFactory();
 
-        jParser.nextToken(); // token '{'
-        jParser.nextToken(); // token 'clientes'
+        try {
+            jParser = jfactory.createJsonParser(is);
 
-        // se procesa cada objeto cliente, primer token '['
-        while(jParser.nextToken() != JsonToken.END_ARRAY){
+            jParser.nextToken(); // token '{'
+            jParser.nextToken(); // token 'clientes'
 
-            String fieldname = jParser.getCurrentName();
-            if ("nombre".equals(fieldname)) {
+            // se procesa cada objeto cliente, primer token '['
+            while (jParser.nextToken() != JsonToken.END_ARRAY) {
 
-                // token 'nombre'
-                // vamos al siguiente token, el valor de 'nombre'
-                jParser.nextToken();
-                nombre = jParser.getText();
+                String fieldname = jParser.getCurrentName();
+                if ("nombre".equals(fieldname)) {
+
+                    // token 'nombre'
+                    // vamos al siguiente token, el valor de 'nombre'
+                    jParser.nextToken();
+                    nombre = jParser.getText();
+                }
+
+                if ("cedula".equals(fieldname)) {
+
+                    // token 'cedula'
+                    // vamos al siguiente token, el valor de 'cedula'
+                    jParser.nextToken();
+                    cedula = jParser.getText();
+
+                    // como es el ultimo campo procesamos el cliente en persistencia
+                }
             }
+        }catch(Exception e){
+            // Procesamos la excepcion
+        }
 
-            if ("cedula".equals(fieldname)) {
+        return Response.status(200).entity("ok").build();
+    }
 
-                // token 'cedula'
-                // vamos al siguiente token, el valor de 'cedula'
-                jParser.nextToken();
-                cedula = jParser.getText();
 
-                // como es el ultimo campo procesamos el cliente en persistencia
+    @POST
+    @Path("/uploadFileCompras")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response uploadFile(@FormDataParam("file") InputStream is) {
+        jfactory = new JsonFactory();
+
+        try {
+            jParser = jfactory.createJsonParser(is);
+
+            jParser.nextToken(); // token '{'
+            jParser.nextToken(); // token 'compras'
+
+            // se procesa cada compra individualmente, primer token '['
+            while (jParser.nextToken() != JsonToken.END_ARRAY) {
+                jParser.nextToken(); // token 'fecha'
+                jParser.nextToken(); // token valor de 'fecha'
+                fecha = jParser.getText();
+                jParser.nextToken(); // token 'proveedor'
+                jParser.nextToken(); // token valor de 'proveedor'
+                proveedor = jParser.getText();
+
+                // se procesa cada objeto cliente, primer token '['
+                while (jParser.nextToken() != JsonToken.END_ARRAY) {
+
+                    String fieldname = jParser.getCurrentName();
+
+                    if ("producto".equals(fieldname)) {
+
+                        while (jParser.nextToken() != JsonToken.END_OBJECT) {
+                            String field = jParser.getCurrentName();
+
+                            if ("descripcion".equals(field)) {
+
+                                // token 'descripcion'
+                                // vamos al siguiente token, el valor de 'descripcion'
+                                jParser.nextToken();
+                                descripcion = jParser.getText();
+                            }
+
+                            if ("precio".equals(field)) {
+
+                                // token 'precio'
+                                // vamos al siguiente token, el valor de 'precio'
+                                jParser.nextToken();
+                                precio = jParser.getText();
+                            }
+
+                            if ("stock".equals(field)) {
+
+                                // token 'stock'
+                                // vamos al siguiente token, el valor de 'stock'
+                                jParser.nextToken();
+                                stock = jParser.getText();
+                            }
+                        }
+                    }
+
+                    if ("cantidad".equals(fieldname)) {
+
+                        // token 'cantidad'
+                        // vamos al siguiente token, el valor de 'cantidad'
+                        jParser.nextToken();
+                        cantidad = jParser.getText();
+
+                        // como es el ultimo campo procesamos la compra en persistencia
+                    }
+                }
             }
+        }catch(Exception e){
+            // Procesamos la excepcion
         }
 
         return Response.status(200).entity("ok").build();
