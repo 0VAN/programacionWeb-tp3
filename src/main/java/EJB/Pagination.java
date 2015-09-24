@@ -1,9 +1,19 @@
 package EJB;
 
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+
+import javax.enterprise.context.ApplicationScoped;
+import java.io.Serializable;
+
 /**
  * Created by alex on 22/09/15.
  */
-public class Meta {
+@ApplicationScoped
+public class Pagination implements Serializable {
+    private int total;
+    private int total_pages;
+    private int page_size;
+
     public Integer getTotal() {
         return total;
     }
@@ -27,9 +37,5 @@ public class Meta {
     public void setTotal_pages(Integer total_pages) {
         this.total_pages = total_pages;
     }
-
-    Integer total;
-    Integer total_pages;
-    Integer page_size;
 
 }

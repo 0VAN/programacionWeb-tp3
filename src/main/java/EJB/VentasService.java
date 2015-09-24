@@ -1,6 +1,7 @@
 package EJB;
 
 import JPA.VentasEntity;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -13,27 +14,25 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.ws.rs.core.MultivaluedMap;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by alex on 31/08/15.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Stateless
 public class VentasService {
 
     @PersistenceContext(unitName = "PU")
     private EntityManager entityManager;
 
-//    @Inject
-    private Ventas response;
+    private Pagination paginationInfo;
 
-//    @Inject
-    private Meta meta;
 
-    private void setMetaInf(){
-        meta.setTotal(100);
-        meta.setPage_size(10);
-        meta.setTotal_pages(20);
+    private void setMetaInf() {
+        paginationInfo = new Pagination();
+        paginationInfo.setTotal(100);
+        paginationInfo.setPage_size(10);
+        paginationInfo.setTotal_pages(20);
     }
 
     public void addVenta(VentasEntity ventasEntity) {
@@ -55,15 +54,12 @@ public class VentasService {
 
     public Object getVenta(int id) {
         Query query = entityManager.createNamedQuery("ventas.findById").setParameter("id", id);
-        return query.getSingleResult();
+        setMetaInf();
+        return new VentasResponse(query.getSingleResult(),paginationInfo);
     }
 
 
     public Object getVentas(MultivaluedMap<String, String> queryParams) {
-        response =  new Ventas();
-        meta = new Meta();
-        setMetaInf();
-
         /**
          * Variables default values for the column sort
          */
@@ -152,9 +148,11 @@ public class VentasService {
         Integer page;
         page = Integer.valueOf(queryParams.getFirst("page")) - 1;
 
-        response.setVentas(entityManager.createQuery(criteriaQuery).setMaxResults(10).setFirstResult(page * 10).getResultList());
-        response.setMeta(meta);
-        return (Object)response;
+
+        List listaDeVentas = entityManager.createQuery(criteriaQuery).setMaxResults(10).setFirstResult(page * 10).getResultList();
+        setMetaInf();
+
+        return new VentasResponse(listaDeVentas, paginationInfo);
     }
 
 

@@ -12,7 +12,7 @@ angular
 function ListController($scope, ListServices) {
 
     var params = {
-        page:1
+        page: 1
     };
     var sortIconsClass = ["circular inverted sort content icon ascending", "circular inverted sort content icon descending"];
     var sortIconsClassDisabled = ["sort content icon ascending", "sort content icon descending "];
@@ -26,7 +26,7 @@ function ListController($scope, ListServices) {
     $scope.sortIconClass = sortIconsClass[0];
     $scope.sortIconClassDisabled = sortIconsClassDisabled[0];
 
-    ListServices.salesServices($scope.config.URL).get(params,function (serverResponse) {
+    ListServices.salesServices($scope.config.URL).get(params, function (serverResponse) {
         $scope.dataList = serverResponse.ventas;
         $scope.dataMeta = serverResponse.meta;
 
