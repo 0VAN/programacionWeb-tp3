@@ -144,6 +144,7 @@ CREATE TABLE solicitud_compra (
 	id bigint DEFAULT nextval('seq_compra_detalle'),
 	fecha timestamp without time zone NOT NULL DEFAULT now(),
 	producto_id bigint,
+	atendido boolean DEFAULT false,
 	CONSTRAINT solicitud_compra_pkey PRIMARY KEY (id),
 	CONSTRAINT producto_fkey FOREIGN KEY (producto_id)
 	  REFERENCES producto (id) MATCH SIMPLE

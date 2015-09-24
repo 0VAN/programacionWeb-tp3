@@ -6,7 +6,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import EJB.VentasService;
+
+import EJB.Service.FilesService;
+import EJB.Service.VentasService;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
@@ -37,6 +39,10 @@ public class VentasRest {
     private String cantidad;
 
     // datos ventas.json
+
+
+    @EJB
+    FilesService filesService;
 
     @EJB
     VentasService ventasService;
@@ -93,6 +99,7 @@ public class VentasRest {
                     cedula = jParser.getText();
 
                     // como es el ultimo campo procesamos el cliente en persistencia
+                    filesService.addCliente(nombre, cedula);
                 }
             }
         }catch(Exception e){
@@ -123,6 +130,14 @@ public class VentasRest {
 
                     // token 'fecha'
                     // vamos al siguiente token, el valor de 'fecha'
+                    jParser.nextToken();
+                    fecha = jParser.getText();
+                }
+
+                if ("monto".equals(fieldname)) {
+
+                    // token 'monto'
+                    // vamos al siguiente token, el valor de 'monto'
                     jParser.nextToken();
                     fecha = jParser.getText();
                 }
