@@ -13,8 +13,8 @@ Observación: El proyecto debe manejarse con Maven
 
     Por cada compra, guardar en tablas los datos de la cabecera (fecha, proveedor) y los detalles de la compra (producto, cantidad).
 
-    IMPORTANTE: En la tabla de COMPRAS_DET, poner un check constraint que evite asignar un valor <= 0 al campo CANTIDAD. NO hacer esta validación desde Java,
-    solo manejar la excepción lanzada por la BD.
+    IMPORTANTE: En la tabla de COMPRAS_DET, poner un check constraint que evite asignar un valor <= 0 al campo CANTIDAD.
+    NO hacer esta validación desde Java, solo manejar la excepción lanzada por la BD.
 
     2.2 Implementar "listado de compras".
 
@@ -23,7 +23,8 @@ Observación: El proyecto debe manejarse con Maven
     Se guarda toda la venta en una única transacción.
     Al guardar la venta, actualizar stock del producto. Si no hay stock suficiente, abortar venta.
 
-    IMPORTANTE: En la tabla de VENTAS_DET, poner un check constraint que evite asignar un valor <= 0 al campo CANTIDAD. NO hacer esta validación desde Java, solo manejar la excepción lanzada por la BD.
+    IMPORTANTE: En la tabla de VENTAS_DET, poner un check constraint que evite asignar un valor <= 0 al campo CANTIDAD.
+    NO hacer esta validación desde Java, solo manejar la excepción lanzada por la BD.
 
     Por cada venta, guardar en tablas los datos de la cabecera (fecha, cliente) y los detalles de la venta (producto, cantidad).
 
@@ -39,7 +40,7 @@ Observación: El proyecto debe manejarse con Maven
 
         Validar los tipos de datos de cada campo, y la existencia de todos los campos obligatorios.
         Mostrar TODOS los errores de validación detectados, y NUNCA abortar ante el primer error.
-        Si ocurrió al menos 1 error, entonces abortar TODA la carga. (pero siempre mostrar todos los errores detectados durante el parseo de TODO el archivo)
+        Si ocurrió al menos 1 error, entonces abortar TODA la carga. (pero siempre mostrar todos los errores detectados durante el parseo de todo el archivo)
         Al cargar compras y ventas, hacer las mismas validaciones que se harían desde el formulario (stock suficiente, manejar errores del check constraint)
         En ningún momento debe estar el archivo completo cargado en memoria RAM
 
