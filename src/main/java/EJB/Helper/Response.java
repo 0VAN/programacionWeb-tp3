@@ -3,7 +3,15 @@ package EJB.Helper;
 import java.util.List;
 
 /**
- * Created by szalimben on 22/09/15.
+ * Clase que representa el response que se realizara desde
+ * los servicios al browser.
+ *
+ * Sera utilizado para el listado de las entidades.
+ * Contiene la lista de entidades que seran mostradas
+ * y el meta para los archivos paginados
+ *
+ * @author szalimben
+ *
  */
 public class Response<T> {
 

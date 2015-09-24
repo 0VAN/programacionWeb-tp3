@@ -4,7 +4,7 @@ import JPA.MODEL.VentaEntity;
 
 
 /**
- * Created by alex on 22/09/15.
+ * Response para las ventas
  */
 public class VentasResponse extends Response<VentaEntity> {
 

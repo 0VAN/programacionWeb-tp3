@@ -1,10 +1,16 @@
 package EJB.Helper;
 
 /**
- * Created by alex on 22/09/15.
+ *
+ * Contiene los valores para el paginado de las listas.
+ * Incluye la cantidad total de registros, la cantidad total de paginas
+ * y el tamano de cada pagina
+ *
+ * @author szalimben
  */
 public class Meta {
 
+    /* Cantidad  */
     Integer total;
     Integer total_pages;
     Integer page_size;
