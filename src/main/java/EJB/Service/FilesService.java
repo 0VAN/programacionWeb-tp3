@@ -35,7 +35,17 @@ public class FilesService {
     @Inject
     private ProductoEntity producto;
 
-    private List<CompraDetalleEntity> listaDetalles = new ArrayList<CompraDetalleEntity>();
+    @Inject
+    private VentaEntity venta;
+
+    @Inject
+    private FacturaEntity factura;
+
+    @Inject
+    private VentaDetalleEntity ventaDetalle;
+
+    private List<CompraDetalleEntity> listaCompraDetalles = new ArrayList<CompraDetalleEntity>();
+    private List<VentaDetalleEntity> listaVentaDetalles = new ArrayList<VentaDetalleEntity>();
 
     @EJB
     Service service;
@@ -61,12 +71,33 @@ public class FilesService {
         producto = service.find(Integer.parseInt(productoId), ProductoEntity.class);
         compraDetalle.setProducto(producto);
         compraDetalle.setCantidad(cantidad);
-        listaDetalles.add(compraDetalle);
+        listaCompraDetalles.add(compraDetalle);
     }
 
     public void addCompra(){
-        compra.setDetalles(listaDetalles);
+        compra.setDetalles(listaCompraDetalles);
         em.persist(compra);
+    }
+
+    public void addCabeceraVenta(String fecha, String facturaId, String clienteId, String monto){
+        venta.setFecha(fecha);
+        factura = service.find(Integer.parseInt(facturaId), FacturaEntity.class);
+        venta.setFactura(factura);
+        cliente = service.find(Integer.parseInt(clienteId), ClienteEntity.class);
+        venta.setCliente(cliente);
+        venta.setMonto(monto);
+    }
+
+    public void addVentaDetalle(String productoId, String cantidad){
+        producto = service.find(Integer.parseInt(productoId), ProductoEntity.class);
+        ventaDetalle.setProducto(producto);
+        ventaDetalle.setCantidad(cantidad);
+        listaVentaDetalles.add(ventaDetalle);
+    }
+
+    public void addVenta(){
+        venta.setDetalles(listaVentaDetalles);
+        em.persist(venta);
     }
 
 
