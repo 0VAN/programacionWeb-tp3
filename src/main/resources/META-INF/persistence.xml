@@ -5,11 +5,20 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>java:/PostgresDS</jta-data-source>
         <class>JPA.VentasEntity</class>
+        <class>JPA.MODEL.ClienteEntity</class>
+        <class>JPA.MODEL.CompraEntity</class>
+        <class>JPA.MODEL.CompraDetalleEntity</class>
+        <class>JPA.MODEL.FacturaEntity</class>
+        <class>JPA.MODEL.ProductoEntity</class>
+        <class>JPA.MODEL.ProveedorEntity</class>
+        <class>JPA.MODEL.SolicitudCompraEntity</class>
+        <class>JPA.MODEL.VentaEntity</class>
+        <class>JPA.MODEL.VentaDetalleEntity</class>
         <properties>
-            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/ventas"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/tienda"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
-            <property name="hibernate.connection.username" value="postgres"/>
-            <property name="hibernate.connection.password" value="postgres"/>
+            <property name="hibernate.connection.username"/>
+            <property name="hibernate.connection.password"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
             <property name="hibernate.archive.autodetection" value="class"/>
             <property name="hibernate.show_sql" value="true"/>

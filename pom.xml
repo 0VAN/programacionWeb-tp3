@@ -29,10 +29,16 @@
             <artifactId>postgresql</artifactId>
             <version>9.3-1100-jdbc41</version>
         </dependency>
+        <!--<dependency>
+         <groupId>javax.ejb</groupId>
+         <artifactId>ejb-api</artifactId>
+         <version>3.0</version>
+        </dependency>-->
         <dependency>
-            <groupId>javax.ejb</groupId>
-            <artifactId>ejb-api</artifactId>
-            <version>3.0</version>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.1_spec</artifactId>
+            <scope>provided</scope>
+            <version>1.0.1.Final</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
