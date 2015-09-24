@@ -1,33 +1,37 @@
 package JPA.MODEL;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
-/**
- * Created by szalimben on 22/09/15.
- */
 @Entity
 @Table(name = "compra", schema = "public", catalog = "tienda")
 public class CompraEntity {
 
 	@Id
 	@Column(name = "id", nullable = false, insertable = true, updatable = true)
+	@Expose
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_compra")
+	@SequenceGenerator(name = "seq_compra", sequenceName = "seq_compra")
 	private Long id;
 
 	@Basic
 	@Column(name = "fecha", nullable = false, insertable = true, updatable = true)
+	@Expose
 	private Timestamp fecha;
 
 	@Basic
 	@Column(name = "monto", nullable = true, insertable = true, updatable = true)
+	@Expose
 	private Long monto;
 
-	@ManyToOne
+	@ManyToOne(optional=false)
 	@JoinColumn(name = "proveedor_id")
 	private ProveedorEntity proveedor;
 
-	@OneToMany(mappedBy = "compra")
+	@OneToMany(mappedBy = "compra", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<CompraDetalleEntity> detalles;
 
 	public Long getId() {

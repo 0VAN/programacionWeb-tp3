@@ -1,5 +1,7 @@
 package JPA.MODEL;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -21,26 +23,32 @@ public class VentaEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_venta")
 	@SequenceGenerator(name = "seq_venta", sequenceName = "seq_name")
 	@Column(name = "id", nullable = false, insertable = true, updatable = true)
+	@Expose
 	private Long id;
 
 	@Basic
 	@Column(name = "fecha", nullable = false, insertable = true, updatable = true)
 	@Temporal(TemporalType.DATE)
+	@Expose
 	private Date fecha;
 
-	@ManyToOne
+	@ManyToOne(optional = true)
 	@JoinColumn(name = "factura_id")
+	@Expose
 	private FacturaEntity factura;
 
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "cliente_id")
+	@Expose
 	private ClienteEntity cliente;
 
-	@OneToMany(mappedBy = "compra")
-	private List<CompraDetalleEntity> detalles;
+	@OneToMany(mappedBy = "venta", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Expose
+	private List<VentaDetalleEntity> detalles;
 
 	@Basic
 	@Column(name = "monto", nullable = true, insertable = true, updatable = true)
+	@Expose
 	private Long monto;
 
 	public Long getId() {
@@ -50,7 +58,6 @@ public class VentaEntity {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 
 	public Date getFecha() {
 		return fecha;
@@ -117,11 +124,11 @@ public class VentaEntity {
 		this.cliente = cliente;
 	}
 
-	public List<CompraDetalleEntity> getDetalles() {
+	public List<VentaDetalleEntity> getDetalles() {
 		return detalles;
 	}
 
-	public void setDetalles(List<CompraDetalleEntity> detalles) {
+	public void setDetalles(List<VentaDetalleEntity> detalles) {
 		this.detalles = detalles;
 	}
 }

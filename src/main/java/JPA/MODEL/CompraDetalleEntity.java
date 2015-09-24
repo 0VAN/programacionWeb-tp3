@@ -1,5 +1,7 @@
 package JPA.MODEL;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 
 /**
@@ -11,18 +13,24 @@ public class CompraDetalleEntity {
 
 	@Id
 	@Column(name = "id", nullable = false, insertable = true, updatable = true)
+	@Expose
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_compra_detalle")
+	@SequenceGenerator(name = "seq_compra_detalle", sequenceName = "seq_compra_detalle")
 	private Long id;
 
 	@Basic
 	@Column(name = "cantidad", nullable = true, insertable = true, updatable = true)
+	@Expose
 	private Long cantidad;
 
-	@ManyToOne
+	@ManyToOne(optional=false)
 	@JoinColumn(name = "compra_id")
+	@Expose
 	private CompraEntity compra;
 
-	@ManyToOne
+	@ManyToOne(optional=false)
 	@JoinColumn(name = "producto_id")
+	@Expose
 	private ProductoEntity producto;
 
 	public Long getId() {

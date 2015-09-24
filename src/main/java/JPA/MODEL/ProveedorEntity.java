@@ -1,5 +1,7 @@
 package JPA.MODEL;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,13 +14,18 @@ public class ProveedorEntity {
 
 	@Id
 	@Column(name = "id", nullable = false, insertable = true, updatable = true)
+	@Expose
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_proveedor")
+	@SequenceGenerator(name = "seq_proveedor", sequenceName = "seq_proveedor")
 	private Long id;
 
 	@Basic
 	@Column(name = "descripcion", nullable = true, insertable = true, updatable = true, length = 100)
+	@Expose
 	private String descripcion;
 
 	@OneToMany(mappedBy = "proveedor")
+	@Expose
 	private List<CompraEntity> compras;
 
 	public Long getId() {

@@ -1,5 +1,7 @@
 package JPA.MODEL;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -14,18 +16,22 @@ public class SolicitudCompraEntity {
 	@Column(name = "id", nullable = false, insertable = true, updatable = true)
 	@GeneratedValue(generator = "SEQ_SOLICITUD_COMPRA", strategy = GenerationType.SEQUENCE)
 	@SequenceGenerator(name = "SEQ_SOLICITUD_COMPRA", sequenceName = "seq_solicitud_compra")
+	@Expose
 	private Long id;
 
 	@Basic
 	@Column(name = "fecha", nullable = false, insertable = true, updatable = true)
 	@Temporal(TemporalType.DATE)
+	@Expose
 	private Date fecha;
 
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "producto_id")
+	@Expose
 	private ProductoEntity producto;
 
 	@Column(name = "atendido", nullable = false, insertable = true, updatable = true)
+	@Expose
 	private boolean atendido;
 
 	public Long getId() {

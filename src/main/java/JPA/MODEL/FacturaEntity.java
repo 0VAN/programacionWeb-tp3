@@ -1,5 +1,7 @@
 package JPA.MODEL;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
@@ -10,14 +12,20 @@ public class FacturaEntity {
 
 	@Id
 	@Column(name = "id", nullable = false, insertable = true, updatable = true)
+	@Expose
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_factura")
+	@SequenceGenerator(name = "seq_factura", sequenceName = "seq_factura")
 	private Long id;
 
 	@Basic
 	@Column(name = "monto", nullable = true, insertable = true, updatable = true)
+	@Expose
 	private Long monto;
 
 	@Basic
 	@Column(name = "fecha", nullable = false, insertable = true, updatable = true)
+	@Temporal(TemporalType.DATE)
+	@Expose
 	private Timestamp fecha;
 
 	@OneToMany(mappedBy = "factura")
