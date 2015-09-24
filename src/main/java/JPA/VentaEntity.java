@@ -1,4 +1,4 @@
-package JPA.MODEL;
+package JPA;
 
 import com.google.gson.annotations.Expose;
 
@@ -28,9 +28,8 @@ public class VentaEntity {
 
 	@Basic
 	@Column(name = "fecha", nullable = false, insertable = true, updatable = true)
-	@Temporal(TemporalType.DATE)
 	@Expose
-	private Date fecha;
+	private String fecha;
 
 	@ManyToOne(optional = true)
 	@JoinColumn(name = "factura_id")
@@ -59,11 +58,11 @@ public class VentaEntity {
 		this.id = id;
 	}
 
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 

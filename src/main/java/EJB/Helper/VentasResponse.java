@@ -1,6 +1,6 @@
 package EJB.Helper;
 
-import JPA.MODEL.VentaEntity;
+import JPA.VentaEntity;
 
 
 /**

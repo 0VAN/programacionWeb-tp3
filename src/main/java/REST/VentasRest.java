@@ -3,7 +3,7 @@ package REST;
 import EJB.Helper.VentasResponse;
 import EJB.Service.VentasService;
 import EJB.Util.StockInsuficienteException;
-import JPA.MODEL.VentaEntity;
+import JPA.VentaEntity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;

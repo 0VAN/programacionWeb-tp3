@@ -1,6 +1,6 @@
 package EJB.Service;
 
-import JPA.MODEL.VentaDetalleEntity;
+import JPA.VentaDetalleEntity;
 
 import javax.ejb.Stateless;
 

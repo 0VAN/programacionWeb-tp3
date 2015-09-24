@@ -1,4 +1,4 @@
-package JPA.MODEL;
+package JPA;
 
 import com.google.gson.annotations.Expose;
 

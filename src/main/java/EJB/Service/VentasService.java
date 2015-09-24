@@ -3,9 +3,9 @@ package EJB.Service;
 import EJB.Helper.Meta;
 import EJB.Helper.VentasResponse;
 import EJB.Util.StockInsuficienteException;
-import JPA.MODEL.ProductoEntity;
-import JPA.MODEL.VentaDetalleEntity;
-import JPA.MODEL.VentaEntity;
+import JPA.ProductoEntity;
+import JPA.VentaDetalleEntity;
+import JPA.VentaEntity;
 
 import javax.ejb.*;
 import javax.persistence.Query;
@@ -33,8 +33,8 @@ public class VentasService extends Service<VentaEntity> {
 	VentaDetalleService ventaDetalleService;
 
     private void setMetaInf(){
-        meta.setTotal((Integer) this.getCount());
-        meta.setPage_size(10);
+        meta.setTotal((Long) this.getCount());
+        meta.setPage_size((long) 10);
         meta.calculateToTalPages();
     }
 
@@ -176,7 +176,7 @@ public class VentasService extends Service<VentaEntity> {
         Integer page;
         page = Integer.valueOf(queryParams.getFirst("page")) - 1;
 
-        response.setEntidades(em.createQuery(criteriaQuery).setMaxResults(meta.getPage_size()).setFirstResult(page * meta.getPage_size()).getResultList());
+        response.setEntidades(em.createQuery(criteriaQuery).setMaxResults(meta.getPage_size().intValue()).setFirstResult(page * meta.getPage_size().intValue()).getResultList());
         response.setMeta(meta);
         return response;
     }

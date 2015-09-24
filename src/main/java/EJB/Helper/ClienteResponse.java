@@ -1,6 +1,6 @@
 package EJB.Helper;
 
-import JPA.MODEL.ClienteEntity;
+import JPA.ClienteEntity;
 
 /**
  * Response para los clientes

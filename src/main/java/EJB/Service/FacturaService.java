@@ -1,6 +1,6 @@
 package EJB.Service;
 
-import JPA.MODEL.FacturaEntity;
+import JPA.FacturaEntity;
 
 import javax.ejb.Stateless;
 

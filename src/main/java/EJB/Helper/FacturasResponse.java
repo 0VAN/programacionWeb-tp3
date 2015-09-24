@@ -1,6 +1,6 @@
 package EJB.Helper;
 
-import JPA.MODEL.FacturaEntity;
+import JPA.FacturaEntity;
 
 /**
  * Response para las facturas

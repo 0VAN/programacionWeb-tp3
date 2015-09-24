@@ -1,9 +1,10 @@
-package JPA.MODEL;
+package JPA;
 
 import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -24,9 +25,8 @@ public class FacturaEntity {
 
 	@Basic
 	@Column(name = "fecha", nullable = false, insertable = true, updatable = true)
-	@Temporal(TemporalType.DATE)
 	@Expose
-	private Timestamp fecha;
+	private String fecha;
 
 	@OneToMany(mappedBy = "factura")
 	private List<VentaEntity> ventas;
@@ -47,11 +47,11 @@ public class FacturaEntity {
 		this.monto = monto;
 	}
 
-	public Timestamp getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Timestamp fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 

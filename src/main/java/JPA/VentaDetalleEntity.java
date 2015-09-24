@@ -1,4 +1,4 @@
-package JPA.MODEL;
+package JPA;
 
 import com.google.gson.annotations.Expose;
 
@@ -8,14 +8,14 @@ import javax.persistence.*;
  * Created by szalimben on 22/09/15.
  */
 @Entity
-@Table(name = "compra_detalle", schema = "public", catalog = "tienda")
-public class CompraDetalleEntity {
+@Table(name = "venta_detalle", schema = "public", catalog = "tienda")
+public class VentaDetalleEntity {
 
 	@Id
 	@Column(name = "id", nullable = false, insertable = true, updatable = true)
 	@Expose
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_compra_detalle")
-	@SequenceGenerator(name = "seq_compra_detalle", sequenceName = "seq_compra_detalle")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_venta_detalle")
+	@SequenceGenerator(name = "seq_venta_detalle", sequenceName = "seq_venta_detalle")
 	private Long id;
 
 	@Basic
@@ -24,14 +24,14 @@ public class CompraDetalleEntity {
 	private Long cantidad;
 
 	@ManyToOne(optional=false)
-	@JoinColumn(name = "compra_id")
-	@Expose
-	private CompraEntity compra;
-
-	@ManyToOne(optional=false)
 	@JoinColumn(name = "producto_id")
 	@Expose
 	private ProductoEntity producto;
+
+	@ManyToOne(optional=false)
+	@JoinColumn(name = "venta_id")
+	@Expose
+	private VentaEntity venta;
 
 	public Long getId() {
 		return id;
@@ -40,6 +40,7 @@ public class CompraDetalleEntity {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 
 	public Long getCantidad() {
 		return cantidad;
@@ -58,7 +59,7 @@ public class CompraDetalleEntity {
 			return false;
 		}
 
-		CompraDetalleEntity that = (CompraDetalleEntity) o;
+		VentaDetalleEntity that = (VentaDetalleEntity) o;
 
 		if(id != null ? !id.equals(that.id) : that.id != null) {
 			return false;
@@ -77,19 +78,19 @@ public class CompraDetalleEntity {
 		return result;
 	}
 
-	public CompraEntity getCompra() {
-		return compra;
-	}
-
-	public void setCompra(CompraEntity compra) {
-		this.compra = compra;
-	}
-
 	public ProductoEntity getProducto() {
 		return producto;
 	}
 
 	public void setProducto(ProductoEntity producto) {
 		this.producto = producto;
+	}
+
+	public VentaEntity getVenta() {
+		return venta;
+	}
+
+	public void setVenta(VentaEntity venta) {
+		this.venta = venta;
 	}
 }

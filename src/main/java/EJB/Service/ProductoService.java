@@ -1,6 +1,6 @@
 package EJB.Service;
 
-import JPA.MODEL.ProductoEntity;
+import JPA.ProductoEntity;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

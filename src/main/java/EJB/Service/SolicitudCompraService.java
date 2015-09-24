@@ -1,7 +1,7 @@
 package EJB.Service;
 
-import JPA.MODEL.ProductoEntity;
-import JPA.MODEL.SolicitudCompraEntity;
+import JPA.ProductoEntity;
+import JPA.SolicitudCompraEntity;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -34,7 +34,7 @@ public class SolicitudCompraService extends Service<SolicitudCompraEntity> {
 		for(ProductoEntity producto : productos) {
 			if(!yaExiste(producto)) {
 				SolicitudCompraEntity entity = new SolicitudCompraEntity();
-				entity.setFecha(new Date());
+				entity.setFecha(new Date().toString());
 				entity.setProducto(producto);
 				em.persist(entity);
 			}
