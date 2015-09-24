@@ -55,6 +55,18 @@
             <artifactId>reflections-maven</artifactId>
             <version>0.9.9-RC2</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+
+        <!-- Log -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.12</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>tp3</finalName>
