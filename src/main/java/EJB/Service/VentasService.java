@@ -2,9 +2,12 @@ package EJB.Service;
 
 import EJB.Helper.Meta;
 import EJB.Helper.VentasResponse;
+import EJB.Util.StockInsuficienteException;
+import JPA.MODEL.ProductoEntity;
+import JPA.MODEL.VentaDetalleEntity;
 import JPA.MODEL.VentaEntity;
 
-import javax.ejb.Stateless;
+import javax.ejb.*;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -13,14 +16,21 @@ import javax.persistence.criteria.Root;
 import javax.ws.rs.core.MultivaluedMap;
 import java.util.List;
 
-/**
- * Created by alex on 31/08/15.
- */
 @Stateless
+@LocalBean
 public class VentasService extends Service<VentaEntity> {
 
     private VentasResponse response;
     private Meta meta;
+
+	@EJB
+	VentasService ventasService;
+	@EJB
+	ClienteService clienteService;
+	@EJB
+	ProductoService productoService;
+	@EJB
+	VentaDetalleService ventaDetalleService;
 
     private void setMetaInf(){
         meta.setTotal((Integer) this.getCount());
@@ -28,8 +38,32 @@ public class VentasService extends Service<VentaEntity> {
         meta.calculateToTalPages();
     }
 
-    public void addVenta(VentaEntity venta) {
-        super.add(venta);
+	/**
+	 * Metodo que recibe una venta y la persiste en la base de datos
+	 *
+	 * @param venta
+	 *          Venta que se desea persistir en la base de datos
+	 * @return <b>True</b> si se guardo correctamente la venta, <b>False</b>
+	 *          caso contrario
+	 * @throws StockInsuficienteException
+	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public boolean addVenta(VentaEntity venta) throws StockInsuficienteException {
+		long montoAcumulador = 0;
+		for (VentaDetalleEntity detalle : venta.getDetalles()) {
+			ProductoEntity producto = productoService.find(detalle.getProducto().getId().intValue(), ProductoEntity.class);
+			if (producto.getStock() < detalle.getCantidad()) {
+				throw new StockInsuficienteException("Stock del producto " + producto.getDescripcion() + " insuficiente");
+			} else {
+				producto.setStock(producto.getStock()-detalle.getCantidad());
+				montoAcumulador = montoAcumulador + producto.getPrecio()*detalle.getCantidad();
+				productoService.update(producto);
+			}
+			detalle.setVenta(venta);
+		}
+		venta.setMonto(montoAcumulador);
+		return super.add(venta);
+
     }
 
     public void deleteVenta(VentaEntity venta) {
@@ -56,6 +90,14 @@ public class VentasService extends Service<VentaEntity> {
         return query.getSingleResult();
     }
 
+	/**
+	 * Metodo para obtener el listado de las ventas, este metodo ya incluye el ordenamiento
+	 * y la busqueda por columnas
+	 *
+	 * @param queryParams
+	 *          Conjunto de parametros para el filtrado y ordenacion
+	 * @return Retorna la lista de entidades filtradas
+	 */
     @SuppressWarnings("unchecked")
     public Object getVentas(MultivaluedMap<String, String> queryParams) {
         response =  new VentasResponse();

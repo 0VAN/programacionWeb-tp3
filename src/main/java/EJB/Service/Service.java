@@ -1,12 +1,18 @@
 package EJB.Service;
 
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 
+
 /**
  * Created by szalimben on 22/09/15.
  */
+@TransactionManagement(TransactionManagementType.CONTAINER)
 public class Service<T> implements IService<T> , Serializable {
 
 	@PersistenceContext(unitName="PU")
@@ -21,6 +27,7 @@ public class Service<T> implements IService<T> , Serializable {
 	 *          Clase de la entidad
 	 * @return <b>True</b> Si el borrado fue exitoso, <b>False</b> caso contrario
 	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public boolean delete(int id, Class<T> clazz) {
 		try{
 			T data = em.find(clazz, id);
@@ -44,6 +51,7 @@ public class Service<T> implements IService<T> , Serializable {
 	 *          Entidad que se desea borrar
 	 * @return <b>True</b> Si el borrado fue exitoso, <b>False</b> caso contrario
 	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public boolean deleteByEntity(T entity) {
 		try{
 			em.remove(entity);
@@ -64,6 +72,7 @@ public class Service<T> implements IService<T> , Serializable {
 	 *          Entidad con los datos actualizados
 	 * @return <b>True</b> Si la actualizacion fue exitosa, <b>False</b> caso contrario
 	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public boolean update(T entity) {
 		try{
 			em.merge(entity);
@@ -83,8 +92,8 @@ public class Service<T> implements IService<T> , Serializable {
 	 *          Entidad que se desea agregar
 	 * @return <b>True</b> Si la creacion fue exitosa, <b>False</b> caso contrario
 	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public boolean add(T entity) {
-
 		try {
 			em.persist(entity);
 			System.out.println("Creacion exitosa");

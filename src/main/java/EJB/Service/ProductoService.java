@@ -3,7 +3,6 @@ package EJB.Service;
 import JPA.MODEL.ProductoEntity;
 
 import javax.ejb.EJB;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import java.util.List;
@@ -12,7 +11,6 @@ import java.util.List;
  * Created by szalimben on 23/09/15.
  */
 @Stateless
-@LocalBean
 public class ProductoService extends Service<ProductoEntity> {
 
 	@EJB
