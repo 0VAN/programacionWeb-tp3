@@ -117,57 +117,61 @@ public class VentasRest {
 
             // se procesa cada compra individualmente, primer token '['
             while (jParser.nextToken() != JsonToken.END_ARRAY) {
-                jParser.nextToken(); // token 'fecha'
-                jParser.nextToken(); // token valor de 'fecha'
-                fecha = jParser.getText();
-                jParser.nextToken(); // token 'proveedor'
-                jParser.nextToken(); // token valor de 'proveedor'
-                proveedor = jParser.getText();
 
-                // se procesa cada objeto cliente, primer token '['
-                while (jParser.nextToken() != JsonToken.END_ARRAY) {
+                String fieldname = jParser.getCurrentName();
+                if ("fecha".equals(fieldname)) {
 
-                    String fieldname = jParser.getCurrentName();
+                    // token 'fecha'
+                    // vamos al siguiente token, el valor de 'fecha'
+                    jParser.nextToken();
+                    fecha = jParser.getText();
+                }
 
-                    if ("producto".equals(fieldname)) {
+                if ("proveedor".equals(fieldname)) {
 
-                        while (jParser.nextToken() != JsonToken.END_OBJECT) {
-                            String field = jParser.getCurrentName();
+                    // token 'proveedor'
+                    // vamos al siguiente token, el valor de 'proveedor'
+                    jParser.nextToken();
+                    proveedor = jParser.getText();
+                }
 
-                            if ("descripcion".equals(field)) {
+                if ("productos".equals(fieldname)) {
 
-                                // token 'descripcion'
-                                // vamos al siguiente token, el valor de 'descripcion'
-                                jParser.nextToken();
-                                descripcion = jParser.getText();
-                            }
+                    while (jParser.nextToken() != JsonToken.END_ARRAY) {
+                        String field = jParser.getCurrentName();
+                        if ("descripcion".equals(field)) {
 
-                            if ("precio".equals(field)) {
-
-                                // token 'precio'
-                                // vamos al siguiente token, el valor de 'precio'
-                                jParser.nextToken();
-                                precio = jParser.getText();
-                            }
-
-                            if ("stock".equals(field)) {
-
-                                // token 'stock'
-                                // vamos al siguiente token, el valor de 'stock'
-                                jParser.nextToken();
-                                stock = jParser.getText();
-                            }
+                            // token 'descripcion'
+                            // vamos al siguiente token, el valor de 'descripcion'
+                            jParser.nextToken();
+                            descripcion = jParser.getText();
                         }
-                    }
 
-                    if ("cantidad".equals(fieldname)) {
+                        if ("precio".equals(field)) {
 
-                        // token 'cantidad'
-                        // vamos al siguiente token, el valor de 'cantidad'
-                        jParser.nextToken();
-                        cantidad = jParser.getText();
+                            // token 'precio'
+                            // vamos al siguiente token, el valor de 'precio'
+                            jParser.nextToken();
+                            precio = jParser.getText();
+                        }
 
-                        // como es el ultimo campo procesamos la compra en persistencia
+                        if ("stock".equals(field)) {
+
+                            // token 'stock'
+                            // vamos al siguiente token, el valor de 'stock'
+                            jParser.nextToken();
+                            stock = jParser.getText();
+                        }
+
+                        if ("cantidad".equals(field)) {
+
+                            // token 'cantidad'
+                            // vamos al siguiente token, el valor de 'cantidad'
+                            jParser.nextToken();
+                            cantidad = jParser.getText();
+
+                            // como es el ultimo campo procesamos el producto en persistencia
+                        }
                     }
                 }
             }
