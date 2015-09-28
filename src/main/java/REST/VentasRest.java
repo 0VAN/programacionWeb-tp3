@@ -116,6 +116,7 @@ public class VentasRest {
                     filesService.addCliente(nombre, cedula);
                 }
             }
+            filesService.terminarStateful();
         }catch(Exception e){
             // Procesamos la excepcion
         }
@@ -194,6 +195,7 @@ public class VentasRest {
             }
             // termino el file entonces persistimos
             filesService.addCompra();
+            filesService.terminarStateful();
         }catch(Exception e){
             // Procesamos la excepcion
         }
@@ -281,6 +283,7 @@ public class VentasRest {
             }
             // termino el file entonces persistimos
             filesService.addVenta();
+            filesService.terminarStateful();
         }catch(Exception e){
             // Procesamos la excepcion
         }
