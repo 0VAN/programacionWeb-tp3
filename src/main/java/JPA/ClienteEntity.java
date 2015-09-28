@@ -64,5 +64,4 @@ public class ClienteEntity {
 		this.cedulaIdentidad = cedulaIdentidad;
 	}
 
-
 }
