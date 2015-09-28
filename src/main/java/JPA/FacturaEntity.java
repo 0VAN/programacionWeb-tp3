@@ -3,9 +3,6 @@ package JPA;
 import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "factura", schema = "public", catalog = "tienda")
@@ -21,15 +18,26 @@ public class FacturaEntity {
 	@Basic
 	@Column(name = "monto", nullable = true, insertable = true, updatable = true)
 	@Expose
-	private Long monto;
+	private String monto;
 
 	@Basic
 	@Column(name = "fecha", nullable = false, insertable = true, updatable = true)
 	@Expose
 	private String fecha;
 
-	@OneToMany(mappedBy = "factura")
-	private List<VentaEntity> ventas;
+	public FacturaEntity() {
+		// Constructor por Defecto
+	}
+
+	// Constructor con parametros
+	public FacturaEntity(String monto, String fecha) {
+		this.monto = monto;
+		this.fecha = fecha;
+
+	}
+
+
+
 
 	public Long getId() {
 		return id;
@@ -39,11 +47,11 @@ public class FacturaEntity {
 		this.id = id;
 	}
 
-	public Long getMonto() {
+	public String getMonto() {
 		return monto;
 	}
 
-	public void setMonto(Long monto) {
+	public void setMonto(String monto) {
 		this.monto = monto;
 	}
 
@@ -87,11 +95,4 @@ public class FacturaEntity {
 		return result;
 	}
 
-	public List<VentaEntity> getVentas() {
-		return ventas;
-	}
-
-	public void setVentas(List<VentaEntity> ventas) {
-		this.ventas = ventas;
-	}
 }

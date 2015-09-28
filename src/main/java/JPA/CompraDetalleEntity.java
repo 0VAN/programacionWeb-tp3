@@ -33,6 +33,16 @@ public class CompraDetalleEntity {
 	@Expose
 	private ProductoEntity producto;
 
+	public CompraDetalleEntity() {
+		// Constructor por defecto
+	}
+
+	public CompraDetalleEntity (long cantidad, CompraEntity compra, ProductoEntity producto) {
+		this.cantidad = cantidad;
+		this.compra = compra;
+		this.producto = producto;
+	}
+
 	public Long getId() {
 		return id;
 	}

@@ -3,7 +3,6 @@ package JPA;
 import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -20,12 +19,12 @@ public class CompraEntity {
 	@Basic
 	@Column(name = "fecha", nullable = false, insertable = true, updatable = true)
 	@Expose
-	private Timestamp fecha;
+	private String fecha;
 
 	@Basic
 	@Column(name = "monto", nullable = true, insertable = true, updatable = true)
 	@Expose
-	private Long monto;
+	private String monto;
 
 	@ManyToOne(optional=false)
 	@JoinColumn(name = "proveedor_id")
@@ -33,6 +32,25 @@ public class CompraEntity {
 
 	@OneToMany(mappedBy = "compra", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<CompraDetalleEntity> detalles;
+
+	public CompraEntity() {
+		// Constructor por defecto
+	}
+
+	// Constructor Sin detalles
+	public CompraEntity(String fecha, ProveedorEntity proveedor, String monto ) {
+		this.fecha = fecha;
+		this.proveedor = proveedor;
+		this.monto = monto;
+	}
+
+	// Constructor con detalles
+	public CompraEntity(String fecha, ProveedorEntity proveedor, String monto, List<CompraDetalleEntity> detalles ) {
+		this.fecha = fecha;
+		this.proveedor = proveedor;
+		this.monto = monto;
+		this.detalles = detalles;
+	}
 
 	public Long getId() {
 		return id;
@@ -42,19 +60,19 @@ public class CompraEntity {
 		this.id = id;
 	}
 
-	public Timestamp getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Timestamp fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 
-	public Long getMonto() {
+	public String getMonto() {
 		return monto;
 	}
 
-	public void setMonto(Long monto) {
+	public void setMonto(String monto) {
 		this.monto = monto;
 	}
 

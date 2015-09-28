@@ -3,11 +3,8 @@ package JPA;
 import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
-import java.util.List;
 
-/**
- * Created by szalimben on 22/09/15.
- */
+
 @Entity
 @Table(name = "proveedor", schema = "public", catalog = "tienda")
 public class ProveedorEntity {
@@ -24,9 +21,15 @@ public class ProveedorEntity {
 	@Expose
 	private String descripcion;
 
-	@OneToMany(mappedBy = "proveedor")
-	@Expose
-	private List<CompraEntity> compras;
+
+	public ProveedorEntity() {
+		// Constructor por defecto
+	}
+
+	public ProveedorEntity(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
 
 	public Long getId() {
 		return id;
@@ -72,11 +75,4 @@ public class ProveedorEntity {
 		return result;
 	}
 
-	public List<CompraEntity> getCompras() {
-		return compras;
-	}
-
-	public void setCompras(List<CompraEntity> compras) {
-		this.compras = compras;
-	}
 }

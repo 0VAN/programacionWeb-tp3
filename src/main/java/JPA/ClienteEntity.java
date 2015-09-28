@@ -3,7 +3,6 @@ package JPA;
 import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * Created by szalimben on 22/09/15.
@@ -27,11 +26,17 @@ public class ClienteEntity {
 	@Basic
 	@Column(name = "cedula_identidad", nullable = false, insertable = true, updatable = true)
 	@Expose
-	private Long cedulaIdentidad;
+	private String cedulaIdentidad;
 
-	@OneToMany(mappedBy = "cliente")
-	@Expose
-	private List<VentaEntity> ventas;
+	public ClienteEntity() {
+		// Constructor por defecto
+	}
+
+	// Constructor
+	public ClienteEntity (String nombre, String cedulaIdentidad) {
+		this.nombre = nombre;
+		this.cedulaIdentidad = cedulaIdentidad;
+	}
 
 	public Long getId() {
 		return id;
@@ -49,11 +54,11 @@ public class ClienteEntity {
 		this.nombre = nombre;
 	}
 
-	public Long getCedulaIdentidad() {
+	public String getCedulaIdentidad() {
 		return cedulaIdentidad;
 	}
 
-	public void setCedulaIdentidad(Long cedulaIdentidad) {
+	public void setCedulaIdentidad(String cedulaIdentidad) {
 		this.cedulaIdentidad = cedulaIdentidad;
 	}
 
@@ -87,13 +92,5 @@ public class ClienteEntity {
 		result = 31 * result + (nombre != null ? nombre.hashCode() : 0);
 		result = 31 * result + (cedulaIdentidad != null ? cedulaIdentidad.hashCode() : 0);
 		return result;
-	}
-
-	public List<VentaEntity> getVentas() {
-		return ventas;
-	}
-
-	public void setVentas(List<VentaEntity> ventas) {
-		this.ventas = ventas;
 	}
 }

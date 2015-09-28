@@ -45,9 +45,11 @@ public class VentasRest {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVentas(@Context UriInfo info) {
+
+        Object o =  ventasService.getVentas(info.getQueryParameters());
+
         return Response.status(200).entity(ventasService.getVentas(info.getQueryParameters())).build();
     }
-
 
     @POST
     @Consumes("application/json")

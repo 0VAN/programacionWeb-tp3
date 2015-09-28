@@ -22,17 +22,27 @@ public class ProductoEntity {
 	@Basic
 	@Column(name = "stock", nullable = true, insertable = true, updatable = true)
 	@Expose
-	private Long stock;
+	private long stock;
 
 	@Basic
 	@Column(name = "precio", nullable = true, insertable = true, updatable = true)
 	@Expose
-	private Long precio;
+	private long precio;
 
 	@Basic
 	@Column(name = "descripcion", nullable = true, insertable = true, updatable = true, length = 100)
 	@Expose
 	private String descripcion;
+
+	public ProductoEntity() {
+		// Constructor por defecto
+	}
+
+	public ProductoEntity(long stock, String descripcion,long precio ) {
+		this.stock = stock;
+		this.descripcion = descripcion;
+		this.precio = precio;
+	}
 
 	public Long getId() {
 		return id;
@@ -45,19 +55,19 @@ public class ProductoEntity {
 		this.id = id;
 	}
 
-	public Long getStock() {
+	public long getStock() {
 		return stock;
 	}
 
-	public void setStock(Long stock) {
+	public void setStock(long stock) {
 		this.stock = stock;
 	}
 
-	public Long getPrecio() {
+	public long getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(Long precio) {
+	public void setPrecio(long precio) {
 		this.precio = precio;
 	}
 
@@ -67,42 +77,6 @@ public class ProductoEntity {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if(this == o) {
-			return true;
-		}
-		if(o == null || getClass() != o.getClass()) {
-			return false;
-		}
-
-		ProductoEntity that = (ProductoEntity) o;
-
-		if(id != null ? !id.equals(that.id) : that.id != null) {
-			return false;
-		}
-		if(stock != null ? !stock.equals(that.stock) : that.stock != null) {
-			return false;
-		}
-		if(precio != null ? !precio.equals(that.precio) : that.precio != null) {
-			return false;
-		}
-		if(descripcion != null ? !descripcion.equals(that.descripcion) : that.descripcion != null) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
-	public int hashCode() {
-		int result = id != null ? id.hashCode() : 0;
-		result = 31 * result + (stock != null ? stock.hashCode() : 0);
-		result = 31 * result + (precio != null ? precio.hashCode() : 0);
-		result = 31 * result + (descripcion != null ? descripcion.hashCode() : 0);
-		return result;
 	}
 
 	public List<SolicitudCompraEntity> getSolicitudes() {
