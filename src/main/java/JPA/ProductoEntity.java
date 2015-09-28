@@ -5,8 +5,9 @@ import com.google.gson.annotations.Expose;
 import javax.persistence.*;
 import java.util.List;
 
+
 /**
- * Created by szalimben on 22/09/15.
+ * Clase que representa un Producto
  */
 @Entity
 @Table(name = "producto", schema = "public", catalog = "tienda")
@@ -17,7 +18,7 @@ public class ProductoEntity {
 	@Expose
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_producto")
 	@SequenceGenerator(name = "seq_producto", sequenceName = "seq_producto")
-	private Long id;
+	private long id;
 
 	@Basic
 	@Column(name = "stock", nullable = true, insertable = true, updatable = true)
@@ -33,6 +34,10 @@ public class ProductoEntity {
 	@Column(name = "descripcion", nullable = true, insertable = true, updatable = true, length = 100)
 	@Expose
 	private String descripcion;
+
+	@ManyToOne(optional=false)
+	@JoinColumn(name = "proveedor_id")
+	private ProveedorEntity proveedor;
 
 	public ProductoEntity() {
 		// Constructor por defecto
@@ -85,5 +90,13 @@ public class ProductoEntity {
 
 	public void setSolicitudes(List<SolicitudCompraEntity> solicitudes) {
 		this.solicitudes = solicitudes;
+	}
+
+	public ProveedorEntity getProveedor() {
+		return proveedor;
+	}
+
+	public void setProveedor(ProveedorEntity proveedor) {
+		this.proveedor = proveedor;
 	}
 }

@@ -5,6 +5,10 @@ import com.google.gson.annotations.Expose;
 import javax.persistence.*;
 import java.util.List;
 
+
+/**
+ * Clase que representa una Compra
+ */
 @Entity
 @Table(name = "compra", schema = "public", catalog = "tienda")
 public class CompraEntity {
@@ -14,7 +18,7 @@ public class CompraEntity {
 	@Expose
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_compra")
 	@SequenceGenerator(name = "seq_compra", sequenceName = "seq_compra")
-	private Long id;
+	private long id;
 
 	@Basic
 	@Column(name = "fecha", nullable = false, insertable = true, updatable = true)
@@ -74,38 +78,6 @@ public class CompraEntity {
 
 	public void setMonto(String monto) {
 		this.monto = monto;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if(this == o) {
-			return true;
-		}
-		if(o == null || getClass() != o.getClass()) {
-			return false;
-		}
-
-		CompraEntity that = (CompraEntity) o;
-
-		if(id != null ? !id.equals(that.id) : that.id != null) {
-			return false;
-		}
-		if(fecha != null ? !fecha.equals(that.fecha) : that.fecha != null) {
-			return false;
-		}
-		if(monto != null ? !monto.equals(that.monto) : that.monto != null) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
-	public int hashCode() {
-		int result = id != null ? id.hashCode() : 0;
-		result = 31 * result + (fecha != null ? fecha.hashCode() : 0);
-		result = 31 * result + (monto != null ? monto.hashCode() : 0);
-		return result;
 	}
 
 	public ProveedorEntity getProveedor() {

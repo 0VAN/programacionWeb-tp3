@@ -3,6 +3,7 @@ package JPA;
 import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -20,6 +21,10 @@ public class ProveedorEntity {
 	@Column(name = "descripcion", nullable = true, insertable = true, updatable = true, length = 100)
 	@Expose
 	private String descripcion;
+
+
+	@OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL)
+	private List<ProductoEntity> productos;
 
 
 	public ProveedorEntity() {

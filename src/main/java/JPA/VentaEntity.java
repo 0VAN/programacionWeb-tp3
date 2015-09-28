@@ -6,6 +6,8 @@ import javax.persistence.*;
 import java.util.List;
 
 /**
+ * Clase que representa una Venta
+ *
  * Created by szalimben on 22/09/15.
  */
 
@@ -23,7 +25,7 @@ public class VentaEntity {
 	@SequenceGenerator(name = "seq_venta", sequenceName = "seq_name")
 	@Column(name = "id", nullable = false, insertable = true, updatable = true)
 	@Expose
-	private Long id;
+	private long id;
 
 	@Basic
 	@Column(name = "fecha", nullable = false, insertable = true, updatable = true)
@@ -48,6 +50,10 @@ public class VentaEntity {
 	@Column(name = "monto", nullable = true, insertable = true, updatable = true)
 	@Expose
 	private String monto;
+
+	public VentaEntity() {
+		// Constructor por defecto
+	}
 
 	// Constructor
 	public VentaEntity(ClienteEntity cliente, String fecha, String monto) {
@@ -85,38 +91,6 @@ public class VentaEntity {
 
 	public void setMonto(String monto) {
 		this.monto = monto;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if(this == o) {
-			return true;
-		}
-		if(o == null || getClass() != o.getClass()) {
-			return false;
-		}
-
-		VentaEntity that = (VentaEntity) o;
-
-		if(id != null ? !id.equals(that.id) : that.id != null) {
-			return false;
-		}
-		if(fecha != null ? !fecha.equals(that.fecha) : that.fecha != null) {
-			return false;
-		}
-		if(monto != null ? !monto.equals(that.monto) : that.monto != null) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
-	public int hashCode() {
-		int result = id != null ? id.hashCode() : 0;
-		result = 31 * result + (fecha != null ? fecha.hashCode() : 0);
-		result = 31 * result + (monto != null ? monto.hashCode() : 0);
-		return result;
 	}
 
 	public FacturaEntity getFactura() {

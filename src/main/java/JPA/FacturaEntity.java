@@ -36,9 +36,6 @@ public class FacturaEntity {
 
 	}
 
-
-
-
 	public Long getId() {
 		return id;
 	}
