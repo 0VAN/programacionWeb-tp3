@@ -1,11 +1,12 @@
 package EJB.Service;
 
-import JPA.MODEL.ProductoEntity;
-import JPA.MODEL.SolicitudCompraEntity;
+import JPA.ProductoEntity;
+import JPA.SolicitudCompraEntity;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class SolicitudCompraService extends Service<SolicitudCompraEntity> {
 	/**
 	 * Metodo para crear una nueva solicitud de compra
 	 */
+	@Transactional
 	public void crear() {
 
 		List<ProductoEntity> productos = productoService.getProductosCantidadMinima(cantidadMinima);
@@ -34,7 +36,7 @@ public class SolicitudCompraService extends Service<SolicitudCompraEntity> {
 		for(ProductoEntity producto : productos) {
 			if(!yaExiste(producto)) {
 				SolicitudCompraEntity entity = new SolicitudCompraEntity();
-				entity.setFecha(new Date());
+				entity.setFecha(new Date().toString());
 				entity.setProducto(producto);
 				em.persist(entity);
 			}
@@ -55,7 +57,7 @@ public class SolicitudCompraService extends Service<SolicitudCompraEntity> {
 		Query query = em.createQuery("SELECT sc FROM SolicitudCompraEntity sc WHERE sc.producto = :producto AND sc.atendido = false ");
 		query.setParameter("producto", producto);
 
-		return query.getResultList().isEmpty();
+		return !query.getResultList().isEmpty();
 	}
 
 

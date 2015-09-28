@@ -1,6 +1,6 @@
 package EJB.Service;
 
-import JPA.MODEL.CompraEntity;
+import JPA.CompraEntity;
 
 import javax.ejb.Stateless;
 

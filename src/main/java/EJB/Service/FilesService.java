@@ -1,8 +1,9 @@
 package EJB.Service;
 
-import JPA.MODEL.*;
+import JPA.*;
 
 import javax.ejb.EJB;
+import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -44,33 +45,39 @@ public class FilesService {
     @Inject
     private VentaDetalleEntity ventaDetalle;
 
-    private List<CompraDetalleEntity> listaCompraDetalles = new ArrayList<CompraDetalleEntity>();
-    private List<VentaDetalleEntity> listaVentaDetalles = new ArrayList<VentaDetalleEntity>();
+    private List<CompraDetalleEntity> listaCompraDetalles = new ArrayList<>();
+    private List<VentaDetalleEntity> listaVentaDetalles = new ArrayList<>();
 
     @EJB
     Service service;
 
+    /*
+    Se almacen los clientes
+     */
     public void addCliente(String nombre, String cedula) {
         try {
             cliente.setNombre(nombre);
-            cliente.setCedulaIdentidad(Long.parseLong(cedula));
+            cliente.setCedulaIdentidad(cedula);
             em.persist(cliente);
         } catch (Exception e) {
             // se procesa la excepcion
         }
     }
 
+    /*
+    Metodos para almacenar compras
+     */
     public void addCabeceraCompra(String fecha, String monto, String proveedorId){
         compra.setFecha(fecha);
         compra.setMonto(monto);
-        proveedor = service.find(Integer.parseInt(proveedorId), ProveedorEntity.class);
+        proveedor = em.find(ProveedorEntity.class, Long.parseLong(proveedorId));
         compra.setProveedor(proveedor);
     }
 
     public void addCompraDetalle(String productoId, String cantidad){
-        producto = service.find(Integer.parseInt(productoId), ProductoEntity.class);
+        producto = em.find(ProductoEntity.class, Long.parseLong(productoId));
         compraDetalle.setProducto(producto);
-        compraDetalle.setCantidad(cantidad);
+        compraDetalle.setCantidad(Long.parseLong(cantidad));
         listaCompraDetalles.add(compraDetalle);
     }
 
@@ -79,19 +86,22 @@ public class FilesService {
         em.persist(compra);
     }
 
+    /*
+    Metodos para almacenar ventas
+     */
     public void addCabeceraVenta(String fecha, String facturaId, String clienteId, String monto){
         venta.setFecha(fecha);
-        factura = service.find(Integer.parseInt(facturaId), FacturaEntity.class);
+        factura = em.find(FacturaEntity.class, Long.parseLong(facturaId));
         venta.setFactura(factura);
-        cliente = service.find(Integer.parseInt(clienteId), ClienteEntity.class);
+        cliente = em.find(ClienteEntity.class, Long.parseLong(clienteId));
         venta.setCliente(cliente);
         venta.setMonto(monto);
     }
 
     public void addVentaDetalle(String productoId, String cantidad){
-        producto = service.find(Integer.parseInt(productoId), ProductoEntity.class);
+        producto = em.find(ProductoEntity.class, Long.parseLong(productoId));
         ventaDetalle.setProducto(producto);
-        ventaDetalle.setCantidad(cantidad);
+        ventaDetalle.setCantidad(Long.parseLong(cantidad));
         listaVentaDetalles.add(ventaDetalle);
     }
 
@@ -100,5 +110,9 @@ public class FilesService {
         em.persist(venta);
     }
 
-
+    @Remove
+    public void terminarStateful(){
+        // este metodo finaliza la instancia creada del stateful bean con el
+        // annotation @Remove
+    }
 }

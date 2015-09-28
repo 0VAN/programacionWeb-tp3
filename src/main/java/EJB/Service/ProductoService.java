@@ -1,6 +1,6 @@
 package EJB.Service;
 
-import JPA.MODEL.ProductoEntity;
+import JPA.ProductoEntity;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -26,8 +26,11 @@ public class ProductoService extends Service<ProductoEntity> {
 	@SuppressWarnings("unchecked")
 	public List<ProductoEntity> getProductosCantidadMinima(int stockMinimo) {
 
+
+		Long stock = new Long(stockMinimo);
+
 		Query query = em.createQuery("SELECT p FROM ProductoEntity p WHERE p.stock <= :stockMinimo");
-		query.setParameter("stockMinimo", stockMinimo);
+		query.setParameter("stockMinimo", stock);
 		return query.getResultList();
 	}
 

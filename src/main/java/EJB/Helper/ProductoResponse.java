@@ -1,6 +1,6 @@
 package EJB.Helper;
 
-import JPA.MODEL.ProductoEntity;
+import JPA.ProductoEntity;
 
 /**
  * Response para los productos

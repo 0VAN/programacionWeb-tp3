@@ -11,39 +11,41 @@ package EJB.Helper;
 public class Meta {
 
     /* Cantidad  */
-    Integer total;
-    Integer total_pages;
-    Integer page_size;
+    Long total;
+    Long total_pages;
+    Long page_size;
 
-    public Integer getTotal() {
+    public Long getTotal() {
         return total;
     }
 
-    public void setTotal(Integer total) {
+    public void setTotal(Long total) {
         this.total = total;
     }
 
-    public Integer getPage_size() {
+    public Long getPage_size() {
         return page_size;
     }
 
-    public void setPage_size(Integer page_size) {
+    public void setPage_size(Long page_size) {
         this.page_size = page_size;
     }
 
-    public Integer getTotal_pages() {
+    public Long getTotal_pages() {
         return total_pages;
     }
 
-    public void setTotal_pages(Integer total_pages) {
+    public void setTotal_pages(Long total_pages) {
         this.total_pages = total_pages;
     }
 
     public void calculateToTalPages() {
 
-        int var = getTotal() / getPage_size();
-        setTotal_pages(var);
+        Long var = getTotal() / getPage_size();
+        if(getTotal() < getPage_size()) {
+            setTotal_pages(1L);
+        } else {
+            setTotal_pages(var + 1L);
+        }
     }
-
-
 }

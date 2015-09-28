@@ -1,6 +1,6 @@
 package EJB.Service;
 
-import JPA.MODEL.ClienteEntity;
+import JPA.ClienteEntity;
 
 import javax.ejb.Stateless;
 

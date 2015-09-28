@@ -9,9 +9,6 @@ import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 
 
-/**
- * Created by szalimben on 22/09/15.
- */
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class Service<T> implements IService<T> , Serializable {
 

@@ -68,13 +68,13 @@ CREATE TABLE proveedor (
 CREATE TABLE cliente (
 	id bigint PRIMARY KEY DEFAULT nextval('seq_cliente'),
 	nombre VARCHAR(100),
-	cedula_identidad bigint NOT NULL DEFAULT nextval('seq_cliente'::regclass),
+	cedula_identidad VARCHAR(50) NOT NULL DEFAULT nextval('seq_cliente'::regclass),
 	CONSTRAINT unique_cedula UNIQUE (cedula_identidad)
 );
 
 CREATE TABLE factura (
 	id bigint PRIMARY KEY DEFAULT nextval('seq_factura'),
-	monto bigint,
+	monto VARCHAR(50),
 	fecha timestamp without time zone NOT NULL DEFAULT now()
 );
 

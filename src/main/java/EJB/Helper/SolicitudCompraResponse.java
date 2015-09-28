@@ -1,6 +1,6 @@
 package EJB.Helper;
 
-import JPA.MODEL.SolicitudCompraEntity;
+import JPA.SolicitudCompraEntity;
 
 /**
  * Response para las solicitudes de compra

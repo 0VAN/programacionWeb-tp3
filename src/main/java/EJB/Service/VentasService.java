@@ -3,16 +3,13 @@ package EJB.Service;
 import EJB.Helper.Meta;
 import EJB.Helper.VentasResponse;
 import EJB.Util.StockInsuficienteException;
-import JPA.MODEL.ProductoEntity;
-import JPA.MODEL.VentaDetalleEntity;
-import JPA.MODEL.VentaEntity;
+import JPA.ProductoEntity;
+import JPA.VentaDetalleEntity;
+import JPA.VentaEntity;
 
 import javax.ejb.*;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import javax.ws.rs.core.MultivaluedMap;
 import java.util.List;
 
@@ -33,8 +30,8 @@ public class VentasService extends Service<VentaEntity> {
 	VentaDetalleService ventaDetalleService;
 
     private void setMetaInf(){
-        meta.setTotal((Integer) this.getCount());
-        meta.setPage_size(10);
+        meta.setTotal((Long) this.getCount());
+        meta.setPage_size((long) 10);
         meta.calculateToTalPages();
     }
 
@@ -61,9 +58,8 @@ public class VentasService extends Service<VentaEntity> {
 			}
 			detalle.setVenta(venta);
 		}
-		venta.setMonto(montoAcumulador);
+		venta.setMonto(String.valueOf(montoAcumulador));
 		return super.add(venta);
-
     }
 
     public void deleteVenta(VentaEntity venta) {
@@ -129,7 +125,6 @@ public class VentasService extends Service<VentaEntity> {
         String by_fecha;
         String by_all_attributes;
 
-
         by_all_attributes = queryParams.getFirst("by_all_attributes");
         by_monto = queryParams.getFirst("by_monto");
         by_cliente = queryParams.getFirst("by_cliente");
@@ -156,27 +151,30 @@ public class VentasService extends Service<VentaEntity> {
         // Filtrado por todas las columnas
         Predicate filtradoPorAllAttributes = criteriaBuilder.or(
                 criteriaBuilder.like(ventas.<String>get("monto"), "%" + by_all_attributes + "%"),
-                criteriaBuilder.like(ventas.<String>get("cliente"), "%" + by_all_attributes + "%"),
+                criteriaBuilder.like(ventas.<String>get("cliente").<String>get("nombre"), "%" + by_cliente + "%"),
                 criteriaBuilder.like(ventas.<String>get("fecha"), "%" + by_all_attributes + "%")
         );
 
         // Filtrado por columna
         Predicate filtradoPorColumna = criteriaBuilder.and(
                 criteriaBuilder.like(ventas.<String>get("monto"), "%" + by_monto + "%"),
-                criteriaBuilder.like(ventas.<String>get("cliente"), "%" + by_cliente + "%"),
+                criteriaBuilder.like(ventas.<String>get("cliente").<String>get("nombre"), "%" + by_cliente + "%"),
                 criteriaBuilder.like(ventas.<String>get("fecha"), "%" + by_fecha + "%")
         );
 
-        if ("asc".equals(ordenDeOrdenacion))
-            criteriaQuery.select(ventas).where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.asc(ventas.get(ordenarPorColumna)));
-        else
-            criteriaQuery.select(ventas).where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(ventas.get(ordenarPorColumna)));
-
+	    // Fijamos la Ordenacion
+        if ("asc".equals(ordenDeOrdenacion)) {
+	        criteriaQuery.multiselect(ventas.<String>get("cliente"), ventas.<String>get("monto"), ventas.<String>get("fecha") );
+	        criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.asc(ventas.get(ordenarPorColumna)));
+        }else{
+	        criteriaQuery.multiselect(ventas.<String>get("cliente"), ventas.<String>get("monto"), ventas.<String>get("fecha") );
+	        criteriaQuery.select(ventas).where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(ventas.get(ordenarPorColumna)));
+        }
 
         Integer page;
         page = Integer.valueOf(queryParams.getFirst("page")) - 1;
 
-        response.setEntidades(em.createQuery(criteriaQuery).setMaxResults(meta.getPage_size()).setFirstResult(page * meta.getPage_size()).getResultList());
+        response.setEntidades(em.createQuery(criteriaQuery).setMaxResults(meta.getPage_size().intValue()).setFirstResult(page * meta.getPage_size().intValue()).getResultList());
         response.setMeta(meta);
         return response;
     }

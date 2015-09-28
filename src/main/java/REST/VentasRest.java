@@ -1,11 +1,20 @@
 package REST;
 
+import EJB.Helper.VentasResponse;
+import EJB.Service.VentasService;
+import EJB.Util.StockInsuficienteException;
+import JPA.VentaEntity;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import java.lang.reflect.Type;
 
 import EJB.Service.FilesService;
 import EJB.Service.VentasService;
@@ -23,6 +32,7 @@ import java.io.InputStream;
 @Path("/ventas")
 public class VentasRest {
 
+    private VentasResponse response;
     private JsonFactory jfactory;
     private JsonParser jParser;
 
@@ -44,8 +54,7 @@ public class VentasRest {
     private String montoVenta;
     private String productoIdVenta;
     private String cantidadVenta;
-
-
+    
     @EJB
     FilesService filesService;
 

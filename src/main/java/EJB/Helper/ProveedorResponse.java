@@ -1,6 +1,6 @@
 package EJB.Helper;
 
-import JPA.MODEL.ProveedorEntity;
+import JPA.ProveedorEntity;
 
 /**
  * Response para los proveedores

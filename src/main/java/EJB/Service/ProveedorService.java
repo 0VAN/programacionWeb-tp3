@@ -1,6 +1,6 @@
 package EJB.Service;
 
-import JPA.MODEL.ProveedorEntity;
+import JPA.ProveedorEntity;
 
 import javax.ejb.Stateless;
 
