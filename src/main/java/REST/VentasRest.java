@@ -31,14 +31,19 @@ public class VentasRest {
     private String cedula;
 
     // datos compras.json
-    private String fecha;
-    private String proveedor;
-    private String descripcion;
-    private String precio;
-    private String stock;
-    private String cantidad;
+    private String fechaCompra;
+    private String montoCompra;
+    private String proveedorCompra;
+    private String productoIdCompra;
+    private String cantidadCompra;
 
     // datos ventas.json
+    private String fechaVenta;
+    private String facturaIdVenta;
+    private String clienteIdVenta;
+    private String montoVenta;
+    private String productoIdVenta;
+    private String cantidadVenta;
 
 
     @EJB
@@ -74,7 +79,7 @@ public class VentasRest {
         jfactory = new JsonFactory();
 
         try {
-            jParser = jfactory.createJsonParser(is);
+            jParser = jfactory.createParser(is);
 
             jParser.nextToken(); // token '{'
             jParser.nextToken(); // token 'clientes'
@@ -117,7 +122,7 @@ public class VentasRest {
         jfactory = new JsonFactory();
 
         try {
-            jParser = jfactory.createJsonParser(is);
+            jParser = jfactory.createParser(is);
 
             jParser.nextToken(); // token '{'
             jParser.nextToken(); // token 'compras'
@@ -131,7 +136,7 @@ public class VentasRest {
                     // token 'fecha'
                     // vamos al siguiente token, el valor de 'fecha'
                     jParser.nextToken();
-                    fecha = jParser.getText();
+                    fechaCompra = jParser.getText();
                 }
 
                 if ("monto".equals(fieldname)) {
@@ -139,7 +144,7 @@ public class VentasRest {
                     // token 'monto'
                     // vamos al siguiente token, el valor de 'monto'
                     jParser.nextToken();
-                    fecha = jParser.getText();
+                    montoCompra = jParser.getText();
                 }
 
                 if ("proveedor".equals(fieldname)) {
@@ -147,35 +152,22 @@ public class VentasRest {
                     // token 'proveedor'
                     // vamos al siguiente token, el valor de 'proveedor'
                     jParser.nextToken();
-                    proveedor = jParser.getText();
+                    proveedorCompra = jParser.getText();
+
+                    filesService.addCabeceraCompra(fechaCompra, montoCompra, proveedorCompra);
                 }
 
                 if ("productos".equals(fieldname)) {
 
                     while (jParser.nextToken() != JsonToken.END_ARRAY) {
                         String field = jParser.getCurrentName();
-                        if ("descripcion".equals(field)) {
 
-                            // token 'descripcion'
-                            // vamos al siguiente token, el valor de 'descripcion'
+                        if ("producto".equals(field)) {
+
+                            // token 'producto'
+                            // vamos al siguiente token, el valor de 'producto'
                             jParser.nextToken();
-                            descripcion = jParser.getText();
-                        }
-
-                        if ("precio".equals(field)) {
-
-                            // token 'precio'
-                            // vamos al siguiente token, el valor de 'precio'
-                            jParser.nextToken();
-                            precio = jParser.getText();
-                        }
-
-                        if ("stock".equals(field)) {
-
-                            // token 'stock'
-                            // vamos al siguiente token, el valor de 'stock'
-                            jParser.nextToken();
-                            stock = jParser.getText();
+                            productoIdCompra = jParser.getText();
                         }
 
                         if ("cantidad".equals(field)) {
@@ -183,13 +175,103 @@ public class VentasRest {
                             // token 'cantidad'
                             // vamos al siguiente token, el valor de 'cantidad'
                             jParser.nextToken();
-                            cantidad = jParser.getText();
+                            cantidadCompra = jParser.getText();
 
                             // como es el ultimo campo procesamos el producto en persistencia
+                            filesService.addCompraDetalle(productoIdCompra, cantidadCompra);
                         }
                     }
                 }
             }
+            // termino el file entonces persistimos
+            filesService.addCompra();
+        }catch(Exception e){
+            // Procesamos la excepcion
+        }
+
+        return Response.status(200).entity("ok").build();
+    }
+
+
+    @POST
+    @Path("/uploadFileVentas")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response uploadFile(@FormDataParam("file") InputStream is) {
+        jfactory = new JsonFactory();
+
+        try {
+            jParser = jfactory.createParser(is);
+
+            jParser.nextToken(); // token '{'
+            jParser.nextToken(); // token 'ventas'
+
+            // se procesa cada compra individualmente, primer token '['
+            while (jParser.nextToken() != JsonToken.END_ARRAY) {
+
+                String fieldname = jParser.getCurrentName();
+                if ("fecha".equals(fieldname)) {
+
+                    // token 'fecha'
+                    // vamos al siguiente token, el valor de 'fecha'
+                    jParser.nextToken();
+                    fechaVenta = jParser.getText();
+                }
+
+                if ("factura".equals(fieldname)) {
+
+                    // token 'factura'
+                    // vamos al siguiente token, el valor de 'factura'
+                    jParser.nextToken();
+                    facturaIdVenta = jParser.getText();
+                }
+
+                if ("cliente".equals(fieldname)) {
+
+                    // token 'cliente'
+                    // vamos al siguiente token, el valor de 'cliente'
+                    jParser.nextToken();
+                    clienteIdVenta = jParser.getText();
+                }
+
+                if ("monto".equals(fieldname)) {
+
+                    // token 'monto'
+                    // vamos al siguiente token, el valor de 'monto'
+                    jParser.nextToken();
+                    montoVenta = jParser.getText();
+
+                    filesService.addCabeceraVenta(fechaVenta, facturaIdVenta,
+                            clienteIdVenta, montoVenta);
+                }
+
+                if ("ventas".equals(fieldname)) {
+
+                    while (jParser.nextToken() != JsonToken.END_ARRAY) {
+                        String field = jParser.getCurrentName();
+
+                        if ("producto".equals(field)) {
+
+                            // token 'producto'
+                            // vamos al siguiente token, el valor de 'producto'
+                            jParser.nextToken();
+                            productoIdVenta = jParser.getText();
+                        }
+
+                        if ("cantidad".equals(field)) {
+
+                            // token 'cantidad'
+                            // vamos al siguiente token, el valor de 'cantidad'
+                            jParser.nextToken();
+                            cantidadVenta = jParser.getText();
+
+                            // como es el ultimo campo procesamos el producto en persistencia
+                            filesService.addVentaDetalle(productoIdVenta, cantidadVenta);
+                        }
+                    }
+                }
+            }
+            // termino el file entonces persistimos
+            filesService.addVenta();
         }catch(Exception e){
             // Procesamos la excepcion
         }
