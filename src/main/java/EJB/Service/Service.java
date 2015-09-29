@@ -118,14 +118,14 @@ public class Service<T> implements IService<T> , Serializable {
 	 * @return Entidad buscada
 	 */
 	public T find(int id, Class<T> clazz) {
-		return em.find(clazz, id);
+		return em.find(clazz, (long) id);
 	}
 
 	/**
 	 * Metodo para inicializar el Meta que acompanha a los response
 	 */
 	public void setMetaInf() {
-		meta.setTotal((Long) this.getCount());
+		meta.setTotal(this.getCount());
 		meta.setPage_size((long) 10);
 		meta.calculateToTalPages();
 	}
@@ -159,4 +159,5 @@ public class Service<T> implements IService<T> , Serializable {
 	public void setMeta(Meta meta) {
 		this.meta = meta;
 	}
+
 }

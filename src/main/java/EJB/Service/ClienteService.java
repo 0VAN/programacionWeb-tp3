@@ -11,15 +11,35 @@ import javax.persistence.criteria.Root;
 import javax.ws.rs.core.MultivaluedMap;
 
 /**
+ * Servicios para la gestion de Clientes
+ *
  * Created by szalimben on 23/09/15.
  */
 @Stateless
 public class ClienteService extends Service<ClienteEntity> {
 
-	private ClienteResponse response;
+	/**
+	 * Retorna la entidad buscada por Id
+	 *
+	 * @param id
+	 *          Identificador del elemento buscado
+	 * @return Elemento cuyo identificador corresponda
+	 */
+	public Object getCliente(int id) {
+		return find(id, ClienteEntity.class);
+	}
 
+	/**
+	 * Metodo para obtener la lista de clientes por filtro y
+	 * orden aplicado a las columnas
+	 *
+	 * @param queryParams
+	 *          parametros de filtro y orden
+	 * @return Lista de Clientes que coinciden con los parametros de filtro y orden
+	 */
 	public Object getClientes(MultivaluedMap<String, String> queryParams) {
-		response = new ClienteResponse();
+
+		ClienteResponse response = new ClienteResponse();
 		inicializarMeta();
 		setMetaInf();
 
@@ -41,13 +61,10 @@ public class ClienteService extends Service<ClienteEntity> {
 			ordenDeOrdenacion = queryParams.getFirst("cedulaIdentidad");
 		}
 
-		String by_cedula_identidad;
-		String by_nombre;
-		String by_all_attributes;
-
-		by_all_attributes = queryParams.getFirst("by_all_attributes");
-		by_cedula_identidad = queryParams.getFirst("by_cedula_identidad");
-		by_nombre = queryParams.getFirst("by_nombre");
+		// Iniciamos las variables parael filtrado
+		String by_all_attributes = queryParams.getFirst("by_all_attributes");
+		String by_cedula_identidad = queryParams.getFirst("by_cedula_identidad");
+		String by_nombre = queryParams.getFirst("by_nombre");
 
 		if(by_nombre == null) {
 			by_nombre = "";

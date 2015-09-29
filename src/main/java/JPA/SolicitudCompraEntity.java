@@ -34,6 +34,16 @@ public class SolicitudCompraEntity {
 	@Expose
 	private boolean atendido;
 
+	public SolicitudCompraEntity() {
+		// por defecto
+	}
+
+	public SolicitudCompraEntity(ProductoEntity producto,  String fecha, boolean atendido) {
+		this.fecha = fecha;
+		this.producto = producto;
+		this.atendido = atendido;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -41,6 +51,7 @@ public class SolicitudCompraEntity {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 
 	@Basic
 	@Column(name = "fecha", nullable = false, insertable = true, updatable = true)

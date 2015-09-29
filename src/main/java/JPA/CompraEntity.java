@@ -42,7 +42,7 @@ public class CompraEntity {
 	}
 
 	// Constructor Sin detalles
-	public CompraEntity(String fecha, ProveedorEntity proveedor, String monto ) {
+	public CompraEntity( ProveedorEntity proveedor, String fecha, String monto ) {
 		this.fecha = fecha;
 		this.proveedor = proveedor;
 		this.monto = monto;

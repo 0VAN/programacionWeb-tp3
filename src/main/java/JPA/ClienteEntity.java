@@ -3,6 +3,7 @@ package JPA;
 import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Clase que representa un Cliente
@@ -30,14 +31,24 @@ public class ClienteEntity {
 	@Expose
 	private String cedulaIdentidad;
 
+	@OneToMany(mappedBy = "cliente")
+	private List<VentaEntity> ventas;
+
 	public ClienteEntity() {
 		// Constructor por defecto
 	}
 
-	// Constructor
-	public ClienteEntity (String nombre, String cedulaIdentidad) {
+//	// Constructor sin ventas
+//	public ClienteEntity (String nombre, String cedulaIdentidad) {
+//		this.nombre = nombre;
+//		this.cedulaIdentidad = cedulaIdentidad;
+//	}
+
+	// Constructor con ventas
+	public ClienteEntity (String nombre, String cedulaIdentidad, List<VentaEntity> ventas) {
 		this.nombre = nombre;
 		this.cedulaIdentidad = cedulaIdentidad;
+		this.ventas = ventas;
 	}
 
 	public Long getId() {

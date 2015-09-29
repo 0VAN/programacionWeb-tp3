@@ -1,6 +1,6 @@
 package REST;
 
-import EJB.Service.ClienteService;
+import EJB.Service.CompraService;
 
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
@@ -13,26 +13,27 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
- * Rest para Clientes
+ * Rest para Compras
+ *
  * Created by szalimben on 28/09/15.
  */
-@Path("/clientes")
-public class ClientesRest {
+@Path("/compras")
+public class CompraRest {
 
 	@EJB
-	ClienteService service;
+	CompraService service;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getClientes(@Context UriInfo info) {
-		return Response.status(200).entity(service.getClientes(info.getQueryParameters())).build();
+	public Response getCompras(@Context UriInfo info) {
+		return Response.status(200).entity(service.getCompras(info.getQueryParameters())).build();
 	}
 
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCliente(@PathParam("id") int id) {
-		return Response.status(200).entity(service.getCliente(id)).build();
+	public Response getCompra(@PathParam("id") int id) {
+		return Response.status(200).entity(service.getCompra(id)).build();
 	}
 
 }

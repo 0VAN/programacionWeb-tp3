@@ -13,7 +13,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.ws.rs.core.MultivaluedMap;
-import java.util.List;
 
 @Stateless
 @LocalBean
@@ -27,7 +26,6 @@ public class VentasService extends Service<VentaEntity> {
 	ProductoService productoService;
 	@EJB
 	VentaDetalleService ventaDetalleService;
-	private VentasResponse response;
 
 	/**
 	 * Metodo que recibe una venta y la persiste en la base de datos
@@ -55,6 +53,7 @@ public class VentasService extends Service<VentaEntity> {
 			detalle.setVenta(venta);
 		}
 		venta.setMonto(String.valueOf(montoAcumulador));
+
 		return super.add(venta);
 	}
 
@@ -67,10 +66,10 @@ public class VentasService extends Service<VentaEntity> {
 
 	}
 
-	public List getVentas() {
-		Query query = em.createNamedQuery("venta.findAll");
-		return query.getResultList();
-	}
+//	public List getVentas() {
+//		Query query = em.createNamedQuery("venta.findAll");
+//		return query.getResultList();
+//	}
 
 	public Object getVenta(int id) {
 		Query query = em.createNamedQuery("venta.findById").setParameter("id", id);
@@ -85,9 +84,9 @@ public class VentasService extends Service<VentaEntity> {
 	 *
 	 * @return Retorna la lista de entidades filtradas
 	 */
-	@SuppressWarnings("unchecked")
+
 	public Object getVentas(MultivaluedMap<String, String> queryParams) {
-		response = new VentasResponse();
+		VentasResponse response = new VentasResponse();
 		inicializarMeta();
 		setMetaInf();
 
@@ -113,16 +112,11 @@ public class VentasService extends Service<VentaEntity> {
 			ordenDeOrdenacion = queryParams.getFirst("fecha");
 		}
 
-		String by_monto;
-		String by_cliente;
-		String by_fecha;
-		String by_all_attributes;
-
-		by_all_attributes = queryParams.getFirst("by_all_attributes");
-		by_monto = queryParams.getFirst("by_monto");
-		by_cliente = queryParams.getFirst("by_cliente");
-		by_fecha = queryParams.getFirst("by_fecha");
-
+		// Iniciamos las variables para el filtrado
+		String by_all_attributes = queryParams.getFirst("by_all_attributes");
+		String by_monto = queryParams.getFirst("by_monto");
+		String by_cliente = queryParams.getFirst("by_cliente");
+		String by_fecha = queryParams.getFirst("by_fecha");
 
 		if(by_cliente == null) {
 			by_cliente = "";
@@ -146,18 +140,27 @@ public class VentasService extends Service<VentaEntity> {
 		Root<VentaEntity> ventas = criteriaQuery.from(VentaEntity.class);
 
 		// Filtrado por todas las columnas
-		Predicate filtradoPorAllAttributes = criteriaBuilder.or(criteriaBuilder.like(ventas.<String>get("monto"), "%" + by_all_attributes + "%"), criteriaBuilder.like(ventas.<String>get("cliente").<String>get("nombre"), "%" + by_cliente + "%"), criteriaBuilder.like(ventas.<String>get("fecha"), "%" + by_all_attributes + "%"));
+		Predicate filtradoPorAllAttributes = criteriaBuilder.or(criteriaBuilder.like(ventas.<String>get("monto"), "%" + by_all_attributes + "%"),
+		                                                        criteriaBuilder.like(ventas.<String>get("cliente").<String>get("nombre"), "%" + by_cliente + "%"),
+		                                                        criteriaBuilder.like(ventas.<String>get("fecha"), "%" + by_all_attributes + "%"));
 
 		// Filtrado por columna
-		Predicate filtradoPorColumna = criteriaBuilder.and(criteriaBuilder.like(ventas.<String>get("monto"), "%" + by_monto + "%"), criteriaBuilder.like(ventas.<String>get("cliente").<String>get("nombre"), "%" + by_cliente + "%"), criteriaBuilder.like(ventas.<String>get("fecha"), "%" + by_fecha + "%"));
+		Predicate filtradoPorColumna = criteriaBuilder.and(criteriaBuilder.like(ventas.<String>get("monto"), "%" + by_monto + "%"),
+		                                                   criteriaBuilder.like(ventas.<String>get("cliente").<String>get("nombre"), "%" + by_cliente + "%"),
+		                                                   criteriaBuilder.like(ventas.<String>get("fecha"), "%" + by_fecha + "%"));
 
 		// Fijamos la Ordenacion
 		if("asc".equals(ordenDeOrdenacion)) {
-			criteriaQuery.multiselect(ventas.<String>get("cliente"), ventas.<String>get("monto"), ventas.<String>get("fecha"));
+			criteriaQuery.multiselect(ventas.<String>get("cliente"),
+			                          ventas.<String>get("monto"), ventas.<String>get("fecha"));
+
 			criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.asc(ventas.get(ordenarPorColumna)));
 		}
 		else {
-			criteriaQuery.multiselect(ventas.<String>get("cliente"), ventas.<String>get("monto"), ventas.<String>get("fecha"));
+			criteriaQuery.multiselect(ventas.<String>get("cliente"),
+			                          ventas.<String>get("monto"),
+			                          ventas.<String>get("fecha"));
+
 			criteriaQuery.select(ventas).where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(ventas.get(ordenarPorColumna)));
 		}
 

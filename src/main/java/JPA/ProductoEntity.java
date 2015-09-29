@@ -49,6 +49,13 @@ public class ProductoEntity {
 		this.precio = precio;
 	}
 
+	public ProductoEntity(ProveedorEntity proveedor, long stock, long precio, String descripcion ) {
+		this.stock = stock;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.proveedor = proveedor;
+	}
+
 	public Long getId() {
 		return id;
 	}
