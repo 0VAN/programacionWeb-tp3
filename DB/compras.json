@@ -1,0 +1,14 @@
+{
+	"compras":[
+		{
+			"fecha":"08152015",
+			"proveedor":"Oscar",
+			"productos":[
+				{
+					"producto": "74",
+					"cantidad": "7"
+				}
+			]
+		}
+	]
+}
