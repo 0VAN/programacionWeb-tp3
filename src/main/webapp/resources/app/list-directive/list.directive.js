@@ -2,7 +2,7 @@
  * Created by alex on 19/08/15.
  */
 angular
-    .module('GenericList',[])
+    .module('GenericList', [])
     .directive('listDirective', [
         ListDirective
     ]);

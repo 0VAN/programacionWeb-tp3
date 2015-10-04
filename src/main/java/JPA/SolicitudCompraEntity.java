@@ -6,65 +6,81 @@ import javax.persistence.*;
 
 /**
  * Clase que representa una Solicitud de Compra
- *
+ * <p>
  * Created by szalimben on 22/09/15.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "solicitud.findAll", query = "select v from SolicitudCompraEntity v"),
+        @NamedQuery(name = "solicitud.totalRegisters", query = "select count(v.id) from SolicitudCompraEntity v"),
+        @NamedQuery(name = "solicitud.findById", query = "select v from SolicitudCompraEntity v where v.id=:id")
+})
 @Table(name = "solicitud_compra", schema = "public", catalog = "tienda")
 public class SolicitudCompraEntity {
 
-	@Id
-	@Column(name = "id", nullable = false, insertable = true, updatable = true)
-	@GeneratedValue(generator = "SEQ_SOLICITUD_COMPRA", strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(name = "SEQ_SOLICITUD_COMPRA", sequenceName = "seq_solicitud_compra")
-	@Expose
-	private long id;
+    @Id
+    @Column(name = "id", nullable = false, insertable = true, updatable = true)
+    @GeneratedValue(generator = "SEQ_SOLICITUD_COMPRA", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "SEQ_SOLICITUD_COMPRA", sequenceName = "seq_solicitud_compra")
+    @Expose
+    private long id;
 
-	@Basic
-	@Column(name = "fecha", nullable = false, insertable = true, updatable = true)
-	@Expose
-	private String fecha;
+    @Basic
+    @Column(name = "fecha", nullable = false, insertable = true, updatable = true)
+    @Expose
+    private String fecha;
 
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "producto_id")
-	@Expose
-	private ProductoEntity producto;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "producto_id")
+    @Expose
+    private ProductoEntity producto;
 
-	@Column(name = "atendido", nullable = false, insertable = true, updatable = true)
-	@Expose
-	private boolean atendido;
+    @Column(name = "atendido", nullable = false, insertable = true, updatable = true)
+    @Expose
+    private boolean atendido;
 
-	public Long getId() {
-		return id;
-	}
+    public SolicitudCompraEntity() {
+        // por defecto
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public SolicitudCompraEntity(ProductoEntity producto, String fecha, boolean atendido) {
+        this.fecha = fecha;
+        this.producto = producto;
+        this.atendido = atendido;
+    }
 
-	@Basic
-	@Column(name = "fecha", nullable = false, insertable = true, updatable = true)
-	public String getFecha() {
-		return fecha;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public ProductoEntity getProducto() {
-		return producto;
-	}
 
-	public void setProducto(ProductoEntity producto) {
-		this.producto = producto;
-	}
+    @Basic
+    @Column(name = "fecha", nullable = false, insertable = true, updatable = true)
+    public String getFecha() {
+        return fecha;
+    }
 
-	public void setAtendido(boolean atendido) {
-		this.atendido = atendido;
-	}
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
 
-	public boolean isAtendido() {
-		return atendido;
-	}
+    public ProductoEntity getProducto() {
+        return producto;
+    }
+
+    public void setProducto(ProductoEntity producto) {
+        this.producto = producto;
+    }
+
+    public boolean isAtendido() {
+        return atendido;
+    }
+
+    public void setAtendido(boolean atendido) {
+        this.atendido = atendido;
+    }
 }

@@ -32,15 +32,18 @@
                         <div data-ng-if="!column.searchable">
                             {{column.name}}
                         </div>
+                        {{column.property}}
+
                     </div>
                 </th>
             </tr>
             </thead>
+            <!--{{dataList[0]["cliente"["id"]]}}-->
             <tbody>
             <tr data-ng-repeat="data in dataList" data-ng-click="showDetailsModal(data)">
                 <td data-ng-repeat="column in config.columns" data-ng-if="column.visible"
                     data-ng-class="isThisColumnSelected(column.property)==true?'active':''">
-                    {{data[column.property]}}
+                    {{showProperty(data,column.property)}}
                 </td>
             </tr>
             </tbody>
@@ -80,7 +83,4 @@
             </div>
         </div>
     </div>
-</div>
-<div class="ui bottom attached label">
-    Alexis Ojeda - Saul Zalimben - Nabil Chamas 2015
 </div>
