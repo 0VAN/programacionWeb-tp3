@@ -10,6 +10,11 @@ import java.util.List;
  * Clase que representa un Producto
  */
 @Entity
+@NamedQueries({
+		              @NamedQuery(name = "producto.findAll", query = "select v from ProductoEntity v"),
+		              @NamedQuery(name = "producto.totalRegisters", query = "select count(v.id) from ProductoEntity v"),
+		              @NamedQuery(name = "producto.findById", query = "select v from ProductoEntity v where v.id=:id")
+})
 @Table(name = "producto", schema = "public", catalog = "tienda")
 public class ProductoEntity {
 

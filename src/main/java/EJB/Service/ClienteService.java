@@ -4,6 +4,7 @@ import EJB.Helper.ClienteResponse;
 import JPA.ClienteEntity;
 
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -30,6 +31,16 @@ public class ClienteService extends Service<ClienteEntity> {
 	}
 
 	/**
+	 * Cantidad de Registros
+	 * @return Cantidad total de Registros
+	 */
+	public Long getCount() {
+		Query query = em.createNamedQuery("cliente.totalRegisters");
+		Long count = (Long) query.getSingleResult();
+		return count;
+	}
+
+	/**
 	 * Metodo para obtener la lista de clientes por filtro y
 	 * orden aplicado a las columnas
 	 *
@@ -41,7 +52,8 @@ public class ClienteService extends Service<ClienteEntity> {
 
 		ClienteResponse response = new ClienteResponse();
 		inicializarMeta();
-		setMetaInf();
+		getMeta().setTotal(this.getCount());
+		getMeta().calculateToTalPages();
 
 		/**
 		 * Variables default values for the column sort

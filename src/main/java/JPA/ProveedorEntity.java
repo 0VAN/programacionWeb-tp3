@@ -7,6 +7,11 @@ import java.util.List;
 
 
 @Entity
+@NamedQueries({
+		              @NamedQuery(name = "proveedor.findAll", query = "select v from ProveedorEntity v"),
+		              @NamedQuery(name = "proveedor.totalRegisters", query = "select count(v.id) from ProveedorEntity v"),
+		              @NamedQuery(name = "proveedor.findById", query = "select v from ProveedorEntity v where v.id=:id")
+})
 @Table(name = "proveedor", schema = "public", catalog = "tienda")
 public class ProveedorEntity {
 

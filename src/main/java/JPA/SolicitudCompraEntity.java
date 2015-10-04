@@ -10,6 +10,11 @@ import javax.persistence.*;
  * Created by szalimben on 22/09/15.
  */
 @Entity
+@NamedQueries({
+		              @NamedQuery(name = "solicitud.findAll", query = "select v from SolicitudCompraEntity v"),
+		              @NamedQuery(name = "solicitud.totalRegisters", query = "select count(v.id) from SolicitudCompraEntity v"),
+		              @NamedQuery(name = "solicitud.findById", query = "select v from SolicitudCompraEntity v where v.id=:id")
+})
 @Table(name = "solicitud_compra", schema = "public", catalog = "tienda")
 public class SolicitudCompraEntity {
 

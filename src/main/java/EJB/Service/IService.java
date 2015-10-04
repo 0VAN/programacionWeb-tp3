@@ -19,6 +19,4 @@ public interface IService<T> {
 
 	T find (int id, Class<T> clazz);
 
-	Long getCount();
-
 }

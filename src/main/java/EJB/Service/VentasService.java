@@ -13,6 +13,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.ws.rs.core.MultivaluedMap;
+import java.util.List;
 
 @Stateless
 @LocalBean
@@ -66,14 +67,31 @@ public class VentasService extends Service<VentaEntity> {
 
 	}
 
-//	public List getVentas() {
-//		Query query = em.createNamedQuery("venta.findAll");
-//		return query.getResultList();
-//	}
+	public List getAllVentas() {
+		Query query = em.createNamedQuery("venta.findAll");
+		return query.getResultList();
+	}
 
-	public Object getVenta(int id) {
+	/**
+	 * Cantidad de Registros
+	 * @return Cantidad total de Registros
+	 */
+	public Long getCount() {
+		Query query = em.createNamedQuery("venta.totalRegisters");
+		Long count = (Long) query.getSingleResult();
+		return count;
+	}
+
+	public List getVentasFactura() {
+		Query query = em.createNamedQuery("venta.getVentasFactura");
+		return query.getResultList();
+
+	}
+
+	public Object getVenta(long id) {
 		Query query = em.createNamedQuery("venta.findById").setParameter("id", id);
 		return query.getSingleResult();
+
 	}
 
 	/**
@@ -84,11 +102,11 @@ public class VentasService extends Service<VentaEntity> {
 	 *
 	 * @return Retorna la lista de entidades filtradas
 	 */
-
 	public Object getVentas(MultivaluedMap<String, String> queryParams) {
 		VentasResponse response = new VentasResponse();
 		inicializarMeta();
-		setMetaInf();
+		getMeta().setTotal(this.getCount());
+		getMeta().calculateToTalPages();
 
 		/**
 		 * Variables default values for the column sort

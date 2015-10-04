@@ -10,6 +10,11 @@ import java.util.List;
  * Clase que representa una Compra
  */
 @Entity
+@NamedQueries({
+		              @NamedQuery(name = "compra.findAll", query = "select v from CompraEntity v"),
+		              @NamedQuery(name = "compra.totalRegisters", query = "select count(v.id) from CompraEntity v"),
+		              @NamedQuery(name = "compra.findById", query = "select v from CompraEntity v where v.id=:id")
+})
 @Table(name = "compra", schema = "public", catalog = "tienda")
 public class CompraEntity {
 

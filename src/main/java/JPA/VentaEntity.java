@@ -15,14 +15,15 @@ import java.util.List;
 @NamedQueries({
 		@NamedQuery(name = "venta.findAll", query = "select v from VentaEntity v"),
 		@NamedQuery(name = "venta.totalRegisters", query = "select count(v.id) from VentaEntity v"),
-		@NamedQuery(name = "venta.findById", query = "select v from VentaEntity v where v.id=:id")
+		@NamedQuery(name = "venta.findById", query = "select v from VentaEntity v where v.id=:id"),
+		@NamedQuery(name = "venta.getVentasFactura", query = "select v from VentaEntity v where v.factura = null" )
 })
 @Table(name = "venta", schema = "public", catalog = "tienda")
 public class VentaEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_venta")
-	@SequenceGenerator(name = "seq_venta", sequenceName = "seq_name")
+	@SequenceGenerator(name = "seq_venta", sequenceName = "seq_venta")
 	@Column(name = "id", nullable = false, insertable = true, updatable = true)
 	@Expose
 	private long id;

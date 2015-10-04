@@ -4,6 +4,7 @@ import EJB.Helper.ComprasResponse;
 import JPA.CompraEntity;
 
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -31,6 +32,16 @@ public class CompraService extends Service<CompraEntity> {
 	}
 
 	/**
+	 * Cantidad de Registros
+	 * @return Cantidad total de Registros
+	 */
+	public Long getCount() {
+		Query query = em.createNamedQuery("compra.totalRegisters");
+		Long count = (Long) query.getSingleResult();
+		return count;
+	}
+
+	/**
 	 * Metodo para obtener la lista de entidades por filtro y
 	 * orden aplicado a las columnas
 	 *
@@ -42,7 +53,8 @@ public class CompraService extends Service<CompraEntity> {
 
 		ComprasResponse response = new ComprasResponse();
 		inicializarMeta();
-		setMetaInf();
+		getMeta().setTotal(this.getCount());
+		getMeta().calculateToTalPages();
 
 		/**
 		 * Variables default values for the column sort

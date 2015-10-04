@@ -5,6 +5,10 @@ import com.google.gson.annotations.Expose;
 import javax.persistence.*;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name = "factura.totalRegisters", query = "select count(f.id) from FacturaEntity f"),
+	@NamedQuery(name = "factura.findById", query = "select f from FacturaEntity f where f.id=:id")
+})
 @Table(name = "factura", schema = "public", catalog = "tienda")
 public class FacturaEntity {
 

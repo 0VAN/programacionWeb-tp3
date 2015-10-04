@@ -8,7 +8,6 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.io.Serializable;
 
 
@@ -19,6 +18,7 @@ public class Service<T> implements IService<T> , Serializable {
 	protected EntityManager em;
 
 	private Meta meta;
+
 
 	/**
 	 * Metodo para borrar una entidad
@@ -122,34 +122,11 @@ public class Service<T> implements IService<T> , Serializable {
 	}
 
 	/**
-	 * Metodo para inicializar el Meta que acompanha a los response
-	 */
-	public void setMetaInf() {
-		meta.setTotal(this.getCount());
-		meta.setPage_size((long) 10);
-		meta.calculateToTalPages();
-	}
-
-	/**
 	 * Metodo para inicializar el META del response
 	 */
 	public void inicializarMeta() {
 		meta = new Meta();
-	}
-
-	/**
-	 * Obtiene la cantidad total de registros existentes
-	 *
-	 * @return Cantidad de registros
-	 */
-	public Long getCount() {
-
-		T entidad = (T) new Object();
-
-		String queryString = "SELECT COUNT( o ) FROM " + entidad.getClass().getName()+ " o ";
-		Query query = em.createQuery(queryString);
-
-		return new Long(query.getFirstResult());
+		meta.setPage_size((long) 10);
 	}
 
 	public Meta getMeta() {
@@ -159,5 +136,6 @@ public class Service<T> implements IService<T> , Serializable {
 	public void setMeta(Meta meta) {
 		this.meta = meta;
 	}
+
 
 }

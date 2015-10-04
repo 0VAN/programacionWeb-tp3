@@ -4,6 +4,7 @@ import EJB.Helper.ProveedorResponse;
 import JPA.ProveedorEntity;
 
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -18,11 +19,23 @@ import javax.ws.rs.core.MultivaluedMap;
 @Stateless
 public class ProveedorService extends Service<ProveedorEntity> {
 
+
+	/**
+	 * Cantidad de Registros
+	 * @return Cantidad total de Registros
+	 */
+	public Long getCount() {
+		Query query = em.createNamedQuery("proveedor.totalRegisters");
+		Long count = (Long) query.getSingleResult();
+		return count;
+	}
+
 	public Object getProveedores(MultivaluedMap<String, String> queryParams) {
 
 		ProveedorResponse response = new ProveedorResponse();
 		inicializarMeta();
-		setMetaInf();
+		getMeta().setTotal(this.getCount());
+		getMeta().calculateToTalPages();
 
 		/**
 		 * Variables default values for the column sort

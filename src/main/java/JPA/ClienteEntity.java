@@ -11,6 +11,11 @@ import java.util.List;
  * Created by szalimben on 22/09/15.
  */
 @Entity
+@NamedQueries({
+		              @NamedQuery(name = "cliente.findAll", query = "select v from ClienteEntity v"),
+		              @NamedQuery(name = "cliente.totalRegisters", query = "select count(v.id) from ClienteEntity v"),
+		              @NamedQuery(name = "cliente.findById", query = "select v from ClienteEntity v where v.id=:id")
+})
 @Table(name = "cliente", schema = "public", catalog = "tienda")
 public class ClienteEntity {
 
@@ -38,11 +43,11 @@ public class ClienteEntity {
 		// Constructor por defecto
 	}
 
-//	// Constructor sin ventas
-//	public ClienteEntity (String nombre, String cedulaIdentidad) {
-//		this.nombre = nombre;
-//		this.cedulaIdentidad = cedulaIdentidad;
-//	}
+	// Constructor sin ventas
+	public ClienteEntity (String nombre, String cedulaIdentidad) {
+		this.nombre = nombre;
+		this.cedulaIdentidad = cedulaIdentidad;
+	}
 
 	// Constructor con ventas
 	public ClienteEntity (String nombre, String cedulaIdentidad, List<VentaEntity> ventas) {

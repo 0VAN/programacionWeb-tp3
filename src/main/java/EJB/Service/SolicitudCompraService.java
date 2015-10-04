@@ -65,12 +65,23 @@ public class SolicitudCompraService extends Service<SolicitudCompraEntity> {
 
 		return !query.getResultList().isEmpty();
 	}
+
+	/**
+	 * Cantidad de Registros
+	 * @return Cantidad total de Registros
+	 */
+	public Long getCount() {
+		Query query = em.createNamedQuery("solicitud.totalRegisters");
+		Long count = (Long) query.getSingleResult();
+		return count;
+	}
 	
 	public Object getSolicitudes(MultivaluedMap<String, String> queryParams) {
 		
 		SolicitudCompraResponse response = new SolicitudCompraResponse();
 		inicializarMeta();
-		setMetaInf();
+		getMeta().setTotal(this.getCount());
+		getMeta().calculateToTalPages();
 		
 		/**
 		 * Variables default values for the column sort

@@ -69,6 +69,16 @@ public class ProductoService extends Service<ProductoEntity> {
 	}
 
 	/**
+	 * Cantidad de Registros
+	 * @return Cantidad total de Registros
+	 */
+	public Long getCount() {
+		Query query = em.createNamedQuery("producto.totalRegisters");
+		Long count = (Long) query.getSingleResult();
+		return count;
+	}
+
+	/**
 	 * Retorna la entidad buscada por Id
 	 *
 	 * @param id
@@ -84,7 +94,8 @@ public class ProductoService extends Service<ProductoEntity> {
 
 		ProductoResponse response = new ProductoResponse();
 		inicializarMeta();
-		setMetaInf();
+		getMeta().setTotal(this.getCount());
+		getMeta().calculateToTalPages();
 
 		/**
 		 * Variables default values for the column sort
