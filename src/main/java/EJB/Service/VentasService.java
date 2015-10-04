@@ -39,7 +39,7 @@ public class VentasService extends Service<VentaEntity> {
 	 * @throws StockInsuficienteException
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public boolean addVenta(VentaEntity venta) throws StockInsuficienteException {
+	public boolean addVenta(VentaEntity venta) throws Exception{
 		long montoAcumulador = 0;
 		for(VentaDetalleEntity detalle : venta.getDetalles()) {
 			ProductoEntity producto = productoService.find(detalle.getProducto().getId().intValue(), ProductoEntity.class);
@@ -78,8 +78,7 @@ public class VentasService extends Service<VentaEntity> {
 	 */
 	public Long getCount() {
 		Query query = em.createNamedQuery("venta.totalRegisters");
-		Long count = (Long) query.getSingleResult();
-		return count;
+		return (Long) query.getSingleResult();
 	}
 
 	public List getVentasFactura() {
