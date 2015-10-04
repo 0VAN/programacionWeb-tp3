@@ -27,4 +27,26 @@ public class FacturaRest {
 	public Response getFacturas(@Context UriInfo info) {
 		return Response.status(200).entity(service.getFacturas(info.getQueryParameters())).build();
 	}
+
+	@GET
+	@Path("facturar")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String facturar(){
+		return service.facturar();
+	}
+
+	@GET
+	@Path("isRun")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String isRun(){
+		return service.isRun();
+	}
+
+	@GET
+	@Path("detener")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String detener(){
+		return service.detener();
+	}
+
 }
