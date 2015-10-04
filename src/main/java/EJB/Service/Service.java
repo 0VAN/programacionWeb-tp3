@@ -116,7 +116,7 @@ public class Service<T> implements IService<T> , Serializable {
 	 * @return Entidad buscada
 	 */
 	public T find(int id, Class<T> clazz) {
-		return em.find(clazz, id);
+		return em.find(clazz, (long) id);
 	}
 
 

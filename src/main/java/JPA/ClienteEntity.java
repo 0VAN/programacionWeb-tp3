@@ -3,6 +3,7 @@ package JPA;
 import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,11 +28,7 @@ public class ClienteEntity {
 	@Basic
 	@Column(name = "cedula_identidad", nullable = false, insertable = true, updatable = true)
 	@Expose
-	private Long cedulaIdentidad;
-
-	@OneToMany(mappedBy = "cliente")
-	@Expose
-	private List<VentaEntity> ventas;
+	private String cedulaIdentidad;
 
 	public Long getId() {
 		return id;
@@ -49,51 +46,12 @@ public class ClienteEntity {
 		this.nombre = nombre;
 	}
 
-	public Long getCedulaIdentidad() {
+	public String getCedulaIdentidad() {
 		return cedulaIdentidad;
 	}
 
-	public void setCedulaIdentidad(Long cedulaIdentidad) {
+	public void setCedulaIdentidad(String cedulaIdentidad) {
 		this.cedulaIdentidad = cedulaIdentidad;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if(this == o) {
-			return true;
-		}
-		if(o == null || getClass() != o.getClass()) {
-			return false;
-		}
-
-		ClienteEntity that = (ClienteEntity) o;
-
-		if(id != null ? !id.equals(that.id) : that.id != null) {
-			return false;
-		}
-		if(nombre != null ? !nombre.equals(that.nombre) : that.nombre != null) {
-			return false;
-		}
-		if(cedulaIdentidad != null ? !cedulaIdentidad.equals(that.cedulaIdentidad) : that.cedulaIdentidad != null) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
-	public int hashCode() {
-		int result = id != null ? id.hashCode() : 0;
-		result = 31 * result + (nombre != null ? nombre.hashCode() : 0);
-		result = 31 * result + (cedulaIdentidad != null ? cedulaIdentidad.hashCode() : 0);
-		return result;
-	}
-
-	public List<VentaEntity> getVentas() {
-		return ventas;
-	}
-
-	public void setVentas(List<VentaEntity> ventas) {
-		this.ventas = ventas;
-	}
 }

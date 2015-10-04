@@ -1,0 +1,37 @@
+{
+  "entidades": [
+    {
+      "id": "123",
+      "cliente":{},
+      "fecha": "Nabil",
+      "facturaId": "789",
+      "monto": "08152015"
+    },
+    {
+      "id": "123",
+      "clienteId": "500",
+      "fecha": "Nabil",
+      "facturaId": "789",
+      "monto": "08152015"
+    },
+    {
+      "id": "123",
+      "clienteId": "500",
+      "fecha": "Nabil",
+      "facturaId": "789",
+      "monto": "08152015"
+    },
+    {
+      "id": "123",
+      "clienteId": "500",
+      "fecha": "Nabil",
+      "facturaId": "789",
+      "monto": "08152015"
+    }
+  ],
+  "meta": {
+    "total": "200",
+    "total_pages": "10",
+    "page_size": "20"
+  }
+}

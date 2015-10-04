@@ -41,7 +41,6 @@ public class VentaDetalleEntity {
 		this.id = id;
 	}
 
-
 	public Long getCantidad() {
 		return cantidad;
 	}
@@ -50,33 +49,6 @@ public class VentaDetalleEntity {
 		this.cantidad = cantidad;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if(this == o) {
-			return true;
-		}
-		if(o == null || getClass() != o.getClass()) {
-			return false;
-		}
-
-		VentaDetalleEntity that = (VentaDetalleEntity) o;
-
-		if(id != null ? !id.equals(that.id) : that.id != null) {
-			return false;
-		}
-		if(cantidad != null ? !cantidad.equals(that.cantidad) : that.cantidad != null) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
-	public int hashCode() {
-		int result = id != null ? id.hashCode() : 0;
-		result = 31 * result + (cantidad != null ? cantidad.hashCode() : 0);
-		return result;
-	}
 
 	public ProductoEntity getProducto() {
 		return producto;

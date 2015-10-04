@@ -51,34 +51,6 @@ public class SolicitudCompraEntity {
 		this.fecha = fecha;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if(this == o) {
-			return true;
-		}
-		if(o == null || getClass() != o.getClass()) {
-			return false;
-		}
-
-		SolicitudCompraEntity entity = (SolicitudCompraEntity) o;
-
-		if(id != null ? !id.equals(entity.id) : entity.id != null) {
-			return false;
-		}
-		if(fecha != null ? !fecha.equals(entity.fecha) : entity.fecha != null) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
-	public int hashCode() {
-		int result = id != null ? id.hashCode() : 0;
-		result = 31 * result + (fecha != null ? fecha.hashCode() : 0);
-		return result;
-	}
-
 	public ProductoEntity getProducto() {
 		return producto;
 	}

@@ -1,0 +1,29 @@
+{
+  "entidades": [
+    {
+      "id": "123",
+      "nombre": "500",
+      "cedulaIdentidad": "Nabil"
+    },
+    {
+      "id": "123",
+      "nombre": "500",
+      "cedulaIdentidad": "Nabil"
+    },
+    {
+      "id": "123",
+      "nombre": "500",
+      "cedulaIdentidad": "Nabil"
+    },
+    {
+      "id": "123",
+      "nombre": "500",
+      "cedulaIdentidad": "Nabil"
+    }
+  ],
+  "meta": {
+    "total": "200",
+    "total_pages": "10",
+    "page_size": "20"
+  }
+}

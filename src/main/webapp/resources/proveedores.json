@@ -1,0 +1,29 @@
+{
+  "entidades": [
+    {
+      "id": "123",
+      "descripcion": "500"
+
+    },
+    {
+      "id": "123",
+      "descripcion": "500"
+
+    },
+    {
+      "id": "123",
+      "descripcion": "500"
+
+    },
+    {
+      "id": "123",
+      "descripcion": "500"
+
+    }
+  ],
+  "meta": {
+    "total": "200",
+    "total_pages": "10",
+    "page_size": "20"
+  }
+}

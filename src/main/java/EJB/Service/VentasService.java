@@ -2,7 +2,10 @@ package EJB.Service;
 
 import EJB.Helper.Meta;
 import EJB.Helper.VentasResponse;
+import EJB.Jackson.Venta;
+import EJB.Jackson.VentaDetalle;
 import EJB.Util.StockInsuficienteException;
+import JPA.ClienteEntity;
 import JPA.ProductoEntity;
 import JPA.VentaDetalleEntity;
 import JPA.VentaEntity;
@@ -20,49 +23,60 @@ import java.util.List;
 @LocalBean
 public class VentasService extends Service<VentaEntity> {
 
+
     private VentasResponse response;
     private Meta meta;
 
-	@EJB
-	VentasService ventasService;
-	@EJB
-	ClienteService clienteService;
-	@EJB
-	ProductoService productoService;
-	@EJB
-	VentaDetalleService ventaDetalleService;
+    @EJB
+    VentasService ventasService;
+    @EJB
+    ClienteService clienteService;
+    @EJB
+    ProductoService productoService;
+    @EJB
+    VentaDetalleService ventaDetalleService;
 
-    private void setMetaInf(){
-        meta.setTotal((Long) this.getCount());
+    private void setMetaInf() {
+        meta.setTotal((long) 100);
         meta.setPage_size((long) 10);
         meta.calculateToTalPages();
     }
 
-	/**
-	 * Metodo que recibe una venta y la persiste en la base de datos
-	 *
-	 * @param venta
-	 *          Venta que se desea persistir en la base de datos
-	 * @return <b>True</b> si se guardo correctamente la venta, <b>False</b>
-	 *          caso contrario
-	 * @throws StockInsuficienteException
-	 */
-	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public boolean addVenta(VentaEntity venta) throws StockInsuficienteException {
-		long montoAcumulador = 0;
-		for (VentaDetalleEntity detalle : venta.getDetalles()) {
-			ProductoEntity producto = productoService.find(detalle.getProducto().getId().intValue(), ProductoEntity.class);
-			if (producto.getStock() < detalle.getCantidad()) {
-				throw new StockInsuficienteException("Stock del producto " + producto.getDescripcion() + " insuficiente");
-			} else {
-				producto.setStock(producto.getStock()-detalle.getCantidad());
-				montoAcumulador = montoAcumulador + producto.getPrecio()*detalle.getCantidad();
-				productoService.update(producto);
-			}
-			detalle.setVenta(venta);
-		}
-		venta.setMonto(montoAcumulador);
-		return super.add(venta);
+    /**
+     * Metodo que recibe una venta y la persiste en la base de datos
+     *
+     * @param venta Venta que se desea persistir en la base de datos
+     * @return <b>True</b> si se guardo correctamente la venta, <b>False</b>
+     * caso contrario
+     * @throws StockInsuficienteException
+     */
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public boolean addVenta(Venta venta) throws StockInsuficienteException {
+
+        VentaEntity ventaEntity = new VentaEntity();
+        ventaEntity.setCliente(clienteService.find(venta.getClienteId(), ClienteEntity.class));
+        ventaEntity.setFecha(venta.getFecha());
+
+        long montoAcumulador = 0;
+
+        for (VentaDetalle detalle : venta.getDetalles()) {
+            ProductoEntity productoEntity = productoService.find(detalle.getProductoId(), ProductoEntity.class);
+            if (productoEntity.getStock() < detalle.getCantidad()) {
+                throw new StockInsuficienteException("Stock del producto " + productoEntity.getDescripcion() + " insuficiente");
+            } else {
+                productoEntity.setStock(productoEntity.getStock() - detalle.getCantidad());
+                montoAcumulador = montoAcumulador + productoEntity.getPrecio() * detalle.getCantidad();
+                productoService.update(productoEntity);
+            }
+            VentaDetalleEntity ventaDetalleEntity = new VentaDetalleEntity();
+            ventaDetalleEntity.setProducto(productoEntity);
+            ventaDetalleEntity.setCantidad(Long.valueOf(detalle.getCantidad()));
+            ventaDetalleEntity.setVenta(ventaEntity);
+            ventaEntity.setDetalles(ventaDetalleEntity);
+        }
+
+        ventaEntity.setMonto(String.valueOf(montoAcumulador));
+        return super.add(ventaEntity);
 
     }
 
@@ -90,17 +104,19 @@ public class VentasService extends Service<VentaEntity> {
         return query.getSingleResult();
     }
 
-	/**
-	 * Metodo para obtener el listado de las ventas, este metodo ya incluye el ordenamiento
-	 * y la busqueda por columnas
-	 *
-	 * @param queryParams
-	 *          Conjunto de parametros para el filtrado y ordenacion
-	 * @return Retorna la lista de entidades filtradas
-	 */
+    /**
+     * Metodo para obtener el listado de las ventas, este metodo ya incluye el ordenamiento
+     * y la busqueda por columnas
+     *
+     * @param queryParams Conjunto de parametros para el filtrado y ordenacion
+     * @return Retorna la lista de entidades filtradas
+     */
     @SuppressWarnings("unchecked")
     public Object getVentas(MultivaluedMap<String, String> queryParams) {
-        response =  new VentasResponse();
+
+        List test = em.createNamedQuery("venta.findAll").getResultList();
+
+        response = new VentasResponse();
         meta = new Meta();
         setMetaInf();
 
@@ -156,14 +172,14 @@ public class VentasService extends Service<VentaEntity> {
         // Filtrado por todas las columnas
         Predicate filtradoPorAllAttributes = criteriaBuilder.or(
                 criteriaBuilder.like(ventas.<String>get("monto"), "%" + by_all_attributes + "%"),
-                criteriaBuilder.like(ventas.<String>get("cliente"), "%" + by_all_attributes + "%"),
+                criteriaBuilder.like(ventas.<String>get("cliente").<String>get("nombre"), "%" + by_all_attributes + "%"),
                 criteriaBuilder.like(ventas.<String>get("fecha"), "%" + by_all_attributes + "%")
         );
 
         // Filtrado por columna
         Predicate filtradoPorColumna = criteriaBuilder.and(
                 criteriaBuilder.like(ventas.<String>get("monto"), "%" + by_monto + "%"),
-                criteriaBuilder.like(ventas.<String>get("cliente"), "%" + by_cliente + "%"),
+                criteriaBuilder.like(ventas.<String>get("cliente").<String>get("nombre"), "%" + by_cliente + "%"),
                 criteriaBuilder.like(ventas.<String>get("fecha"), "%" + by_fecha + "%")
         );
 
@@ -176,7 +192,7 @@ public class VentasService extends Service<VentaEntity> {
         Integer page;
         page = Integer.valueOf(queryParams.getFirst("page")) - 1;
 
-        response.setEntidades(em.createQuery(criteriaQuery).setMaxResults(meta.getPage_size().intValue()).setFirstResult(page * meta.getPage_size().intValue()).getResultList());
+        response.setEntidades(em.createQuery(criteriaQuery).setMaxResults(10).setFirstResult(0).getResultList());
         response.setMeta(meta);
         return response;
     }

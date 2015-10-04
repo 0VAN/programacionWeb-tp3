@@ -3,7 +3,9 @@ package JPA;
 import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -21,7 +23,7 @@ public class VentaEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_venta")
-	@SequenceGenerator(name = "seq_venta", sequenceName = "seq_name")
+	@SequenceGenerator(name = "seq_venta", sequenceName = "seq_venta")
 	@Column(name = "id", nullable = false, insertable = true, updatable = true)
 	@Expose
 	private Long id;
@@ -41,14 +43,14 @@ public class VentaEntity {
 	@Expose
 	private ClienteEntity cliente;
 
-	@OneToMany(mappedBy = "venta", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
 	@Expose
-	private List<VentaDetalleEntity> detalles;
+	private List<VentaDetalleEntity> detalles = new ArrayList<>();
 
 	@Basic
 	@Column(name = "monto", nullable = true, insertable = true, updatable = true)
 	@Expose
-	private Long monto;
+	private String monto;
 
 	public Long getId() {
 		return id;
@@ -67,45 +69,14 @@ public class VentaEntity {
 	}
 
 
-	public Long getMonto() {
+	public String getMonto() {
 		return monto;
 	}
 
-	public void setMonto(Long monto) {
+	public void setMonto(String monto) {
 		this.monto = monto;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if(this == o) {
-			return true;
-		}
-		if(o == null || getClass() != o.getClass()) {
-			return false;
-		}
-
-		VentaEntity that = (VentaEntity) o;
-
-		if(id != null ? !id.equals(that.id) : that.id != null) {
-			return false;
-		}
-		if(fecha != null ? !fecha.equals(that.fecha) : that.fecha != null) {
-			return false;
-		}
-		if(monto != null ? !monto.equals(that.monto) : that.monto != null) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
-	public int hashCode() {
-		int result = id != null ? id.hashCode() : 0;
-		result = 31 * result + (fecha != null ? fecha.hashCode() : 0);
-		result = 31 * result + (monto != null ? monto.hashCode() : 0);
-		return result;
-	}
 
 	public FacturaEntity getFactura() {
 		return factura;
@@ -127,7 +98,7 @@ public class VentaEntity {
 		return detalles;
 	}
 
-	public void setDetalles(List<VentaDetalleEntity> detalles) {
-		this.detalles = detalles;
+	public void setDetalles(VentaDetalleEntity detalle) {
+		this.detalles.add(detalle);
 	}
 }
