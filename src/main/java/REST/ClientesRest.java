@@ -19,20 +19,20 @@ import javax.ws.rs.core.UriInfo;
 @Path("/clientes")
 public class ClientesRest {
 
-	@EJB
-	ClienteService service;
+    @EJB
+    ClienteService service;
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getClientes(@Context UriInfo info) {
-		return Response.status(200).entity(service.getClientes(info.getQueryParameters())).build();
-	}
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getClientes(@Context UriInfo info) {
+        return Response.status(200).entity(service.getClientes(info.getQueryParameters())).build();
+    }
 
-	@GET
-	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCliente(@PathParam("id") int id) {
-		return Response.status(200).entity(service.getCliente(id)).build();
-	}
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCliente(@PathParam("id") int id) {
+        return Response.status(200).entity(service.getCliente(id)).build();
+    }
 
 }

@@ -12,7 +12,7 @@ angular
 function ListController($scope, ListServices) {
 
     var params = {
-        page:1
+        page: 1
     };
     var sortIconsClass = ["circular inverted sort content icon ascending", "circular inverted sort content icon descending"];
     var sortIconsClassDisabled = ["sort content icon ascending", "sort content icon descending "];
@@ -26,8 +26,8 @@ function ListController($scope, ListServices) {
     $scope.sortIconClass = sortIconsClass[0];
     $scope.sortIconClassDisabled = sortIconsClassDisabled[0];
 
-    ListServices.salesServices($scope.config.URL).get(params,function (serverResponse) {
-        $scope.dataList = serverResponse.ventas;
+    ListServices.salesServices($scope.config.URL).get(params, function (serverResponse) {
+        $scope.dataList = serverResponse.entidades;
         $scope.dataMeta = serverResponse.meta;
 
 
@@ -40,7 +40,7 @@ function ListController($scope, ListServices) {
                 delete params['by_' + column];
             }
             ListServices.salesServices($scope.config.URL).get(params, function (data) {
-                $scope.dataList = data.ventas;
+                $scope.dataList = data.entidades;
                 $scope.dataMeta = data.meta;
 
             });
@@ -58,7 +58,7 @@ function ListController($scope, ListServices) {
                 params[selectedColumn] = $scope.sortIconClass == sortIconsClass[0] ? 'asc' : 'desc';
             }
             ListServices.salesServices($scope.config.URL).get(params, function (data) {
-                $scope.dataList = data.ventas;
+                $scope.dataList = data.entidades;
                 $scope.dataMeta = data.meta;
 
             });
@@ -94,7 +94,7 @@ function ListController($scope, ListServices) {
         $scope.page -= 1;
         params.page = $scope.page;
         ListServices.salesServices($scope.config.URL).get(params, function (data) {
-            $scope.dataList = data.ventas;
+            $scope.dataList = data.entidades;
             $scope.dataMeta = data.meta;
         });
 
@@ -104,7 +104,7 @@ function ListController($scope, ListServices) {
         $scope.page += 1;
         params.page = $scope.page;
         ListServices.salesServices($scope.config.URL).get(params, function (data) {
-            $scope.dataList = data.ventas;
+            $scope.dataList = data.entidades;
             $scope.dataMeta = data.meta;
 
         });
@@ -118,5 +118,11 @@ function ListController($scope, ListServices) {
         ;
     };
 
-
+    $scope.showProperty = function (object, string) {
+        var explodedString = string.split('.');
+        for (i = 0, l = explodedString.length; i < l; i++) {
+            object = object[explodedString[i]];
+        }
+        return object;
+    }
 }

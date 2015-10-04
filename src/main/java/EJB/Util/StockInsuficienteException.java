@@ -9,10 +9,21 @@ import javax.ejb.ApplicationException;
 @ApplicationException(rollback = true)
 public class StockInsuficienteException extends Exception {
 
-	public StockInsuficienteException() { super(); }
-	public StockInsuficienteException(String message) { super(message); }
-	public StockInsuficienteException(String message, Throwable cause) { super(message, cause); }
-	public StockInsuficienteException(Throwable cause) { super(cause); }
+    public StockInsuficienteException() {
+        super();
+    }
+
+    public StockInsuficienteException(String message) {
+        super(message);
+    }
+
+    public StockInsuficienteException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public StockInsuficienteException(Throwable cause) {
+        super(cause);
+    }
 
 
 }

@@ -14,26 +14,26 @@ import javax.ws.rs.core.UriInfo;
 
 /**
  * Rest para Compras
- *
+ * <p>
  * Created by szalimben on 28/09/15.
  */
 @Path("/compras")
 public class CompraRest {
 
-	@EJB
-	CompraService service;
+    @EJB
+    CompraService service;
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCompras(@Context UriInfo info) {
-		return Response.status(200).entity(service.getCompras(info.getQueryParameters())).build();
-	}
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCompras(@Context UriInfo info) {
+        return Response.status(200).entity(service.getCompras(info.getQueryParameters())).build();
+    }
 
-	@GET
-	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCompra(@PathParam("id") int id) {
-		return Response.status(200).entity(service.getCompra(id)).build();
-	}
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCompra(@PathParam("id") int id) {
+        return Response.status(200).entity(service.getCompra(id)).build();
+    }
 
 }
