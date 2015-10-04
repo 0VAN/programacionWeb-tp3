@@ -1,5 +1,7 @@
 package EJB.Service;
 
+import EJB.Helper.Meta;
+
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
@@ -9,14 +11,14 @@ import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 
 
-/**
- * Created by szalimben on 22/09/15.
- */
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class Service<T> implements IService<T> , Serializable {
 
 	@PersistenceContext(unitName="PU")
 	protected EntityManager em;
+
+	private Meta meta;
+
 
 	/**
 	 * Metodo para borrar una entidad
@@ -119,7 +121,21 @@ public class Service<T> implements IService<T> , Serializable {
 		return em.find(clazz, (long) id);
 	}
 
+	/**
+	 * Metodo para inicializar el META del response
+	 */
+	public void inicializarMeta() {
+		meta = new Meta();
+		meta.setPage_size((long) 10);
+	}
 
+	public Meta getMeta() {
+		return meta;
+	}
+
+	public void setMeta(Meta meta) {
+		this.meta = meta;
+	}
 
 
 }

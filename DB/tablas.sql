@@ -68,14 +68,14 @@ CREATE TABLE proveedor (
 CREATE TABLE cliente (
 	id bigint PRIMARY KEY DEFAULT nextval('seq_cliente'),
 	nombre VARCHAR(100),
-	cedula_identidad bigint NOT NULL DEFAULT nextval('seq_cliente'::regclass),
+	cedula_identidad VARCHAR(50) NOT NULL DEFAULT nextval('seq_cliente'::regclass),
 	CONSTRAINT unique_cedula UNIQUE (cedula_identidad)
 );
 
 CREATE TABLE factura (
 	id bigint PRIMARY KEY DEFAULT nextval('seq_factura'),
-	monto bigint,
-	fecha timestamp without time zone NOT NULL DEFAULT now()
+	monto VARCHAR(50),
+	fecha VARCHAR(50) without time zone NOT NULL DEFAULT now()
 );
 
 CREATE TABLE producto (
@@ -88,7 +88,7 @@ CREATE TABLE producto (
 CREATE TABLE venta (
   	id bigint DEFAULT nextval('seq_venta'),
   	cliente_id bigint,
-	fecha timestamp without time zone NOT NULL DEFAULT now(),
+	fecha VARCHAR(50) without time zone NOT NULL DEFAULT now(),
 	factura_id  bigint,
 	monto bigint, 
 	CONSTRAINT venta_pkey PRIMARY KEY (id),
@@ -118,7 +118,7 @@ CREATE TABLE venta_detalle (
 CREATE TABLE compra (
   	id bigint DEFAULT nextval('seq_compra'),
   	proveedor_id bigint,
-	fecha timestamp without time zone NOT NULL DEFAULT now(),
+	fecha VARCHAR(50) without time zone NOT NULL DEFAULT now(),
 	monto bigint, 
 	CONSTRAINT compra_pkey PRIMARY KEY (id),
 	CONSTRAINT proveedor_fkey FOREIGN KEY (proveedor_id)
@@ -142,7 +142,7 @@ CREATE TABLE compra_detalle (
 
 CREATE TABLE solicitud_compra (
 	id bigint DEFAULT nextval('seq_compra_detalle'),
-	fecha timestamp without time zone NOT NULL DEFAULT now(),
+	fecha VARCHAR(50) without time zone NOT NULL DEFAULT now(),
 	producto_id bigint,
 	atendido boolean DEFAULT false,
 	CONSTRAINT solicitud_compra_pkey PRIMARY KEY (id),

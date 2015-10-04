@@ -3,10 +3,18 @@ package JPA;
 import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.List;
 
+
+/**
+ * Clase que representa una Compra
+ */
 @Entity
+@NamedQueries({
+		              @NamedQuery(name = "compra.findAll", query = "select v from CompraEntity v"),
+		              @NamedQuery(name = "compra.totalRegisters", query = "select count(v.id) from CompraEntity v"),
+		              @NamedQuery(name = "compra.findById", query = "select v from CompraEntity v where v.id=:id")
+})
 @Table(name = "compra", schema = "public", catalog = "tienda")
 public class CompraEntity {
 
@@ -34,6 +42,28 @@ public class CompraEntity {
     @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL)
     private List<CompraDetalleEntity> detalles;
 
+	public CompraEntity() {
+		// Constructor por defecto
+	}
+
+	// Constructor Sin detalles
+	public CompraEntity( ProveedorEntity proveedor, String fecha, String monto ) {
+		this.fecha = fecha;
+		this.proveedor = proveedor;
+		this.monto = monto;
+	}
+
+	// Constructor con detalles
+	public CompraEntity(String fecha, ProveedorEntity proveedor, String monto, List<CompraDetalleEntity> detalles ) {
+		this.fecha = fecha;
+		this.proveedor = proveedor;
+		this.monto = monto;
+		this.detalles = detalles;
+	}
+
+	public Long getId() {
+		return id;
+	}
     public Long getId() {
         return id;
     }

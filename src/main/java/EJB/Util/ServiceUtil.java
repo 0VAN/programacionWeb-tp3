@@ -2,9 +2,7 @@ package EJB.Util;
 
 import org.hibernate.exception.ConstraintViolationException;
 
-/**
- * Created by szalimben on 24/09/15.
- */
+
 public class ServiceUtil {
 
 		public static String getConstraintName(Throwable exception){

@@ -7,9 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Clase que representa un Cliente
+ *
  * Created by szalimben on 22/09/15.
  */
 @Entity
+@NamedQueries({
+		              @NamedQuery(name = "cliente.findAll", query = "select v from ClienteEntity v"),
+		              @NamedQuery(name = "cliente.totalRegisters", query = "select count(v.id) from ClienteEntity v"),
+		              @NamedQuery(name = "cliente.findById", query = "select v from ClienteEntity v where v.id=:id")
+})
 @Table(name = "cliente", schema = "public", catalog = "tienda")
 public class ClienteEntity {
 
@@ -29,6 +36,26 @@ public class ClienteEntity {
 	@Column(name = "cedula_identidad", nullable = false, insertable = true, updatable = true)
 	@Expose
 	private String cedulaIdentidad;
+
+	@OneToMany(mappedBy = "cliente")
+	private List<VentaEntity> ventas;
+
+	public ClienteEntity() {
+		// Constructor por defecto
+	}
+
+	// Constructor sin ventas
+	public ClienteEntity (String nombre, String cedulaIdentidad) {
+		this.nombre = nombre;
+		this.cedulaIdentidad = cedulaIdentidad;
+	}
+
+	// Constructor con ventas
+	public ClienteEntity (String nombre, String cedulaIdentidad, List<VentaEntity> ventas) {
+		this.nombre = nombre;
+		this.cedulaIdentidad = cedulaIdentidad;
+		this.ventas = ventas;
+	}
 
 	public Long getId() {
 		return id;

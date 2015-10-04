@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose;
 import javax.persistence.*;
 
 /**
+ * Clase que representa los detalles que pertenecen a la VentaEntity
  * Created by szalimben on 22/09/15.
  */
 @Entity
@@ -48,8 +49,7 @@ public class VentaDetalleEntity {
 	public void setCantidad(Long cantidad) {
 		this.cantidad = cantidad;
 	}
-
-
+    
 	public ProductoEntity getProducto() {
 		return producto;
 	}

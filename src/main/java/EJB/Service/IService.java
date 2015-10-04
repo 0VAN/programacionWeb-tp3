@@ -3,6 +3,9 @@ package EJB.Service;
 import javax.ejb.Local;
 
 /**
+ * Interfaz para almacenar todos los metodos comunes de los servicios
+ * prestados por el sistema
+ *
  * Created by szalimben on 22/09/15.
  */
 @Local

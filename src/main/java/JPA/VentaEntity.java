@@ -9,6 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * Clase que representa una Venta
+ *
  * Created by szalimben on 22/09/15.
  */
 
@@ -16,7 +18,8 @@ import java.util.List;
 @NamedQueries({
 		@NamedQuery(name = "venta.findAll", query = "select v from VentaEntity v"),
 		@NamedQuery(name = "venta.totalRegisters", query = "select count(v.id) from VentaEntity v"),
-		@NamedQuery(name = "venta.findById", query = "select v from VentaEntity v where v.id=:id")
+		@NamedQuery(name = "venta.findById", query = "select v from VentaEntity v where v.id=:id"),
+		@NamedQuery(name = "venta.getVentasFactura", query = "select v from VentaEntity v where v.factura = null" )
 })
 @Table(name = "venta", schema = "public", catalog = "tienda")
 public class VentaEntity {
@@ -51,6 +54,24 @@ public class VentaEntity {
 	@Column(name = "monto", nullable = true, insertable = true, updatable = true)
 	@Expose
 	private String monto;
+
+	public VentaEntity() {
+		// Constructor por defecto
+	}
+
+	// Constructor
+	public VentaEntity(ClienteEntity cliente, String fecha, String monto) {
+		this.cliente = cliente;
+		this.fecha = fecha;
+		this.monto = monto;
+	}
+
+	public VentaEntity(ClienteEntity cliente, String fecha, String monto, List<VentaDetalleEntity> detalles) {
+		this.cliente = cliente;
+		this.fecha = fecha;
+		this.monto = monto;
+		this.detalles = detalles;
+	}
 
 	public Long getId() {
 		return id;

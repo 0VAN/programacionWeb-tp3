@@ -5,10 +5,16 @@ import com.google.gson.annotations.Expose;
 import javax.persistence.*;
 import java.util.List;
 
+
 /**
- * Created by szalimben on 22/09/15.
+ * Clase que representa un Producto
  */
 @Entity
+@NamedQueries({
+		              @NamedQuery(name = "producto.findAll", query = "select v from ProductoEntity v"),
+		              @NamedQuery(name = "producto.totalRegisters", query = "select count(v.id) from ProductoEntity v"),
+		              @NamedQuery(name = "producto.findById", query = "select v from ProductoEntity v where v.id=:id")
+})
 @Table(name = "producto", schema = "public", catalog = "tienda")
 public class ProductoEntity {
 
@@ -17,22 +23,43 @@ public class ProductoEntity {
 	@Expose
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_producto")
 	@SequenceGenerator(name = "seq_producto", sequenceName = "seq_producto")
-	private Long id;
+	private long id;
 
 	@Basic
 	@Column(name = "stock", nullable = true, insertable = true, updatable = true)
 	@Expose
-	private Long stock;
+	private long stock;
 
 	@Basic
 	@Column(name = "precio", nullable = true, insertable = true, updatable = true)
 	@Expose
-	private Long precio;
+	private long precio;
 
 	@Basic
 	@Column(name = "descripcion", nullable = true, insertable = true, updatable = true, length = 100)
 	@Expose
 	private String descripcion;
+
+	@ManyToOne(optional=false)
+	@JoinColumn(name = "proveedor_id")
+	private ProveedorEntity proveedor;
+
+	public ProductoEntity() {
+		// Constructor por defecto
+	}
+
+	public ProductoEntity(long stock, String descripcion,long precio ) {
+		this.stock = stock;
+		this.descripcion = descripcion;
+		this.precio = precio;
+	}
+
+	public ProductoEntity(ProveedorEntity proveedor, long stock, long precio, String descripcion ) {
+		this.stock = stock;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.proveedor = proveedor;
+	}
 
 	public Long getId() {
 		return id;
@@ -45,19 +72,19 @@ public class ProductoEntity {
 		this.id = id;
 	}
 
-	public Long getStock() {
+	public long getStock() {
 		return stock;
 	}
 
-	public void setStock(Long stock) {
+	public void setStock(long stock) {
 		this.stock = stock;
 	}
 
-	public Long getPrecio() {
+	public long getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(Long precio) {
+	public void setPrecio(long precio) {
 		this.precio = precio;
 	}
 
@@ -75,5 +102,13 @@ public class ProductoEntity {
 
 	public void setSolicitudes(List<SolicitudCompraEntity> solicitudes) {
 		this.solicitudes = solicitudes;
+	}
+
+	public ProveedorEntity getProveedor() {
+		return proveedor;
+	}
+
+	public void setProveedor(ProveedorEntity proveedor) {
+		this.proveedor = proveedor;
 	}
 }

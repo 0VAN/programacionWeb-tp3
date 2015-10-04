@@ -42,8 +42,10 @@ public class Meta {
     public void calculateToTalPages() {
 
         Long var = getTotal() / getPage_size();
-        setTotal_pages(var);
+        if(getTotal() < getPage_size()) {
+            setTotal_pages(1L);
+        } else {
+            setTotal_pages(var + 1L);
+        }
     }
-
-
 }

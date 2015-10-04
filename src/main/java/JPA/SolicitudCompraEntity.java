@@ -3,12 +3,18 @@ package JPA;
 import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
+ * Clase que representa una Solicitud de Compra
+ *
  * Created by szalimben on 22/09/15.
  */
 @Entity
+@NamedQueries({
+		              @NamedQuery(name = "solicitud.findAll", query = "select v from SolicitudCompraEntity v"),
+		              @NamedQuery(name = "solicitud.totalRegisters", query = "select count(v.id) from SolicitudCompraEntity v"),
+		              @NamedQuery(name = "solicitud.findById", query = "select v from SolicitudCompraEntity v where v.id=:id")
+})
 @Table(name = "solicitud_compra", schema = "public", catalog = "tienda")
 public class SolicitudCompraEntity {
 
@@ -17,7 +23,7 @@ public class SolicitudCompraEntity {
 	@GeneratedValue(generator = "SEQ_SOLICITUD_COMPRA", strategy = GenerationType.SEQUENCE)
 	@SequenceGenerator(name = "SEQ_SOLICITUD_COMPRA", sequenceName = "seq_solicitud_compra")
 	@Expose
-	private Long id;
+	private long id;
 
 	@Basic
 	@Column(name = "fecha", nullable = false, insertable = true, updatable = true)
@@ -33,6 +39,16 @@ public class SolicitudCompraEntity {
 	@Expose
 	private boolean atendido;
 
+	public SolicitudCompraEntity() {
+		// por defecto
+	}
+
+	public SolicitudCompraEntity(ProductoEntity producto,  String fecha, boolean atendido) {
+		this.fecha = fecha;
+		this.producto = producto;
+		this.atendido = atendido;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -40,6 +56,7 @@ public class SolicitudCompraEntity {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 
 	@Basic
 	@Column(name = "fecha", nullable = false, insertable = true, updatable = true)

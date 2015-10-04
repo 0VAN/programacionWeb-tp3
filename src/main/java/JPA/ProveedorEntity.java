@@ -5,10 +5,13 @@ import com.google.gson.annotations.Expose;
 import javax.persistence.*;
 import java.util.List;
 
-/**
- * Created by szalimben on 22/09/15.
- */
+
 @Entity
+@NamedQueries({
+		              @NamedQuery(name = "proveedor.findAll", query = "select v from ProveedorEntity v"),
+		              @NamedQuery(name = "proveedor.totalRegisters", query = "select count(v.id) from ProveedorEntity v"),
+		              @NamedQuery(name = "proveedor.findById", query = "select v from ProveedorEntity v where v.id=:id")
+})
 @Table(name = "proveedor", schema = "public", catalog = "tienda")
 public class ProveedorEntity {
 
@@ -24,9 +27,19 @@ public class ProveedorEntity {
 	@Expose
 	private String descripcion;
 
-	@OneToMany(mappedBy = "proveedor")
-	@Expose
-	private List<CompraEntity> compras;
+
+	@OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL)
+	private List<ProductoEntity> productos;
+
+
+	public ProveedorEntity() {
+		// Constructor por defecto
+	}
+
+	public ProveedorEntity(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
 
 	public Long getId() {
 		return id;
