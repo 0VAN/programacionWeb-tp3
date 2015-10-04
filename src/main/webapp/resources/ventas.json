@@ -2,7 +2,7 @@
   "entidades": [
     {
       "id": "123",
-      "cliente":{},
+      "cliente": {},
       "fecha": "Nabil",
       "facturaId": "789",
       "monto": "08152015"

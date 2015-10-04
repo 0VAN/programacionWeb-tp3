@@ -30,10 +30,10 @@ function VentasController($scope, $http) {
             fecha: "25/25/25",
             detalles: [
                 {
-                    productoId: 1,
+                    productoId: 3,
                     cantidad: 2
                 }, {
-                    productoId: 2,
+                    productoId: 4,
                     cantidad: 2
                 }
             ]

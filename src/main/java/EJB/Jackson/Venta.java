@@ -6,6 +6,10 @@ import java.util.List;
  * Created by alex on 03/10/15.
  */
 public class Venta {
+    private Integer clienteId;
+    private String fecha;
+    private List<VentaDetalle> detalles;
+
     public Integer getClienteId() {
         return clienteId;
     }
@@ -29,8 +33,4 @@ public class Venta {
     public void setDetalles(List<VentaDetalle> detalles) {
         this.detalles = detalles;
     }
-
-    private Integer clienteId;
-    private String fecha;
-    private List<VentaDetalle> detalles;
 }

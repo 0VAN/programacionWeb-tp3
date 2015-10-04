@@ -12,57 +12,57 @@ import javax.persistence.*;
 @Table(name = "venta_detalle", schema = "public", catalog = "tienda")
 public class VentaDetalleEntity {
 
-	@Id
-	@Column(name = "id", nullable = false, insertable = true, updatable = true)
-	@Expose
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_venta_detalle")
-	@SequenceGenerator(name = "seq_venta_detalle", sequenceName = "seq_venta_detalle")
-	private Long id;
+    @Id
+    @Column(name = "id", nullable = false, insertable = true, updatable = true)
+    @Expose
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_venta_detalle")
+    @SequenceGenerator(name = "seq_venta_detalle", sequenceName = "seq_venta_detalle")
+    private Long id;
 
-	@Basic
-	@Column(name = "cantidad", nullable = true, insertable = true, updatable = true)
-	@Expose
-	private Long cantidad;
+    @Basic
+    @Column(name = "cantidad", nullable = true, insertable = true, updatable = true)
+    @Expose
+    private Long cantidad;
 
-	@ManyToOne(optional=false)
-	@JoinColumn(name = "producto_id")
-	@Expose
-	private ProductoEntity producto;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "producto_id")
+    @Expose
+    private ProductoEntity producto;
 
-	@ManyToOne(optional=false)
-	@JoinColumn(name = "venta_id")
-	@Expose
-	private VentaEntity venta;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "venta_id")
+    @Expose
+    private VentaEntity venta;
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public Long getCantidad() {
-		return cantidad;
-	}
+    public Long getCantidad() {
+        return cantidad;
+    }
 
-	public void setCantidad(Long cantidad) {
-		this.cantidad = cantidad;
-	}
-    
-	public ProductoEntity getProducto() {
-		return producto;
-	}
+    public void setCantidad(Long cantidad) {
+        this.cantidad = cantidad;
+    }
 
-	public void setProducto(ProductoEntity producto) {
-		this.producto = producto;
-	}
+    public ProductoEntity getProducto() {
+        return producto;
+    }
 
-	public VentaEntity getVenta() {
-		return venta;
-	}
+    public void setProducto(ProductoEntity producto) {
+        this.producto = producto;
+    }
 
-	public void setVenta(VentaEntity venta) {
-		this.venta = venta;
-	}
+    public VentaEntity getVenta() {
+        return venta;
+    }
+
+    public void setVenta(VentaEntity venta) {
+        this.venta = venta;
+    }
 }

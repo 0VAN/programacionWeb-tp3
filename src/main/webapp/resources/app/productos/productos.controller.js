@@ -8,7 +8,7 @@ angular
         ProductosController
     ]);
 
-function ProductosController($scope){
+function ProductosController($scope) {
     $scope.var = {
         columns: [
             {name: 'Id', property: 'id', visible: true, sortable: true, searchable: true},

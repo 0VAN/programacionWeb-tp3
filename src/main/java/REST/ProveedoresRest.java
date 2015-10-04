@@ -18,12 +18,12 @@ import javax.ws.rs.core.UriInfo;
 @Path("/proveedores")
 public class ProveedoresRest {
 
-	@EJB
-	ProveedorService service;
+    @EJB
+    ProveedorService service;
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getVentas(@Context UriInfo info) {
-		return Response.status(200).entity(service.getProveedores(info.getQueryParameters())).build();
-	}
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getVentas(@Context UriInfo info) {
+        return Response.status(200).entity(service.getProveedores(info.getQueryParameters())).build();
+    }
 }

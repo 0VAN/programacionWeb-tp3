@@ -8,7 +8,7 @@ angular
         ComprasController
     ]);
 
-function ComprasController($scope){
+function ComprasController($scope) {
     $scope.var = {
         columns: [
             {name: 'Id', property: 'id', visible: true, sortable: true, searchable: true},

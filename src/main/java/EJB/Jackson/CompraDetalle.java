@@ -5,6 +5,7 @@ package EJB.Jackson;
  */
 public class CompraDetalle {
     private Integer productoId;
+    private Integer cantidad;
 
     public Integer getProductoId() {
         return productoId;
@@ -21,6 +22,4 @@ public class CompraDetalle {
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
-
-    private Integer cantidad;
 }

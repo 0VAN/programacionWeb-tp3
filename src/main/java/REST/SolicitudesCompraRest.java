@@ -18,14 +18,14 @@ import javax.ws.rs.core.UriInfo;
 @Path("/solicitudes")
 public class SolicitudesCompraRest {
 
-	@EJB
-	SolicitudCompraService service;
+    @EJB
+    SolicitudCompraService service;
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getVentas(@Context UriInfo info) {
-		return Response.status(200).entity(service.getSolicitudes(info.getQueryParameters())).build();
-	}
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getVentas(@Context UriInfo info) {
+        return Response.status(200).entity(service.getSolicitudes(info.getQueryParameters())).build();
+    }
 }
 
 

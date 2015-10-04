@@ -19,27 +19,27 @@ import javax.ws.rs.core.UriInfo;
 @Path("/productos")
 public class ProductoRest {
 
-	@EJB
-	ProductoService service;
+    @EJB
+    ProductoService service;
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getProductos(@Context UriInfo info) {
-		return Response.status(200).entity(service.getProductos(info.getQueryParameters())).build();
-	}
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getProductos(@Context UriInfo info) {
+        return Response.status(200).entity(service.getProductos(info.getQueryParameters())).build();
+    }
 
-	@GET
-	@Path("/proveedor/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getProductosByProveedor(@PathParam("id") int id) {
-		return Response.status(200).entity(service.getProductosByProveedor(id)).build();
-	}
+    @GET
+    @Path("/proveedor/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getProductosByProveedor(@PathParam("id") int id) {
+        return Response.status(200).entity(service.getProductosByProveedor(id)).build();
+    }
 
-	@GET
-	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getVenta(@PathParam("id") int id) {
-		return Response.status(200).entity(service.getProducto(id)).build();
-	}
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getVenta(@PathParam("id") int id) {
+        return Response.status(200).entity(service.getProducto(id)).build();
+    }
 
 }

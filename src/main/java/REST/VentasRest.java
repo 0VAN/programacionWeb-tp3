@@ -1,19 +1,16 @@
 package REST;
 
-import EJB.Jackson.Venta;
 import EJB.Helper.VentasResponse;
+import EJB.Jackson.Venta;
 import EJB.Service.FilesService;
 import EJB.Service.VentasService;
 import EJB.Util.StockInsuficienteException;
-import org.codehaus.jackson.map.ObjectMapper;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import javax.ejb.EJB;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -27,21 +24,22 @@ import java.io.IOException;
 @Path("/ventas")
 public class VentasRest {
 
+    @EJB
+    FilesService filesService;
+    @EJB
+    VentasService ventasService;
     private VentasResponse response;
     private JsonFactory jfactory;
     private JsonParser jParser;
-
     // datos clientes.json
     private String nombre;
     private String cedula;
-
     // datos compras.json
     private String fechaCompra;
     private String montoCompra;
     private String proveedorCompra;
     private String productoIdCompra;
     private String cantidadCompra;
-
     // datos ventas.json
     private String fechaVenta;
     private String facturaIdVenta;
@@ -49,19 +47,12 @@ public class VentasRest {
     private String montoVenta;
     private String productoIdVenta;
     private String cantidadVenta;
-    
-    @EJB
-    FilesService filesService;
-
-    @EJB
-    VentasService ventasService;
 
 //    @GET
 //    @Produces(MediaType.APPLICATION_JSON)
 //    public Response getAllVentas() {
 //        return Response.status(200).entity(ventasService.getVentas()).build();
 //    }
-
 
     @GET
     @Path("/{id}")
@@ -305,7 +296,8 @@ public class VentasRest {
         } catch (StockInsuficienteException e) {
             return Response
                     .status(409)
-                    .entity(e.getMessage()).build();        }
+                    .entity(e.getMessage()).build();
+        }
         return Response.status(201).build();
     }
 

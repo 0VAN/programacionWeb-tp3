@@ -8,7 +8,7 @@ angular
         FacturasController
     ]);
 
-function FacturasController($scope){
+function FacturasController($scope) {
     $scope.var = {
         columns: [
             {name: 'Id', property: 'id', visible: true, sortable: true, searchable: true},

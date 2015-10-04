@@ -4,6 +4,10 @@ package EJB.Jackson;
  * Created by alex on 04/10/15.
  */
 public class Producto {
+    private Integer stock;
+    private Integer precio;
+    private String descripcion;
+
     public Integer getStock() {
         return stock;
     }
@@ -27,8 +31,4 @@ public class Producto {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
-    private Integer stock;
-    private Integer precio;
-    private String descripcion;
 }

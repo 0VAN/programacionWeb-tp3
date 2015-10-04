@@ -8,7 +8,7 @@ angular
         ProveedoresController
     ]);
 
-function ProveedoresController($scope){
+function ProveedoresController($scope) {
     $scope.var = {
         columns: [
             {name: 'Id', property: 'id', visible: true, sortable: true, searchable: true},
