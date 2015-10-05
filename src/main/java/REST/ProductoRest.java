@@ -42,4 +42,11 @@ public class ProductoRest {
         return Response.status(200).entity(service.getProducto(id)).build();
     }
 
+    @GET
+    @Path("/all")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllProducto() {
+        return Response.status(200).entity(service.getAllProductos()).build();
+    }
+
 }
