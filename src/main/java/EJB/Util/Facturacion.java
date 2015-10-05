@@ -68,7 +68,6 @@ public class Facturacion {
         int contador = 0;
 
         for (VentaEntity venta : ventas) {
-            System.out.println("Procesando ventas: " + contador + "/" + ventas.size());
             if (!context.wasCancelCalled()) {
                 if (venta.getId() != null) {
                     try {
@@ -86,18 +85,16 @@ public class Facturacion {
                     ventasService.update(venta);
                     pdf(venta, factura.getId().intValue());
                     contador++;
+                    System.out.println("Procesando ventas: " + contador + "/" + ventas.size());
                 }
             } else {
                 borrarDirectorio(carpeta);
                 carpeta.delete();
                 contextBD.setRollbackOnly();
-
                 System.out.println("Se aborto la exportacion");
                 return new AsyncResult<>("");
             }
         }
-        VentaEntity venta2 = (VentaEntity) ventasService.getVenta(1L);
-        pdf(venta2, 951);
         System.out.println("Termino la exportacion");
 
         if (contador == 0) {
