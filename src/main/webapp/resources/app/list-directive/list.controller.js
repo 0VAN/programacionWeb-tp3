@@ -27,7 +27,11 @@ function ListController($scope, ListServices) {
     $scope.sortIconClassDisabled = sortIconsClassDisabled[0];
 
     ListServices.salesServices($scope.config.URL).get(params, function (serverResponse) {
+<<<<<<< HEAD
         $scope.dataList = serverResponse.entidades;
+=======
+        $scope.dataList = serverResponse.ventas;
+>>>>>>> 9bcd6f9406646f340fafc6c516a7c095d5796ac8
         $scope.dataMeta = serverResponse.meta;
 
 

@@ -1,5 +1,6 @@
 package REST;
 
+<<<<<<< HEAD
 import EJB.Helper.VentasResponse;
 import EJB.Jackson.Venta;
 import EJB.Service.FilesService;
@@ -8,6 +9,9 @@ import EJB.Util.StockInsuficienteException;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
+=======
+import EJB.VentasService;
+>>>>>>> 9bcd6f9406646f340fafc6c516a7c095d5796ac8
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -15,7 +19,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+<<<<<<< HEAD
 import java.io.IOException;
+=======
+>>>>>>> 9bcd6f9406646f340fafc6c516a7c095d5796ac8
 
 /**
  * Created by alex on 31/08/15.
