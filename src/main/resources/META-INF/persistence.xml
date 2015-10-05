@@ -3,10 +3,18 @@
 
     <persistence-unit name="PU">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <jta-data-source>java:/PostgresDS</jta-data-source>
-        <class>JPA.VentasEntity</class>
+        <jta-data-source>java:/TiendaDS</jta-data-source>
+        <class>JPA.ClienteEntity</class>
+        <class>JPA.CompraEntity</class>
+        <class>JPA.CompraDetalleEntity</class>
+        <class>JPA.FacturaEntity</class>
+        <class>JPA.ProductoEntity</class>
+        <class>JPA.ProveedorEntity</class>
+        <class>JPA.SolicitudCompraEntity</class>
+        <class>JPA.VentaEntity</class>
+        <class>JPA.VentaDetalleEntity</class>
         <properties>
-            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/ventas"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/tienda"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
             <property name="hibernate.connection.username" value="postgres"/>
             <property name="hibernate.connection.password" value="postgres"/>

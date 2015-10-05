@@ -13,7 +13,8 @@ function ListServices($resource) {
         salesServices: function (URL) {
             return $resource(URL, {}, {
                 'get': {
-                    method: 'GET'}
+                    method: 'GET'
+                }
             })
         }
     };
