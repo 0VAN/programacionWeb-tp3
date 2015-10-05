@@ -62,7 +62,7 @@ public class Facturacion {
 
         List<VentaEntity> ventas = ventasService.getVentasFactura();
 
-        carpeta = new File("/tmp/reportes/reporte" + generarNumero());
+        carpeta = new File("/tmp/reportes/reporte_" + generarNumero());
         carpeta.mkdirs();
 
         int contador = 0;
@@ -95,6 +95,9 @@ public class Facturacion {
                 return new AsyncResult<>("");
             }
         }
+
+
+        pdf((VentaEntity) ventasService.getVenta(1L), 978);
         System.out.println("Termino la exportacion");
 
         if (contador == 0) {
@@ -144,7 +147,7 @@ public class Facturacion {
 
             //se procesa el archivo jasper
             HashMap parametros = new HashMap();
-            parametros.put("factura", nro_factura.toString());
+            parametros.put("venta", venta.getId().toString());
             parametros.put("fecha", new Date());
             parametros.put("total", venta.getMonto());
             parametros.put("cliente", venta.getCliente().getNombre());
@@ -158,7 +161,7 @@ public class Facturacion {
                 det.setProducto(detalle.getProducto().getDescripcion());
                 det.setCantidad(detalle.getCantidad().intValue());
                 det.setPrecio(detalle.getProducto().getPrecio());
-                det.setFactura(nro_factura);
+                det.setventa(venta.getId().intValue());
                 det.setCantidad(detalle.getCantidad().intValue());
                 det.setCliente(venta.getCliente().getNombre());
                 det.setFecha(venta.getFecha());
