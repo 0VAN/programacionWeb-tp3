@@ -14,3 +14,12 @@ Para la creacion de base de datos, se incluyen los siguientes archivos SQL:
 * productos.sql: Datos semilla de producto
 
 Cuenta con un diagrama de la base de datos donde se observan todos las relaciones y asociaciones existentes.
+
+Reportes
+
+Para la generacion de reportes Ud. primero debe configurar su entorno para la generacion de los mismos
+ejecute el script que se encuentra dentro de la carpeta del proyecto.
+
+$ sudo ./reporteConfig.sh
+
+Y listo

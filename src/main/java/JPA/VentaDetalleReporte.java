@@ -8,7 +8,7 @@ package JPA;
 public class VentaDetalleReporte {
 
     private Integer id;
-    private Integer factura;
+    private Integer venta;
     private Integer idProducto;
     private String nombreProducto;
     private Integer cantidad;
@@ -57,12 +57,12 @@ public class VentaDetalleReporte {
         this.precio = precio;
     }
 
-    public Integer getFactura() {
-        return factura;
+    public Integer getventa() {
+        return venta;
     }
 
-    public void setFactura(Integer factura) {
-        this.factura = factura;
+    public void setventa(Integer venta) {
+        this.venta = venta;
     }
 
     public String getFecha() {
