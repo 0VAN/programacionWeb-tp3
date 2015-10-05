@@ -85,6 +85,11 @@ public class ProductoService extends Service<ProductoEntity> {
         return find(id, ProductoEntity.class);
     }
 
+    public List getAllProductos() {
+        Query query = em.createNamedQuery("producto.findAll");
+        return query.getResultList();
+    }
+
     public Object getProductos(MultivaluedMap<String, String> queryParams) {
 
         ProductoResponse response = new ProductoResponse();
