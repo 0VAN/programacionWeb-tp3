@@ -21,4 +21,6 @@ function ProductosController($scope) {
         title: 'Lista de productos',
         detailViewTitle: 'Vista detalle de venta'
     };
+
+    //$scope.
 }

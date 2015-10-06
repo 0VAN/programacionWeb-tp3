@@ -38,8 +38,15 @@ public class ProductoRest {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getVenta(@PathParam("id") int id) {
+    public Response getProducto(@PathParam("id") int id) {
         return Response.status(200).entity(service.getProducto(id)).build();
+    }
+
+    @GET
+    @Path("/all")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllProductos() {
+        return Response.status(200).entity(service.getAllProductos()).build();
     }
 
 }

@@ -75,6 +75,10 @@ public class ProductoService extends Service<ProductoEntity> {
         return count;
     }
 
+    public List getAllProductos() {
+        Query query = em.createNamedQuery("producto.findAll");
+        return query.getResultList();
+    }
     /**
      * Retorna la entidad buscada por Id
      *

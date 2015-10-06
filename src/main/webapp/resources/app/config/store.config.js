@@ -9,16 +9,36 @@ angular
                 templateUrl: 'resources/app/ventas/ventas.html',
                 controller: 'VentasController'
             })
+            .when('/ventas/alta', {
+                templateUrl: 'resources/app/ventas/ventas_form.html',
+                controller: 'VentasController'
+            })
             .when('/clientes', {
                 templateUrl: 'resources/app/clientes/clientes.html',
+                controller: 'ClientesController'
+            })
+            .when('/clientes/alta', {
+                templateUrl: 'resources/app/clientes/clientes_form.html',
+                controller: 'ClientesController'
+            })
+            .when('/clientes/file', {
+                templateUrl: 'resources/app/clientes/clientes_carga_masiva.html',
                 controller: 'ClientesController'
             })
             .when('/productos', {
                 templateUrl: 'resources/app/productos/productos.html',
                 controller: 'ProductosController'
             })
+            .when('/productos/alta', {
+                templateUrl: 'resources/app/productos/productos_form.html',
+                controller: 'ProductosController'
+            })
             .when('/compras', {
                 templateUrl: 'resources/app/compras/compras.html',
+                controller: 'ComprasController'
+            })
+            .when('/compras/alta', {
+                templateUrl: 'resources/app/compras/compras_form.html',
                 controller: 'ComprasController'
             })
             .when('/home', {
@@ -31,6 +51,10 @@ angular
             })
             .when('/proveedores', {
                 templateUrl: 'resources/app/proveedores/proveedores.html',
+                controller: 'ProveedoresController'
+            })
+            .when('/proveedores/alta', {
+                templateUrl: 'resources/app/proveedores/proveedores_form.html',
                 controller: 'ProveedoresController'
             });
     });
