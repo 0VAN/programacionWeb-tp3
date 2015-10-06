@@ -21,6 +21,7 @@ import EJB.Service.VentasService;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
+import com.sun.jersey.multipart.FormDataParam;
 
 
 import java.io.InputStream;
@@ -84,7 +85,7 @@ public class VentasRest {
     @POST
     @Path("/uploadFileClientes")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response uploadFile(@FormDataParam("file") InputStream is) {
+    public Response uploadFileClientes(@FormDataParam("file") InputStream is) {
         jfactory = new JsonFactory();
 
         try {
@@ -128,7 +129,7 @@ public class VentasRest {
     @POST
     @Path("/uploadFileCompras")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response uploadFile(@FormDataParam("file") InputStream is) {
+    public Response uploadFileCompras(@FormDataParam("file") InputStream is) {
         jfactory = new JsonFactory();
 
         try {
@@ -207,7 +208,7 @@ public class VentasRest {
     @POST
     @Path("/uploadFileVentas")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response uploadFile(@FormDataParam("file") InputStream is) {
+    public Response uploadFileVentas(@FormDataParam("file") InputStream is) {
         jfactory = new JsonFactory();
 
         try {
