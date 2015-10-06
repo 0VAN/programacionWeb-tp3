@@ -74,48 +74,7 @@ public class VentasRest {
         return Response.status(200).entity(ventasService.getVentas(info.getQueryParameters())).build();
     }
 
-//    @POST
-//    @Path("/uploadFileClientes")
-//    @Consumes(MediaType.MULTIPART_FORM_DATA)
-//    public Response uploadFile(@FormDataParam("file") InputStream is) {
-//        jfactory = new JsonFactory();
-//
-//        try {
-//            jParser = jfactory.createParser(is);
-//
-//            jParser.nextToken(); // token '{'
-//            jParser.nextToken(); // token 'clientes'
-//
-//            // se procesa cada objeto cliente, primer token '['
-//            while (jParser.nextToken() != JsonToken.END_ARRAY) {
-//
-//                String fieldname = jParser.getCurrentName();
-//                if ("nombre".equals(fieldname)) {
-//
-//                    // token 'nombre'
-//                    // vamos al siguiente token, el valor de 'nombre'
-//                    jParser.nextToken();
-//                    nombre = jParser.getText();
-//                }
-//
-//                if ("cedula".equals(fieldname)) {
-//
-//                    // token 'cedula'
-//                    // vamos al siguiente token, el valor de 'cedula'
-//                    jParser.nextToken();
-//                    cedula = jParser.getText();
-//
-//                    // como es el ultimo campo procesamos el cliente en persistencia
-//                    filesService.addCliente(nombre, cedula);
-//                }
-//            }
-//            filesService.terminarStateful();
-//        }catch(Exception e){
-//            // Procesamos la excepcion
-//        }
-//
-//        return Response.status(200).entity("ok").build();
-//    }
+
 //
 //
 //    @POST
