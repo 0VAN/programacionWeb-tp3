@@ -81,13 +81,14 @@ public class ClientesRest {
     @POST
     @Path("/uploadFileClientes")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response uploadFile(@FormDataParam("file") InputStream is) {
+    public Response uploadFile(@FormDataParam("fileCliente") InputStream is) {
         jfactory = new JsonFactory();
 
         try {
             jParser = jfactory.createParser(is);
 
             jParser.nextToken(); // token '{'
+            String texto1 = jParser.getText();
             jParser.nextToken(); // token 'clientes'
 
             // se procesa cada objeto cliente, primer token '['
