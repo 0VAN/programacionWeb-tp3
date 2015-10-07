@@ -1,16 +1,19 @@
 package REST;
 
+import EJB.Jackson.Producto;
 import EJB.Service.ProductoService;
+import EJB.Service.ProveedorService;
+import JPA.ProductoEntity;
+import JPA.ProveedorEntity;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import javax.ejb.EJB;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import java.io.IOException;
 
 /**
  * Rest para Producto
@@ -21,6 +24,9 @@ public class ProductoRest {
 
     @EJB
     ProductoService service;
+
+    @EJB
+    ProveedorService proveedorService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -49,4 +55,24 @@ public class ProductoRest {
         return Response.status(200).entity(service.getAllProductos()).build();
     }
 
+    @POST
+    @Consumes("application/json")
+    public Response crearCliente(String content) {
+        System.out.println(content);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            Producto producto = mapper.readValue(content, Producto.class);
+            ProductoEntity productoEntity = new ProductoEntity();
+            productoEntity.setProveedor(proveedorService.find(producto.getProveedorId(), ProveedorEntity.class));
+            productoEntity.setDescripcion(producto.getDescripcion());
+            service.add(productoEntity);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Response
+                    .status(409)
+                    .entity(e.getMessage()).build();
+        }
+        return Response.status(201).build();
+    }
 }

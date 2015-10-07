@@ -1,5 +1,12 @@
+<script>
+    $(document).ready(function () {
+        $('.ui.dropdown')
+                .dropdown()
+        ;
+    });
+</script>
 <h1 class="ui dividing header">
-    Formulario de cliente
+    Formulario de producto
 </h1>
 <form class="ui form" name="personForm">
     <div class="fields">
@@ -10,13 +17,6 @@
                 <input id="descripcion" type="text" placeholder="Producto..." data-ng-model="producto.descripcion">
             </div>
         </div>
-        <!--<div class="three wide field">-->
-        <!--<label for="stock">Ingrese la cantidad(stock) del producto: </label>-->
-
-        <!--<div class="ui input">-->
-        <!--<input id="stock" type="text" placeholder="Stock..." data-ng-model="producto.stock">-->
-        <!--</div>-->
-        <!--</div>-->
         <div class="three wide field">
             <label for="precio">Ingrese el precio del producto: </label>
 
@@ -34,5 +34,5 @@
         </div>
     </div>
     <br/>
-    <button class="ui button blue" data-ng-click="confirmarNuevoProveedor()">Confirmar</button>
+    <button class="ui button blue" data-ng-click="confirmarNuevoProducto()">Confirmar</button>
 </form>

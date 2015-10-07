@@ -29,6 +29,13 @@ public class ProveedoresRest {
         return Response.status(200).entity(service.getProveedores(info.getQueryParameters())).build();
     }
 
+    @GET
+    @Path("/all")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllVentas() {
+        return Response.status(200).entity(service.getAllProveedores()).build();
+    }
+
     @POST
     @Consumes("application/json")
     public Response crearProveedor(String content) {
