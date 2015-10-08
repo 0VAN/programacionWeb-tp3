@@ -89,7 +89,6 @@ public class ClientesRest {
 
         try {
             jParser = jfactory.createParser(is);
-            jParser.setCodec(new ObjectMapper());
 
             jParser.nextToken(); // token '{'
             String texto1 = jParser.getText();
