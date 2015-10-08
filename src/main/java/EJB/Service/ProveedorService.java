@@ -10,6 +10,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.ws.rs.core.MultivaluedMap;
+import java.util.List;
 
 /**
  * Servicios para la gestion de proveedores
@@ -29,6 +30,11 @@ public class ProveedorService extends Service<ProveedorEntity> {
         Query query = em.createNamedQuery("proveedor.totalRegisters");
         Long count = (Long) query.getSingleResult();
         return count;
+    }
+
+    public List getAllProveedores() {
+        Query query = em.createNamedQuery("proveedor.findAll");
+        return query.getResultList();
     }
 
     public Object getProveedores(MultivaluedMap<String, String> queryParams) {

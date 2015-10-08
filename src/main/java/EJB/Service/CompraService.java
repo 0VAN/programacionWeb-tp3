@@ -1,9 +1,18 @@
 package EJB.Service;
 
 import EJB.Helper.ComprasResponse;
+import EJB.Jackson.Compra;
+import EJB.Jackson.CompraDetalle;
+import EJB.Util.StockInsuficienteException;
+import JPA.CompraDetalleEntity;
 import JPA.CompraEntity;
+import JPA.ProductoEntity;
+import JPA.ProveedorEntity;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -19,7 +28,41 @@ import javax.ws.rs.core.MultivaluedMap;
 @Stateless
 public class CompraService extends Service<CompraEntity> {
 
+    @EJB
+    ProveedorService proveedorService;
+    @EJB
+    ProductoService productoService;
 
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public boolean addCompra(Compra compra) throws StockInsuficienteException {
+
+        CompraEntity compraEntity = new CompraEntity();
+        compraEntity.setProveedor(proveedorService.find(compra.getProveedorId(), ProveedorEntity.class));
+        compraEntity.setFecha(compra.getFecha());
+
+        long montoAcumulador = 0;
+
+        for (CompraDetalle detalle : compra.getDetalles()) {
+            ProductoEntity productoEntity = productoService.find(detalle.getProductoId(), ProductoEntity.class);
+            if (productoEntity == null) {
+                throw new StockInsuficienteException();
+            } else {
+                productoEntity.setStock(productoEntity.getStock() + detalle.getCantidad());
+                montoAcumulador = montoAcumulador + productoEntity.getPrecio() * detalle.getCantidad();
+                productoService.update(productoEntity);
+            }
+            CompraDetalleEntity compraDetalleEntity = new CompraDetalleEntity();
+            compraDetalleEntity.setProducto(productoEntity);
+            compraDetalleEntity.setCantidad(Long.valueOf(detalle.getCantidad()));
+            compraDetalleEntity.setCompra(compraEntity);
+            compraEntity.setDetalles(compraDetalleEntity);
+        }
+
+        compraEntity.setMonto(String.valueOf(montoAcumulador));
+        return super.add(compraEntity);
+
+    }
     /**
      * Retorna la entidad buscada por Id
      *
@@ -29,6 +72,7 @@ public class CompraService extends Service<CompraEntity> {
     public Object getCompra(int id) {
         return find(id, CompraEntity.class);
     }
+
 
     /**
      * Cantidad de Registros

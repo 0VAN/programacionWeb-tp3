@@ -57,11 +57,13 @@ function VentasController($scope, $http) {
             $scope.productos = productos.data;
         }
     );
+
+
     $scope.confirmarVenta = function () {
         var detalles = [];
         for (indice in $scope.productosSeleccionados) {
             detalles.push({
-                productoId: $scope.productosSeleccionados[indice].id,
+                productoId: parseInt($scope.productosSeleccionados[indice].id),
                 cantidad: parseInt($scope.productosSeleccionados[indice].cantidad)
             })
         }

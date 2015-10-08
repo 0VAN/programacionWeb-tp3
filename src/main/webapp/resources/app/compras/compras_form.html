@@ -13,7 +13,7 @@
         <label for="proveedor">Seleccione el proveedor: </label>
         <select id="proveedor" class="ui search dropdown"
                 data-ng-options="proveedor.id as proveedor.descripcion for proveedor in proveedores"
-                data-ng-model="proveedorSeleccionado">
+                data-ng-model="proveedorSeleccionado" data-ng-change="productosByProveedor()">
             <option value="">Proveedores...</option>
         </select>
     </div>

@@ -13,6 +13,10 @@ angular
                 templateUrl: 'resources/app/ventas/ventas_form.html',
                 controller: 'VentasController'
             })
+            .when('/ventas/file', {
+                templateUrl: 'resources/app/ventas/ventas_carga_masiva.html',
+                controller: 'VentasController'
+            })
             .when('/clientes', {
                 templateUrl: 'resources/app/clientes/clientes.html',
                 controller: 'ClientesController'
@@ -39,6 +43,10 @@ angular
             })
             .when('/compras/alta', {
                 templateUrl: 'resources/app/compras/compras_form.html',
+                controller: 'ComprasController'
+            })
+            .when('/compras/file', {
+                templateUrl: 'resources/app/compras/compras_carga_masiva.html',
                 controller: 'ComprasController'
             })
             .when('/home', {
