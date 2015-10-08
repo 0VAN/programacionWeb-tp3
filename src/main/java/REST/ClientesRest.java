@@ -17,8 +17,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * Rest para Clientes
@@ -82,10 +84,12 @@ public class ClientesRest {
     @Path("/uploadFileClientes")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadFile(@FormDataParam("fileCliente") InputStream is) {
+        String result = getStringFromInputStream(is);
         jfactory = new JsonFactory();
 
         try {
             jParser = jfactory.createParser(is);
+            jParser.setCodec(new ObjectMapper());
 
             jParser.nextToken(); // token '{'
             String texto1 = jParser.getText();
@@ -120,6 +124,36 @@ public class ClientesRest {
         }
 
         return Response.status(200).entity("ok").build();
+    }
+
+
+    // convert InputStream to String
+    private static String getStringFromInputStream(InputStream is) {
+
+        BufferedReader br = null;
+        StringBuilder sb = new StringBuilder();
+
+        String line;
+        try {
+
+            br = new BufferedReader(new InputStreamReader(is));
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return sb.toString();
     }
 
 }
