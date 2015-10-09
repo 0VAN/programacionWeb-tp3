@@ -2,13 +2,13 @@ package REST;
 
 import EJB.Helper.VentasResponse;
 import EJB.Jackson.Cliente;
+import EJB.Service.ClienteFileService;
 import EJB.Service.ClienteService;
 import EJB.Service.FilesService;
 import JPA.ClienteEntity;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
 import com.sun.jersey.multipart.FormDataParam;
+import org.codehaus.jackson.JsonFactory;
+import org.codehaus.jackson.*;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import javax.ejb.EJB;
@@ -29,7 +29,10 @@ import java.io.InputStreamReader;
 @Path("/clientes")
 public class ClientesRest {
     @EJB
-    FilesService filesService;
+    private ClienteFileService clienteFileService;
+
+    @EJB
+    private FilesService filesService;
     private JsonFactory jfactory;
     private JsonParser jParser;
     // datos clientes.json
@@ -37,7 +40,7 @@ public class ClientesRest {
     private String cedula;
 
     @EJB
-    ClienteService service;
+    private ClienteService service;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -85,42 +88,7 @@ public class ClientesRest {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadFile(@FormDataParam("fileCliente") InputStream is) {
         String result = getStringFromInputStream(is);
-        jfactory = new JsonFactory();
-
-        try {
-            jParser = jfactory.createParser(is);
-
-            jParser.nextToken(); // token '{'
-            String texto1 = jParser.getText();
-            jParser.nextToken(); // token 'clientes'
-
-            // se procesa cada objeto cliente, primer token '['
-            while (jParser.nextToken() != JsonToken.END_ARRAY) {
-
-                String fieldname = jParser.getCurrentName();
-                if ("nombre".equals(fieldname)) {
-
-                    // token 'nombre'
-                    // vamos al siguiente token, el valor de 'nombre'
-                    jParser.nextToken();
-                    nombre = jParser.getText();
-                }
-
-                if ("cedula".equals(fieldname)) {
-
-                    // token 'cedula'
-                    // vamos al siguiente token, el valor de 'cedula'
-                    jParser.nextToken();
-                    cedula = jParser.getText();
-
-                    // como es el ultimo campo procesamos el cliente en persistencia
-                    filesService.addCliente(nombre, cedula);
-                }
-            }
-            filesService.terminarStateful();
-        }catch(Exception e){
-            // Procesamos la excepcion
-        }
+        clienteFileService.parsear(result);
 
         return Response.status(200).entity("ok").build();
     }
