@@ -1,8 +1,11 @@
 package REST;
 
 import EJB.Jackson.Compra;
+import EJB.Service.CompraFileService;
 import EJB.Service.CompraService;
 import EJB.Util.StockInsuficienteException;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.sun.jersey.multipart.FormDataParam;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import javax.ejb.EJB;
@@ -11,7 +14,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * Rest para Compras
@@ -23,6 +29,9 @@ public class CompraRest {
 
     @EJB
     CompraService service;
+
+    @EJB
+    CompraFileService compraFileService;
 
 
     @GET
@@ -58,6 +67,47 @@ public class CompraRest {
                     .entity(e.getMessage()).build();
         }
         return Response.status(201).build();
+    }
+
+
+
+    @POST
+    @Path("/uploadFileCompras")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response uploadFile(@FormDataParam("fileCompra") InputStream is) {
+        String result = getStringFromInputStream(is);
+        compraFileService.parsear(result);
+
+        return Response.status(200).entity("ok").build();
+    }
+
+    // convert InputStream to String
+    private static String getStringFromInputStream(InputStream is) {
+
+        BufferedReader br = null;
+        StringBuilder sb = new StringBuilder();
+
+        String line;
+        try {
+
+            br = new BufferedReader(new InputStreamReader(is));
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return sb.toString();
     }
 
 }
