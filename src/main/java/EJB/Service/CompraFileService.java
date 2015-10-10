@@ -8,23 +8,21 @@ import org.codehaus.jackson.*;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import javax.ejb.Remove;
+import javax.ejb.Stateful;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by nabil on 10/10/15.
  */
+
+@Stateful
 public class CompraFileService {
 
-    @Inject
-    private CompraEntity compra;
+    private CompraEntity compra = new CompraEntity();
 
     @Inject
     private ProveedorEntity proveedor;
@@ -65,7 +63,7 @@ public class CompraFileService {
             jParser.nextToken(); // token 'compras'
 
             // se procesa cada compra individualmente, primer token '['
-            while (jParser.nextToken() != JsonToken.END_ARRAY) {
+            while (!jParser.getText().equals("]") && jParser.nextToken() != JsonToken.END_ARRAY) {
 
                 String fieldname = jParser.getText();
                 if ("fecha".equals(fieldname)) {
@@ -153,7 +151,11 @@ public class CompraFileService {
         for(CompraDetalleEntity detalle : listaCompraDetalles) {
             compra.setDetalles(detalle);
         }
-        em.persist(compra);
+        try {
+            em.persist(compra);
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Remove
