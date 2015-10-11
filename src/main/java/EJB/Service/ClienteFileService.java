@@ -6,13 +6,11 @@ import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.JsonToken;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import javax.ejb.*;
+import javax.ejb.Remove;
+import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 /**
  * Created by nabil on 08/10/15.
@@ -34,7 +32,7 @@ public class ClienteFileService {
     private String nombre;
     private String cedula;
 
-    public void parsear(String is){
+    public void parsear(String is) {
         ObjectMapper objectMapper = new ObjectMapper();
         jfactory = objectMapper.getJsonFactory();
         String result = is;
@@ -87,7 +85,7 @@ public class ClienteFileService {
                 }
             }
             terminarStateful();
-        }catch(IOException e){
+        } catch (IOException e) {
             // Procesamos la excepcion
         }
     }
@@ -104,7 +102,7 @@ public class ClienteFileService {
     }
 
     @Remove
-    private void terminarStateful(){
+    private void terminarStateful() {
         // este metodo finaliza la instancia creada del stateful bean con el
         // annotation @Remove
     }

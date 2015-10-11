@@ -57,7 +57,7 @@ public class VentaEntity {
         // Constructor por defecto
     }
 
-    public VentaEntity(Long id, ClienteEntity cliente, String fecha, String monto ) {
+    public VentaEntity(Long id, ClienteEntity cliente, String fecha, String monto) {
         this.id = id;
         this.cliente = cliente;
         this.fecha = fecha;
@@ -65,17 +65,19 @@ public class VentaEntity {
     }
 
     // Constructor
-    public VentaEntity(ClienteEntity cliente, String fecha, String monto) {
+    public VentaEntity(ClienteEntity cliente, String fecha, String monto, FacturaEntity factura) {
         this.cliente = cliente;
         this.fecha = fecha;
         this.monto = monto;
+        this.factura = factura;
+
     }
 
     public VentaEntity(ClienteEntity cliente, String fecha, String monto, List<VentaDetalleEntity> detalles) {
         this.cliente = cliente;
         this.fecha = fecha;
         this.monto = monto;
-        this.detalles = detalles;
+//        this.detalles = detalles;
     }
 
     public Long getId() {

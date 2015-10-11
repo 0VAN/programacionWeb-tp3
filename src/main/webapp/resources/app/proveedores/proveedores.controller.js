@@ -12,7 +12,7 @@ angular
 function ProveedoresController($scope, $http) {
     $scope.var = {
         columns: [
-            {name: 'Id', property: 'id', visible: true, sortable: true, searchable: true},
+            {name: 'Id', property: 'id', visible: false, sortable: true, searchable: true},
             {name: 'descripcion', property: 'descripcion', visible: true, sortable: true, searchable: true}
         ],
         URL: 'http://localhost:8080/tp3/service/proveedores',

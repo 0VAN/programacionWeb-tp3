@@ -121,6 +121,7 @@ public class ProveedorService extends Service<ProveedorEntity> {
 
 
     }
+
     public Object getProveedores(MultivaluedMap<String, String> queryParams) {
 
         ProveedorResponse response = new ProveedorResponse();
@@ -171,11 +172,11 @@ public class ProveedorService extends Service<ProveedorEntity> {
             criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.asc(proveedores.get(ordenarPorColumna)));
         } else {
             criteriaQuery.multiselect(proveedores.<String>get("descripcion"));
-            criteriaQuery.select(proveedores).where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(proveedores.get(ordenarPorColumna)));
+            criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(proveedores.get(ordenarPorColumna)));
         }
 
         Integer page;
-        if(queryParams.getFirst("page") != null ) {
+        if (queryParams.getFirst("page") != null) {
             page = Integer.valueOf(queryParams.getFirst("page")) - 1;
         } else {
             page = 0;

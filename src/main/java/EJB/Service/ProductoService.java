@@ -84,6 +84,7 @@ public class ProductoService extends Service<ProductoEntity> {
         Query query = em.createNamedQuery("producto.findAll");
         return query.getResultList();
     }
+
     /**
      * Retorna la entidad buscada por Id
      *
@@ -110,9 +111,9 @@ public class ProductoService extends Service<ProductoEntity> {
         /**
          * Retrieve one or none of the URI query params that have the column name and sort order values
          */
-        if (queryParams.getFirst("proveedor") != null) {
+        if (queryParams.getFirst("proveedor.descipcion") != null) {
             ordenarPorColumna = "proveedor";
-            ordenDeOrdenacion = queryParams.getFirst("proveedor");
+            ordenDeOrdenacion = queryParams.getFirst("proveedor.descripcion");
         } else if (queryParams.getFirst("stock") != null) {
             ordenarPorColumna = "stock";
             ordenDeOrdenacion = queryParams.getFirst("stock");
@@ -127,7 +128,7 @@ public class ProductoService extends Service<ProductoEntity> {
         // Iniciamos las varialles para el filtrado
         String by_all_attributes = queryParams.getFirst("by_all_attributes");
         String by_stock = queryParams.getFirst("by_stock");
-        String by_proveedor = queryParams.getFirst("by_proveedor");
+        String by_proveedor = queryParams.getFirst("by_proveedor.descripcion");
         String by_precio = queryParams.getFirst("by_precio");
         String by_descripcion = queryParams.getFirst("by_descripcion");
 
@@ -180,9 +181,13 @@ public class ProductoService extends Service<ProductoEntity> {
 
         // Fijamos la Ordenacion
         if ("asc".equals(ordenDeOrdenacion)) {
+            criteriaQuery.multiselect(productos.<String>get("proveedor"), productos.<String>get("precio"), productos.<String>get("stock"), productos.<String>get("descripcion"));
+
             criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.asc(productos.get(ordenarPorColumna)));
         } else {
-            criteriaQuery.select(productos).where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(productos.get(ordenarPorColumna)));
+            criteriaQuery.multiselect(productos.<String>get("proveedor"), productos.<String>get("precio"), productos.<String>get("stock"), productos.<String>get("descripcion"));
+
+            criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(productos.get(ordenarPorColumna)));
         }
 
 
@@ -228,9 +233,9 @@ public class ProductoService extends Service<ProductoEntity> {
         /**
          * Retrieve one or none of the URI query params that have the column name and sort order values
          */
-        if (queryParams.getFirst("proveedor") != null) {
+        if (queryParams.getFirst("proveedor.descripcion") != null) {
             ordenarPorColumna = "proveedor";
-            ordenDeOrdenacion = queryParams.getFirst("proveedor");
+            ordenDeOrdenacion = queryParams.getFirst("proveedor.descripcion");
         } else if (queryParams.getFirst("stock") != null) {
             ordenarPorColumna = "stock";
             ordenDeOrdenacion = queryParams.getFirst("stock");
@@ -245,7 +250,7 @@ public class ProductoService extends Service<ProductoEntity> {
         // Iniciamos las varialles para el filtrado
         String by_all_attributes = queryParams.getFirst("by_all_attributes");
         String by_stock = queryParams.getFirst("by_stock");
-        String by_proveedor = queryParams.getFirst("by_proveedor");
+        String by_proveedor = queryParams.getFirst("by_proveedor.descripcion");
         String by_precio = queryParams.getFirst("by_precio");
         String by_descripcion = queryParams.getFirst("by_descripcion");
 
@@ -273,8 +278,8 @@ public class ProductoService extends Service<ProductoEntity> {
         if (by_stock != null && by_precio != null) {
             filtradoPorAllAttributes = criteriaBuilder.or(criteriaBuilder.like(productos.<String>get("proveedor").<String>get("descripcion"), "%" + by_proveedor + "%"),
                     criteriaBuilder.like(productos.<String>get("descripcion"), "%" + by_all_attributes + "%"),
-                    criteriaBuilder.equal(productos.<Long>get("precio"), by_precio),
-                    criteriaBuilder.equal(productos.<Long>get("stock"), by_stock));
+                    criteriaBuilder.equal(productos.<Long>get("precio"), Integer.parseInt(by_precio)),
+                    criteriaBuilder.equal(productos.<Long>get("stock"), Integer.parseInt(by_stock)));
         } else {
             if (by_precio == null && by_stock == null) {
                 filtradoPorAllAttributes = criteriaBuilder.or(criteriaBuilder.like(productos.<String>get("proveedor").<String>get("descripcion"), "%" + by_proveedor + "%"),
@@ -306,7 +311,7 @@ public class ProductoService extends Service<ProductoEntity> {
         }
 
         Integer page;
-        if(queryParams.getFirst("page") != null ) {
+        if (queryParams.getFirst("page") != null) {
             page = Integer.valueOf(queryParams.getFirst("page")) - 1;
         } else {
             page = 0;

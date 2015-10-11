@@ -106,11 +106,11 @@ public class FacturaService extends Service<FacturaEntity> {
         if ("asc".equals(ordenDeOrdenacion)) {
             criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.asc(facturas.get(ordenarPorColumna)));
         } else {
-            criteriaQuery.select(facturas).where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(facturas.get(ordenarPorColumna)));
+            criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(facturas.get(ordenarPorColumna)));
         }
 
         Integer page;
-        if(queryParams.getFirst("page") != null ) {
+        if (queryParams.getFirst("page") != null) {
             page = Integer.valueOf(queryParams.getFirst("page")) - 1;
         } else {
             page = 0;

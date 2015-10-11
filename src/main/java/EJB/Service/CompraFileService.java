@@ -4,7 +4,9 @@ import JPA.CompraDetalleEntity;
 import JPA.CompraEntity;
 import JPA.ProductoEntity;
 import JPA.ProveedorEntity;
-import org.codehaus.jackson.*;
+import org.codehaus.jackson.JsonFactory;
+import org.codehaus.jackson.JsonParser;
+import org.codehaus.jackson.JsonToken;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import javax.ejb.Remove;
@@ -50,7 +52,7 @@ public class CompraFileService {
     private List<CompraDetalleEntity> listaCompraDetalles = new ArrayList<>();
 
 
-    public void parsear(String is){
+    public void parsear(String is) {
         ObjectMapper objectMapper = new ObjectMapper();
         jfactory = objectMapper.getJsonFactory();
         String result = is;
@@ -121,7 +123,7 @@ public class CompraFileService {
             // termino el file entonces persistimos
             addCompra();
             terminarStateful();
-        }catch(Exception e){
+        } catch (Exception e) {
             // Procesamos la excepcion
         }
     }
@@ -129,14 +131,14 @@ public class CompraFileService {
     /*
     Metodos para almacenar compras
      */
-    public void addCabeceraCompra(String fecha, String monto, String proveedorId){
+    public void addCabeceraCompra(String fecha, String monto, String proveedorId) {
         compra.setFecha(fecha);
         compra.setMonto(monto);
         proveedor = em.find(ProveedorEntity.class, Long.parseLong(proveedorId));
         compra.setProveedor(proveedor);
     }
 
-    public void addCompraDetalle(String productoId, String cantidad){
+    public void addCompraDetalle(String productoId, String cantidad) {
         ProductoEntity producto;
         producto = em.find(ProductoEntity.class, Long.parseLong(productoId));
 
@@ -147,19 +149,19 @@ public class CompraFileService {
         listaCompraDetalles.add(compraDetalle);
     }
 
-    public void addCompra(){
-        for(CompraDetalleEntity detalle : listaCompraDetalles) {
+    public void addCompra() {
+        for (CompraDetalleEntity detalle : listaCompraDetalles) {
             compra.setDetalles(detalle);
         }
         try {
             em.persist(compra);
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Remove
-    public void terminarStateful(){
+    public void terminarStateful() {
         // este metodo finaliza la instancia creada del stateful bean con el
         // annotation @Remove
     }

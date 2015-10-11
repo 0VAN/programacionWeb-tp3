@@ -63,22 +63,22 @@ public class FilesService {
     /*
     Metodos para almacenar compras
      */
-    public void addCabeceraCompra(String fecha, String monto, String proveedorId){
+    public void addCabeceraCompra(String fecha, String monto, String proveedorId) {
         compra.setFecha(fecha);
         compra.setMonto(monto);
         proveedor = em.find(ProveedorEntity.class, Long.parseLong(proveedorId));
         compra.setProveedor(proveedor);
     }
 
-    public void addCompraDetalle(String productoId, String cantidad){
+    public void addCompraDetalle(String productoId, String cantidad) {
         producto = em.find(ProductoEntity.class, Long.parseLong(productoId));
         compraDetalle.setProducto(producto);
         compraDetalle.setCantidad(Long.parseLong(cantidad));
         listaCompraDetalles.add(compraDetalle);
     }
 
-    public void addCompra(){
-        for(CompraDetalleEntity detalle : listaCompraDetalles) {
+    public void addCompra() {
+        for (CompraDetalleEntity detalle : listaCompraDetalles) {
             compra.setDetalles(detalle);
         }
         em.persist(compra);
@@ -87,7 +87,7 @@ public class FilesService {
     /*
     Metodos para almacenar ventas
      */
-    public void addCabeceraVenta(String fecha, String facturaId, String clienteId, String monto){
+    public void addCabeceraVenta(String fecha, String facturaId, String clienteId, String monto) {
         venta.setFecha(fecha);
         factura = em.find(FacturaEntity.class, Long.parseLong(facturaId));
         venta.setFactura(factura);
@@ -96,7 +96,7 @@ public class FilesService {
         venta.setMonto(monto);
     }
 
-    public void addVentaDetalle(String productoId, String cantidad){
+    public void addVentaDetalle(String productoId, String cantidad) {
         producto = em.find(ProductoEntity.class, Long.parseLong(productoId));
         ventaDetalle.setProducto(producto);
         ventaDetalle.setCantidad(Long.parseLong(cantidad));
@@ -112,7 +112,7 @@ public class FilesService {
     }
 
     @Remove
-    public void terminarStateful(){
+    public void terminarStateful() {
         // este metodo finaliza la instancia creada del stateful bean con el
         // annotation @Remove
     }

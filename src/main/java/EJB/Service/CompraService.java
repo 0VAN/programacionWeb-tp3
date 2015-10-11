@@ -68,6 +68,7 @@ public class CompraService extends Service<CompraEntity> {
         return super.add(compraEntity);
 
     }
+
     /**
      * Retorna la entidad buscada por Id
      *
@@ -148,23 +149,23 @@ public class CompraService extends Service<CompraEntity> {
         /* Creamos el query para la consulta */
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<CompraEntity> criteriaQuery = criteriaBuilder.createQuery(CompraEntity.class);
-        Root<CompraEntity> ventas = criteriaQuery.from(CompraEntity.class);
+        Root<CompraEntity> compras = criteriaQuery.from(CompraEntity.class);
 
         // Filtrado por todas las columnas
-        Predicate filtradoPorAllAttributes = criteriaBuilder.or(criteriaBuilder.like(ventas.<String>get("monto"), "%" + by_all_attributes + "%"),
-                criteriaBuilder.like(ventas.<String>get("proveedor").<String>get("descripcion"), "%" + by_proveedor + "%"),
-                criteriaBuilder.like(ventas.<String>get("fecha"), "%" + by_all_attributes + "%"));
+        Predicate filtradoPorAllAttributes = criteriaBuilder.or(criteriaBuilder.like(compras.<String>get("monto"), "%" + by_all_attributes + "%"),
+                criteriaBuilder.like(compras.<String>get("proveedor").<String>get("descripcion"), "%" + by_proveedor + "%"),
+                criteriaBuilder.like(compras.<String>get("fecha"), "%" + by_all_attributes + "%"));
 
         // Filtrado por columna
-        Predicate filtradoPorColumna = criteriaBuilder.and(criteriaBuilder.like(ventas.<String>get("monto"), "%" + by_monto + "%"),
-                criteriaBuilder.like(ventas.<String>get("proveedor").<String>get("descripcion"), "%" + by_proveedor + "%"),
-                criteriaBuilder.like(ventas.<String>get("fecha"), "%" + by_fecha + "%"));
+        Predicate filtradoPorColumna = criteriaBuilder.and(criteriaBuilder.like(compras.<String>get("monto"), "%" + by_monto + "%"),
+                criteriaBuilder.like(compras.<String>get("proveedor").<String>get("descripcion"), "%" + by_proveedor + "%"),
+                criteriaBuilder.like(compras.<String>get("fecha"), "%" + by_fecha + "%"));
 
         // Fijamos la Ordenacion
         if ("asc".equals(ordenDeOrdenacion)) {
-            criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.asc(ventas.get(ordenarPorColumna)));
+            criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.asc(compras.get(ordenarPorColumna)));
         } else {
-            criteriaQuery.select(ventas).where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(ventas.get(ordenarPorColumna)));
+            criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(compras.get(ordenarPorColumna)));
         }
 
 
@@ -231,7 +232,7 @@ public class CompraService extends Service<CompraEntity> {
         // Iniciamos las varialles para el filtrado
         String by_all_attributes = queryParams.getFirst("by_all_attributes");
         String by_monto = queryParams.getFirst("by_monto");
-        String by_proveedor = queryParams.getFirst("by_proveedor");
+        String by_proveedor = queryParams.getFirst("by_proveedor.descripcion");
         String by_fecha = queryParams.getFirst("by_fecha");
 
         if (by_proveedor == null) {
@@ -253,35 +254,35 @@ public class CompraService extends Service<CompraEntity> {
         /* Creamos el query para la consulta */
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<CompraEntity> criteriaQuery = criteriaBuilder.createQuery(CompraEntity.class);
-        Root<CompraEntity> ventas = criteriaQuery.from(CompraEntity.class);
+        Root<CompraEntity> compras = criteriaQuery.from(CompraEntity.class);
 
         // Filtrado por todas las columnas
-        Predicate filtradoPorAllAttributes = criteriaBuilder.or(criteriaBuilder.like(ventas.<String>get("monto"), "%" + by_all_attributes + "%"),
-                criteriaBuilder.like(ventas.<String>get("proveedor").<String>get("descripcion"), "%" + by_proveedor + "%"),
-                criteriaBuilder.like(ventas.<String>get("fecha"), "%" + by_all_attributes + "%"));
+        Predicate filtradoPorAllAttributes = criteriaBuilder.or(criteriaBuilder.like(compras.<String>get("monto"), "%" + by_all_attributes + "%"),
+                criteriaBuilder.like(compras.<String>get("proveedor").<String>get("descripcion"), "%" + by_proveedor + "%"),
+                criteriaBuilder.like(compras.<String>get("fecha"), "%" + by_all_attributes + "%"));
 
         // Filtrado por columna
-        Predicate filtradoPorColumna = criteriaBuilder.and(criteriaBuilder.like(ventas.<String>get("monto"), "%" + by_monto + "%"),
-                criteriaBuilder.like(ventas.<String>get("proveedor").<String>get("descripcion"), "%" + by_proveedor + "%"),
-                criteriaBuilder.like(ventas.<String>get("fecha"), "%" + by_fecha + "%"));
+        Predicate filtradoPorColumna = criteriaBuilder.and(criteriaBuilder.like(compras.<String>get("monto"), "%" + by_monto + "%"),
+                criteriaBuilder.like(compras.<String>get("proveedor").<String>get("descripcion"), "%" + by_proveedor + "%"),
+                criteriaBuilder.like(compras.<String>get("fecha"), "%" + by_fecha + "%"));
 
         // Fijamos la Ordenacion
         if ("asc".equals(ordenDeOrdenacion)) {
-            criteriaQuery.multiselect(ventas.<String>get("proveedor"),
-                    ventas.<String>get("fecha"),
-                    ventas.<String>get("monto"));
+            criteriaQuery.multiselect(compras.<String>get("proveedor"),
+                    compras.<String>get("fecha"),
+                    compras.<String>get("monto"));
 
-            criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.asc(ventas.get(ordenarPorColumna)));
+            criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.asc(compras.get(ordenarPorColumna)));
         } else {
-            criteriaQuery.multiselect(ventas.<String>get("proveedor"),
-                    ventas.<String>get("fecha"),
-                    ventas.<String>get("monto"));
+            criteriaQuery.multiselect(compras.<String>get("proveedor"),
+                    compras.<String>get("fecha"),
+                    compras.<String>get("monto"));
 
-            criteriaQuery.select(ventas).where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(ventas.get(ordenarPorColumna)));
+            criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(compras.get(ordenarPorColumna)));
         }
 
         Integer page;
-        if(queryParams.getFirst("page") != null ) {
+        if (queryParams.getFirst("page") != null) {
             page = Integer.valueOf(queryParams.getFirst("page")) - 1;
         } else {
             page = 0;

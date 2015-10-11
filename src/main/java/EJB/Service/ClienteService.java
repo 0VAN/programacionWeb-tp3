@@ -175,7 +175,7 @@ public class ClienteService extends Service<ClienteEntity> {
 
         // Iniciamos las variables parael filtrado
         String by_all_attributes = queryParams.getFirst("by_all_attributes");
-        String by_cedula_identidad = queryParams.getFirst("by_cedula_identidad");
+        String by_cedula_identidad = queryParams.getFirst("by_cedulaIdentidad");
         String by_nombre = queryParams.getFirst("by_nombre");
 
         if (by_nombre == null) {
@@ -197,11 +197,11 @@ public class ClienteService extends Service<ClienteEntity> {
 
         // Filtrado por todas las columnas
         Predicate filtradoPorAllAttributes = criteriaBuilder.or(criteriaBuilder.like(clientes.<String>get("nombre"), "%" + by_all_attributes + "%"),
-                criteriaBuilder.like(clientes.<String>get("cedulaIdentidad"), "%" + by_all_attributes + "%"));
+                criteriaBuilder.like(clientes.<String>get("cedulaIdentidad"), "%" + by_all_attributes));
 
         // Filtrado por columna
         Predicate filtradoPorColumna = criteriaBuilder.and(criteriaBuilder.like(clientes.<String>get("nombre"), "%" + by_nombre + "%"),
-                criteriaBuilder.like(clientes.<String>get("cedulaIdentidad"), "%" + by_cedula_identidad + "%"));
+                criteriaBuilder.like(clientes.<String>get("cedulaIdentidad"), "%" + by_cedula_identidad));
 
         // Fijamos la Ordenacion
         if ("asc".equals(ordenDeOrdenacion)) {
@@ -213,7 +213,7 @@ public class ClienteService extends Service<ClienteEntity> {
         }
 
         Integer page;
-        if(queryParams.getFirst("page") != null ) {
+        if (queryParams.getFirst("page") != null) {
             page = Integer.valueOf(queryParams.getFirst("page")) - 1;
         } else {
             page = 0;

@@ -142,13 +142,18 @@ public class VentasService extends Service<VentaEntity> {
         } else if (queryParams.getFirst("fecha") != null) {
             ordenarPorColumna = "fecha";
             ordenDeOrdenacion = queryParams.getFirst("fecha");
+        } else if (queryParams.getFirst("factura.id") != null) {
+            ordenarPorColumna = "factura";
+            ordenDeOrdenacion = queryParams.getFirst("factura.id");
         }
 
         // Iniciamos las variables para el filtrado
         String by_all_attributes = queryParams.getFirst("by_all_attributes");
         String by_monto = queryParams.getFirst("by_monto");
-        String by_cliente = queryParams.getFirst("by_cliente");
+        String by_cliente = queryParams.getFirst("by_cliente.nombre");
         String by_fecha = queryParams.getFirst("by_fecha");
+        String by_factura = queryParams.getFirst("by_factura");
+
 
         if (by_cliente == null) {
             by_cliente = "";
@@ -162,6 +167,11 @@ public class VentasService extends Service<VentaEntity> {
             by_monto = "";
         }
 
+        if (by_factura == null) {
+            by_factura = "";
+        }
+
+
         if (by_all_attributes == null) {
             by_all_attributes = "";
         }
@@ -174,29 +184,31 @@ public class VentasService extends Service<VentaEntity> {
         // Filtrado por todas las columnas
         Predicate filtradoPorAllAttributes = criteriaBuilder.or(criteriaBuilder.like(ventas.<String>get("monto"), "%" + by_all_attributes + "%"),
                 criteriaBuilder.like(ventas.<String>get("cliente").<String>get("nombre"), "%" + by_cliente + "%"),
+//                criteriaBuilder.like(ventas.<String>get("factura").<String>get("id"), "%" + by_factura + "%"),
                 criteriaBuilder.like(ventas.<String>get("fecha"), "%" + by_all_attributes + "%"));
 
         // Filtrado por columna
         Predicate filtradoPorColumna = criteriaBuilder.and(criteriaBuilder.like(ventas.<String>get("monto"), "%" + by_monto + "%"),
                 criteriaBuilder.like(ventas.<String>get("cliente").<String>get("nombre"), "%" + by_cliente + "%"),
+//                criteriaBuilder.like(ventas.<String>get("factura").<String>get("id"), "%" + by_factura + "%"),
                 criteriaBuilder.like(ventas.<String>get("fecha"), "%" + by_fecha + "%"));
 
         // Fijamos la Ordenacion
         if ("asc".equals(ordenDeOrdenacion)) {
             criteriaQuery.multiselect(ventas.<String>get("cliente"),
-                    ventas.<String>get("fecha"), ventas.<String>get("monto"));
+                    ventas.<String>get("fecha"), ventas.<String>get("monto"), ventas.<String>get("factura"));
 
             criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.asc(ventas.get(ordenarPorColumna)));
         } else {
             criteriaQuery.multiselect(ventas.<String>get("cliente"),
                     ventas.<String>get("fecha"),
-                    ventas.<String>get("monto"));
+                    ventas.<String>get("monto"), ventas.<String>get("factura"));
 
-            criteriaQuery.select(ventas).where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(ventas.get(ordenarPorColumna)));
+            criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(ventas.get(ordenarPorColumna)));
         }
 
         Integer page;
-        if(queryParams.getFirst("page") != null ) {
+        if (queryParams.getFirst("page") != null) {
             page = Integer.valueOf(queryParams.getFirst("page")) - 1;
         } else {
             page = 0;
@@ -230,6 +242,9 @@ public class VentasService extends Service<VentaEntity> {
         } else if (queryParams.getFirst("fecha") != null) {
             ordenarPorColumna = "fecha";
             ordenDeOrdenacion = queryParams.getFirst("fecha");
+        } else if (queryParams.getFirst("factura.id") != null) {
+            ordenarPorColumna = "factura";
+            ordenDeOrdenacion = queryParams.getFirst("factura.id");
         }
 
         // Iniciamos las variables para el filtrado

@@ -124,7 +124,7 @@ function ListController($scope, ListServices) {
             if (object != null)
                 object = object[explodedString[i]];
             else
-                object = "empty"
+                object = ""
         }
         return object;
     };

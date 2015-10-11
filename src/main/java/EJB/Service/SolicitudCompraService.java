@@ -141,7 +141,7 @@ public class SolicitudCompraService extends Service<SolicitudCompraEntity> {
         }
 
         Integer page;
-        if(queryParams.getFirst("page") != null ) {
+        if (queryParams.getFirst("page") != null) {
             page = Integer.valueOf(queryParams.getFirst("page")) - 1;
         } else {
             page = 0;

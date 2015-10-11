@@ -67,6 +67,7 @@ public class VentasRest {
     public Response exportAllVentas(@Context UriInfo info) {
         return Response.status(200).entity(ventasService.exportAllVentas(info.getQueryParameters())).build();
     }
+
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
@@ -79,7 +80,6 @@ public class VentasRest {
     public Response getVentas(@Context UriInfo info) {
         return Response.status(200).entity(ventasService.getVentas(info.getQueryParameters())).build();
     }
-
 
 
 //

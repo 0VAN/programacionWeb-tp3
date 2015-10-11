@@ -32,6 +32,34 @@ public class CompraRest {
     @EJB
     CompraFileService compraFileService;
 
+    // convert InputStream to String
+    private static String getStringFromInputStream(InputStream is) {
+
+        BufferedReader br = null;
+        StringBuilder sb = new StringBuilder();
+
+        String line;
+        try {
+
+            br = new BufferedReader(new InputStreamReader(is));
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return sb.toString();
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -75,8 +103,6 @@ public class CompraRest {
         return Response.status(201).build();
     }
 
-
-
     @POST
     @Path("/uploadFileCompras")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -85,35 +111,6 @@ public class CompraRest {
         compraFileService.parsear(result);
 
         return Response.status(200).entity("ok").build();
-    }
-
-    // convert InputStream to String
-    private static String getStringFromInputStream(InputStream is) {
-
-        BufferedReader br = null;
-        StringBuilder sb = new StringBuilder();
-
-        String line;
-        try {
-
-            br = new BufferedReader(new InputStreamReader(is));
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return sb.toString();
     }
 
 }

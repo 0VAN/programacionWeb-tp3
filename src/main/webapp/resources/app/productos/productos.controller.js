@@ -12,6 +12,7 @@ function ProductosController($scope, $http) {
         columns: [
             {name: 'Id', property: 'id', visible: false, sortable: true, searchable: true},
             {name: 'descripcion', property: 'descripcion', visible: true, sortable: true, searchable: true},
+            {name: 'proveedor', property: 'proveedor.descripcion', visible: true, sortable: true, searchable: true},
             {name: 'stock', property: 'stock', visible: true, sortable: true, searchable: true},
             {name: 'precio', property: 'precio', visible: true, sortable: true, searchable: true}
         ],
