@@ -97,7 +97,7 @@ public class Facturacion {
         }
 
 
-        pdf((VentaEntity) ventasService.getVenta(1L), 978);
+        //pdf((VentaEntity) ventasService.getVenta(1L), 978);
         System.out.println("Termino la exportacion");
 
         if (contador == 0) {

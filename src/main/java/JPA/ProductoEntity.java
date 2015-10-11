@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "producto.findAll", query = "select p.stock, p.descripcion, p.precio, p.proveedor from ProductoEntity p"),
+    @NamedQuery(name = "producto.findAll", query = "select p.id, p.stock, p.descripcion, p.precio, p.proveedor from ProductoEntity p"),
     @NamedQuery(name = "producto.totalRegisters", query = "select count(p.id) from ProductoEntity p"),
     @NamedQuery(name = "producto.findById", query = "select p from ProductoEntity p where p.id=:id")
 })
