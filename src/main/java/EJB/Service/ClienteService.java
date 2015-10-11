@@ -10,6 +10,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.ws.rs.core.MultivaluedMap;
+import java.util.List;
 
 /**
  * Servicios para la gestion de Clientes
@@ -40,6 +41,10 @@ public class ClienteService extends Service<ClienteEntity> {
         return count;
     }
 
+    public List getAllClientes() {
+        Query query = em.createNamedQuery("cliente.findAll");
+        return query.getResultList();
+    }
     /**
      * Metodo para obtener la lista de clientes por filtro y
      * orden aplicado a las columnas

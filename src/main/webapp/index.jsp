@@ -30,67 +30,53 @@
         Sistema Compra-Venta
     </div>
 </h2>
+
 <div class="ui grid">
     <div class="two wide column">
         <div class="ui vertical menu inverted">
-            <div class="ui simple dropdown item">
-                <a data-ng-href="#/clientes">Clientes</a>
-                <i class="dropdown icon"></i>
-
-                <div class="menu inverted">
-                    <a class="item"><i class="edit icon"></i>Agregar Cliente</a>
-                    <a class="item"><i class="globe icon"></i>Eliminar Cliente/s</a>
-                    <a class="item"><i class="settings icon"></i>Editar Cliente</a>
+            <div class="item">
+                <div class="header">Ventas</div>
+                <div class="menu">
+                    <a class="item" data-ng-href="#/ventas/alta">Alta</a>
+                    <a class="item" data-ng-href="#/ventas/file">Carga Masiva</a>
+                    <a class="item">Modificacion</a>
+                    <a class="item" data-ng-href="#/ventas">Todas las ventas</a>
                 </div>
             </div>
-            <div class="ui simple dropdown item">
-                <a data-ng-href="#/productos">Productos</a>
-                <i class="dropdown icon"></i>
-
-                <div class="menu inverted">
-                    <a class="item"><i class="edit icon"></i>Agregar Producto</a>
-                    <a class="item"><i class="globe icon"></i>Eliminar Producto/s</a>
-                    <a class="item"><i class="settings icon"></i>Editar Producto</a>
+            <div class="item">
+                <div class="header">Clientes</div>
+                <div class="menu">
+                    <a class="item" data-ng-href="#/clientes/alta">Alta</a>
+                    <a class="item" data-ng-href="#/clientes/file">Carga Masiva</a>
+                    <a class="item">Modificacion</a>
+                    <a class="item" data-ng-href="#/clientes">Todos los clientes</a>
                 </div>
             </div>
-            <div class="ui simple dropdown item">
-                <a data-ng-href="#/proveedores">Proveedores</a>
-                <i class="dropdown icon"></i>
-
-                <div class="menu inverted">
-                    <a class="item"><i class="edit icon"></i>Agregar Proveedor</a>
-                    <a class="item"><i class="globe icon"></i>Eliminar Proveedor/es</a>
-                    <a class="item"><i class="settings icon"></i>Editar Proveedor</a>
+            <div class="item">
+                <div class="header">Proveedores</div>
+                <div class="menu">
+                    <a class="item" data-ng-href="#/proveedores/alta">Alta</a>
+                    <a class="item">Baja</a>
+                    <a class="item">Modificacion</a>
+                    <a class="item" data-ng-href="#/proveedores">Todos los proveedores</a>
                 </div>
             </div>
-            <div class="ui simple dropdown item">
-                <a data-ng-href="#/compras">Compras</a>
-                <i class="dropdown icon"></i>
-
-                <div class="menu inverted">
-                    <a class="item"><i class="edit icon"></i>Agregar Compra</a>
-                    <a class="item"><i class="globe icon"></i>Eliminar Compras/s</a>
-                    <a class="item"><i class="settings icon"></i>Editar Compras</a>
+            <div class="item">
+                <div class="header">Productos</div>
+                <div class="menu">
+                    <a class="item" data-ng-href="#/productos/alta">Alta</a>
+                    <a class="item">Baja</a>
+                    <a class="item">Modificacion</a>
+                    <a class="item" data-ng-href="#/productos">Todos los productos</a>
                 </div>
             </div>
-            <div class="ui simple dropdown item">
-                <a data-ng-href="#/ventas">Ventas</a>
-                <i class="dropdown icon"></i>
-
-                <div class="menu inverted">
-                    <a class="item"><i class="edit icon"></i>Agregar Venta</a>
-                    <a class="item"><i class="globe icon"></i>Eliminar Venta/s</a>
-                    <a class="item"><i class="settings icon"></i>Editar Venta</a>
-                </div>
-            </div>
-            <div class="ui simple dropdown item">
-                <a data-ng-href="#/facturas">Facturas</a>
-                <i class="dropdown icon"></i>
-
-                <div class="menu inverted">
-                    <a class="item"><i class="edit icon"></i>Agregar Venta</a>
-                    <a class="item"><i class="globe icon"></i>Eliminar Venta/s</a>
-                    <a class="item"><i class="settings icon"></i>Editar Venta</a>
+            <div class="item">
+                <div class="header">Compras</div>
+                <div class="menu">
+                    <a class="item" data-ng-href="#/compras/alta">Alta</a>
+                    <a class="item" data-ng-href="#/compras/file">Carga Masiva</a>
+                    <a class="item">Modificacion</a>
+                    <a class="item" data-ng-href="#/compras">Todas los compras</a>
                 </div>
             </div>
         </div>

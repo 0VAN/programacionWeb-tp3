@@ -5,4 +5,12 @@ package EJB.Jackson;
  */
 public class Proveedor {
     private String descripcion;
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 }

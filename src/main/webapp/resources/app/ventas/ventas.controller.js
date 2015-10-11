@@ -24,19 +24,54 @@ function VentasController($scope, $http) {
         detailViewTitle: 'Vista detalle de venta'
     };
 
-    $scope.createVentas = function () {
+    $scope.clienteSeleccionado = 0;
+    $scope.productoSeleccionado = {};
+    $scope.productosSeleccionados = [];
+
+    $scope.agregarAlCarro = function () {
+        $scope.productosSeleccionados.push(
+            {
+                id: $scope.productoSeleccionado.id,
+                descripcion: $scope.productoSeleccionado.descripcion,
+                cantidad: $scope.productoSeleccionado.cantidad
+            }
+        );
+        console.log($scope.productosSeleccionados);
+    };
+    $scope.removerProducto = function (data) {
+        var idx = $scope.productosSeleccionados.indexOf(data);
+        if (idx !== -1) {
+            $scope.productosSeleccionados.splice(idx, 1);
+        }
+        console.log($scope.productosSeleccionados);
+    };
+
+    $http.get('http://localhost:8080/tp3/service/clientes/all').then(
+        function (clientes) {
+            $scope.clientes = clientes.data;
+        }
+    );
+
+    $http.get('http://localhost:8080/tp3/service/productos/all').then(
+        function (productos) {
+            $scope.productos = productos.data;
+        }
+    );
+
+
+    $scope.confirmarVenta = function () {
+        var detalles = [];
+        for (indice in $scope.productosSeleccionados) {
+            detalles.push({
+                productoId: parseInt($scope.productosSeleccionados[indice].id),
+                cantidad: parseInt($scope.productosSeleccionados[indice].cantidad)
+            })
+        }
+
         var data = {
-            clienteId: 1,
+            clienteId: $scope.clienteSeleccionado,
             fecha: "25/25/25",
-            detalles: [
-                {
-                    productoId: 3,
-                    cantidad: 2
-                }, {
-                    productoId: 4,
-                    cantidad: 2
-                }
-            ]
+            detalles: detalles
         };
         $http.post('http://localhost:8080/tp3/service/ventas', data).then(successCallback, errorCallback);
 

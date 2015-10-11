@@ -3,6 +3,7 @@ package JPA;
 import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -40,7 +41,7 @@ public class CompraEntity {
     private ProveedorEntity proveedor;
 
     @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL)
-    private List<CompraDetalleEntity> detalles;
+    private List<CompraDetalleEntity> detalles = new ArrayList<>();
 
     public CompraEntity() {
         // Constructor por defecto

@@ -3,6 +3,7 @@ package JPA;
 import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -11,7 +12,7 @@ import java.util.List;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "producto.findAll", query = "select p.id, p.stock, p.descripcion, p.precio, p.proveedor from ProductoEntity p"),
+    @NamedQuery(name = "producto.findAll", query = "select p from ProductoEntity p"),
     @NamedQuery(name = "producto.totalRegisters", query = "select count(p.id) from ProductoEntity p"),
     @NamedQuery(name = "producto.findById", query = "select p from ProductoEntity p where p.id=:id")
 })
@@ -45,7 +46,7 @@ public class ProductoEntity {
     private ProveedorEntity proveedor;
 
     @OneToMany(mappedBy = "producto")
-    private List<SolicitudCompraEntity> solicitudes;
+    private List<SolicitudCompraEntity> solicitudes = new ArrayList<>();
 
     public ProductoEntity() {
         // Constructor por defecto
@@ -96,13 +97,13 @@ public class ProductoEntity {
         this.descripcion = descripcion;
     }
 
-    public List<SolicitudCompraEntity> getSolicitudes() {
-        return solicitudes;
-    }
-
-    public void setSolicitudes(List<SolicitudCompraEntity> solicitudes) {
-        this.solicitudes = solicitudes;
-    }
+//    public List<SolicitudCompraEntity> getSolicitudes() {
+//        return solicitudes;
+//    }
+//
+//    public void setSolicitudes(List<SolicitudCompraEntity> solicitudes) {
+//        this.solicitudes = solicitudes;
+//    }
 
     public ProveedorEntity getProveedor() {
         return proveedor;
