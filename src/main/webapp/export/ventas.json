@@ -1,0 +1,258 @@
+[
+  {
+    "id": 960,
+    "fecha": "25/25/25",
+    "factura": null,
+    "cliente": {
+      "id": 3,
+      "nombre": "Catherine Lynch",
+      "cedulaIdentidad": "1002"
+    },
+    "detalles": [],
+    "monto": "1209184"
+  },
+  {
+    "id": 962,
+    "fecha": "25/25/25",
+    "factura": null,
+    "cliente": {
+      "id": 1,
+      "nombre": "Mary Harvey",
+      "cedulaIdentidad": "1000"
+    },
+    "detalles": [
+      {
+        "id": 958,
+        "cantidad": 5,
+        "producto": {
+          "id": 1,
+          "stock": 52,
+          "precio": 16778,
+          "descripcion": "Devify",
+          "proveedor": {
+            "id": 276,
+            "descripcion": "Vipe"
+          }
+        }
+      }
+    ],
+    "monto": "83890"
+  },
+  {
+    "id": 963,
+    "fecha": "25/25/25",
+    "factura": null,
+    "cliente": {
+      "id": 1,
+      "nombre": "Mary Harvey",
+      "cedulaIdentidad": "1000"
+    },
+    "detalles": [
+      {
+        "id": 959,
+        "cantidad": 5,
+        "producto": {
+          "id": 1,
+          "stock": 52,
+          "precio": 16778,
+          "descripcion": "Devify",
+          "proveedor": {
+            "id": 276,
+            "descripcion": "Vipe"
+          }
+        }
+      }
+    ],
+    "monto": "83890"
+  },
+  {
+    "id": 964,
+    "fecha": "25/25/25",
+    "factura": null,
+    "cliente": {
+      "id": 1,
+      "nombre": "Mary Harvey",
+      "cedulaIdentidad": "1000"
+    },
+    "detalles": [
+      {
+        "id": 961,
+        "cantidad": 7,
+        "producto": {
+          "id": 5,
+          "stock": 326,
+          "precio": 46769,
+          "descripcion": "Skinder",
+          "proveedor": {
+            "id": 409,
+            "descripcion": "Ainyx"
+          }
+        }
+      },
+      {
+        "id": 960,
+        "cantidad": 5,
+        "producto": {
+          "id": 1,
+          "stock": 52,
+          "precio": 16778,
+          "descripcion": "Devify",
+          "proveedor": {
+            "id": 276,
+            "descripcion": "Vipe"
+          }
+        }
+      }
+    ],
+    "monto": "411273"
+  },
+  {
+    "id": 965,
+    "fecha": "25/25/25",
+    "factura": null,
+    "cliente": {
+      "id": 11,
+      "nombre": "Thomas Payne",
+      "cedulaIdentidad": "1010"
+    },
+    "detalles": [
+      {
+        "id": 963,
+        "cantidad": 5,
+        "producto": {
+          "id": 239,
+          "stock": 116,
+          "precio": 166794,
+          "descripcion": "Bluejam",
+          "proveedor": {
+            "id": 9,
+            "descripcion": "Yamia"
+          }
+        }
+      },
+      {
+        "id": 962,
+        "cantidad": 5,
+        "producto": {
+          "id": 14,
+          "stock": 102,
+          "precio": 91383,
+          "descripcion": "Quire",
+          "proveedor": {
+            "id": 448,
+            "descripcion": "Thoughtmix"
+          }
+        }
+      }
+    ],
+    "monto": "1290885"
+  },
+  {
+    "id": 966,
+    "fecha": "25/25/25",
+    "factura": null,
+    "cliente": {
+      "id": 5,
+      "nombre": "Robin Hamilton",
+      "cedulaIdentidad": "1004"
+    },
+    "detalles": [
+      {
+        "id": 964,
+        "cantidad": 2,
+        "producto": {
+          "id": 1,
+          "stock": 52,
+          "precio": 16778,
+          "descripcion": "Devify",
+          "proveedor": {
+            "id": 276,
+            "descripcion": "Vipe"
+          }
+        }
+      }
+    ],
+    "monto": "33556"
+  },
+  {
+    "id": 967,
+    "fecha": "25/25/25",
+    "factura": null,
+    "cliente": {
+      "id": 4,
+      "nombre": "Fred Ramirez",
+      "cedulaIdentidad": "1003"
+    },
+    "detalles": [
+      {
+        "id": 965,
+        "cantidad": 5,
+        "producto": {
+          "id": 239,
+          "stock": 116,
+          "precio": 166794,
+          "descripcion": "Bluejam",
+          "proveedor": {
+            "id": 9,
+            "descripcion": "Yamia"
+          }
+        }
+      }
+    ],
+    "monto": "833970"
+  },
+  {
+    "id": 968,
+    "fecha": "25/25/25",
+    "factura": null,
+    "cliente": {
+      "id": 3,
+      "nombre": "Catherine Lynch",
+      "cedulaIdentidad": "1002"
+    },
+    "detalles": [
+      {
+        "id": 966,
+        "cantidad": 5,
+        "producto": {
+          "id": 14,
+          "stock": 102,
+          "precio": 91383,
+          "descripcion": "Quire",
+          "proveedor": {
+            "id": 448,
+            "descripcion": "Thoughtmix"
+          }
+        }
+      }
+    ],
+    "monto": "456915"
+  },
+  {
+    "id": 969,
+    "fecha": "25/25/25",
+    "factura": null,
+    "cliente": {
+      "id": 4,
+      "nombre": "Fred Ramirez",
+      "cedulaIdentidad": "1003"
+    },
+    "detalles": [
+      {
+        "id": 967,
+        "cantidad": 5,
+        "producto": {
+          "id": 4,
+          "stock": 123,
+          "precio": 158439,
+          "descripcion": "Twitterwire",
+          "proveedor": {
+            "id": 310,
+            "descripcion": "Skiba"
+          }
+        }
+      }
+    ],
+    "monto": "792195"
+  }
+]

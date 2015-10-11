@@ -1,4 +1,5 @@
 <html data-ng-app="storeApp">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <link rel="stylesheet" type="text/css" href="resources/static/css/table.css">
 <link rel="stylesheet" type="text/css" href="resources/static/css/semantic.min.css">

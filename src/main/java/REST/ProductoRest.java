@@ -42,6 +42,13 @@ public class ProductoRest {
     }
 
     @GET
+    @Path("/exportar")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response exportAllProductos(@Context UriInfo info) {
+        return Response.status(200).entity(service.exportAllProductos(info.getQueryParameters())).build();
+    }
+
+    @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProducto(@PathParam("id") int id) {

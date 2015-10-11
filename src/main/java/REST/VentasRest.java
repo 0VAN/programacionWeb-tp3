@@ -62,6 +62,12 @@ public class VentasRest {
     }
 
     @GET
+    @Path("/exportar")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response exportAllVentas(@Context UriInfo info) {
+        return Response.status(200).entity(ventasService.exportAllVentas(info.getQueryParameters())).build();
+    }
+    @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllVentas() {

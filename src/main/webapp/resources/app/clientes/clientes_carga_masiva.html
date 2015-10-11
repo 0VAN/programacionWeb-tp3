@@ -1,14 +1,17 @@
 <h1 class="ui dividing header">
     Formulario de carga masiva de clientes
 </h1>
-<form class="ui form" action="service/clientes/uploadFileClientes" method="post" enctype="multipart/form-data">
-    <div class="fields">
-        <div class="three wide field">
-            <p>
-                Select a file : <input type="file" name="fileCliente" id="fileCliente" />
-            </p>
-
-            <input type="submit" value="Upload It"/>
-        </div>
-    </div>
+<form method="post" action="service/clientes/upload"
+      enctype="multipart/form-data">
+    <table align="center" border="1" cellpadding="0"
+           cellspacing="0">
+        <tr>
+            <td>Select File:</td>
+            <td><input type="file" name="uploadedFile" size="1000"/></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Upload File"/></td>
+            <td><input type="reset" value="Reset"/></td>
+        </tr>
+    </table>
 </form>

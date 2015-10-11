@@ -10,10 +10,10 @@ angular
     ]);
 
 function ListController($scope, ListServices) {
-
     var params = {
         page: 1
     };
+
     var sortIconsClass = ["circular inverted sort content icon ascending", "circular inverted sort content icon descending"];
     var sortIconsClassDisabled = ["sort content icon ascending", "sort content icon descending "];
 
@@ -121,8 +121,18 @@ function ListController($scope, ListServices) {
     $scope.showProperty = function (object, string) {
         var explodedString = string.split('.');
         for (i = 0, l = explodedString.length; i < l; i++) {
-            object = object[explodedString[i]];
+            if (object != null)
+                object = object[explodedString[i]];
+            else
+                object = "empty"
         }
         return object;
-    }
+    };
+
+    $scope.exportar = function () {
+        ListServices.salesServices($scope.config.URL).exportar(function (data) {
+            console.log(data);
+        });
+        console.log(params);
+    };
 }

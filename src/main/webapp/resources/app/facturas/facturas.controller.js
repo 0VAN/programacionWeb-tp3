@@ -15,7 +15,7 @@ function FacturasController($scope) {
             {name: 'fecha', property: 'fecha', visible: true, sortable: true, searchable: true},
             {name: 'monto', property: 'monto', visible: true, sortable: true, searchable: true}
         ],
-        URL: 'http://localhost:8080/tp3/resources/facturas.json',
+        URL: 'http://localhost:8080/tp3/service/facturas',
         globalSearch: true,
         title: 'Lista de facturas',
         detailViewTitle: 'Vista detalle de venta'

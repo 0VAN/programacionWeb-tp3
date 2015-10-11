@@ -12,15 +12,17 @@ angular
 function ComprasController($scope, $http) {
     $scope.var = {
         columns: [
-            {name: 'Id', property: 'id', visible: true, sortable: true, searchable: true},
-            {name: 'proveedorId', property: 'proveedorId', visible: true, sortable: true, searchable: true},
+            {name: 'Id', property: 'id', visible: false, sortable: true, searchable: true},
+            {name: 'proveedorId', property: 'proveedor.descripcion', visible: true, sortable: true, searchable: true},
             {name: 'fecha', property: 'fecha', visible: true, sortable: true, searchable: true},
             {name: 'monto', property: 'monto', visible: true, sortable: true, searchable: true}
         ],
-        URL: 'http://localhost:8080/tp3/resources/compras.json',
+        URL: 'http://localhost:8080/tp3/service/compras',
         globalSearch: true,
         title: 'Lista de compras',
-        detailViewTitle: 'Vista detalle de venta'
+        detailViewTitle: 'Vista detalle de venta',
+        file: 'compras.json'
+
     };
 
     $scope.proveedorSeleccionado = 0;

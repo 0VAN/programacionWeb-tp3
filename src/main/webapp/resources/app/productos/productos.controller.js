@@ -12,15 +12,17 @@ angular
 function ProductosController($scope, $http) {
     $scope.var = {
         columns: [
-            {name: 'Id', property: 'id', visible: true, sortable: true, searchable: true},
+            {name: 'Id', property: 'id', visible: false, sortable: true, searchable: true},
             {name: 'descripcion', property: 'descripcion', visible: true, sortable: true, searchable: true},
             {name: 'stock', property: 'stock', visible: true, sortable: true, searchable: true},
             {name: 'precio', property: 'precio', visible: true, sortable: true, searchable: true}
         ],
-        URL: 'http://localhost:8080/tp3/resources/productos.json',
+        URL: 'http://localhost:8080/tp3/service/productos',
         globalSearch: true,
         title: 'Lista de productos',
-        detailViewTitle: 'Vista detalle de venta'
+        detailViewTitle: 'Vista detalle de venta',
+        file: 'productos.json'
+
     };
 
     $scope.producto = {};

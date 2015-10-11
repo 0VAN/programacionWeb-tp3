@@ -32,8 +32,6 @@
                         <div data-ng-if="!column.searchable">
                             {{column.name}}
                         </div>
-                        {{column.property}}
-
                     </div>
                 </th>
             </tr>
@@ -84,3 +82,8 @@
         </div>
     </div>
 </div>
+<a class="ui small blue icon button" data-ng-click="exportar()" data-ng-href="export/{{config.file}}"
+   download="{{config.file}}">
+    <i class="download icon"></i>
+</a>
+<!--<a >Download</a>-->

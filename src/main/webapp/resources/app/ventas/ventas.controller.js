@@ -12,7 +12,7 @@ angular
 function VentasController($scope, $http) {
     $scope.var = {
         columns: [
-            {name: 'Id', property: 'id', visible: true, sortable: true, searchable: true},
+            {name: 'Id', property: "id", visible: false, sortable: true, searchable: true},
             {name: 'Cliente Id', property: "cliente.nombre", visible: true, sortable: true, searchable: true},
             {name: 'Fecha', property: 'fecha', visible: true, sortable: true, searchable: true},
             {name: 'Factura Id', property: 'factura.id', visible: true, sortable: false, searchable: true},
@@ -21,7 +21,9 @@ function VentasController($scope, $http) {
         URL: 'http://localhost:8080/tp3/service/ventas',
         globalSearch: true,
         title: 'Lista de ventas',
-        detailViewTitle: 'Vista detalle de venta'
+        detailViewTitle: 'Vista detalle de venta',
+        file: 'ventas.json'
+
     };
 
     $scope.clienteSeleccionado = 0;

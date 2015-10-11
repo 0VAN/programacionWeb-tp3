@@ -58,10 +58,10 @@ public class VentaDetalleEntity {
         this.producto = producto;
     }
 
-    public VentaEntity getVenta() {
-        return venta;
-    }
-
+    //    public VentaEntity getVenta() {
+//        return venta;
+//    }
+//
     public void setVenta(VentaEntity venta) {
         this.venta = venta;
     }

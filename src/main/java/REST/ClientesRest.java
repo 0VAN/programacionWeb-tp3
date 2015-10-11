@@ -1,15 +1,14 @@
 package REST;
 
-import EJB.Helper.VentasResponse;
 import EJB.Jackson.Cliente;
 import EJB.Service.ClienteService;
 import EJB.Service.FilesService;
 import JPA.ClienteEntity;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
-import com.sun.jersey.multipart.FormDataParam;
+import org.codehaus.jackson.JsonFactory;
+import org.codehaus.jackson.JsonParser;
+import org.codehaus.jackson.JsonToken;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -30,14 +29,39 @@ import java.io.InputStreamReader;
 public class ClientesRest {
     @EJB
     FilesService filesService;
-    private JsonFactory jfactory;
-    private JsonParser jParser;
-    // datos clientes.json
-    private String nombre;
-    private String cedula;
-
     @EJB
     ClienteService service;
+    // datos clientes.json
+    private String nombre;
+
+    // convert InputStream to String
+    private static String getStringFromInputStream(InputStream is) {
+
+        BufferedReader br = null;
+        StringBuilder sb = new StringBuilder();
+
+        String line;
+        try {
+
+            br = new BufferedReader(new InputStreamReader(is));
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return sb.toString();
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -50,6 +74,13 @@ public class ClientesRest {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllCliente() {
         return Response.status(200).entity(service.getAllClientes()).build();
+    }
+
+    @GET
+    @Path("/exportar")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response exportAllCliente(@Context UriInfo info) {
+        return Response.status(200).entity(service.exportAllClientes(info.getQueryParameters())).build();
     }
 
     @GET
@@ -81,15 +112,17 @@ public class ClientesRest {
     }
 
     @POST
-    @Path("/uploadFileClientes")
+    @Path("/upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response uploadFile(@FormDataParam("fileCliente") InputStream is) {
-        String result = getStringFromInputStream(is);
-        jfactory = new JsonFactory();
+    public Response uploadFile(MultipartFormDataInput is) {
+//        String result = getStringFromInputStream(is);
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonFactory jfactory = objectMapper.getJsonFactory();
 
+        JsonParser jParser = null;
+        String a = "";
         try {
-            jParser = jfactory.createParser(is);
-
+            jParser = jfactory.createJsonParser(a);
             jParser.nextToken(); // token '{'
             String texto1 = jParser.getText();
             jParser.nextToken(); // token 'clientes'
@@ -111,48 +144,19 @@ public class ClientesRest {
                     // token 'cedula'
                     // vamos al siguiente token, el valor de 'cedula'
                     jParser.nextToken();
-                    cedula = jParser.getText();
+                    String cedula = jParser.getText();
 
                     // como es el ultimo campo procesamos el cliente en persistencia
                     filesService.addCliente(nombre, cedula);
                 }
             }
             filesService.terminarStateful();
-        }catch(Exception e){
-            // Procesamos la excepcion
-        }
-
-        return Response.status(200).entity("ok").build();
-    }
-
-
-    // convert InputStream to String
-    private static String getStringFromInputStream(InputStream is) {
-
-        BufferedReader br = null;
-        StringBuilder sb = new StringBuilder();
-
-        String line;
-        try {
-
-            br = new BufferedReader(new InputStreamReader(is));
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
 
-        return sb.toString();
+
+        return Response.status(200).entity("ok").build();
     }
 
 }

@@ -15,10 +15,12 @@ function ProveedoresController($scope, $http) {
             {name: 'Id', property: 'id', visible: true, sortable: true, searchable: true},
             {name: 'descripcion', property: 'descripcion', visible: true, sortable: true, searchable: true}
         ],
-        URL: 'http://localhost:8080/tp3/resources/proveedores.json',
+        URL: 'http://localhost:8080/tp3/service/proveedores',
         globalSearch: true,
         title: 'Lista de proveedores',
-        detailViewTitle: 'Vista detalle de venta'
+        detailViewTitle: 'Vista detalle de venta',
+        file: 'proveedores.json'
+
     };
 
 

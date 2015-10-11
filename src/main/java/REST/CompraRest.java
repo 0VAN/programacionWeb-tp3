@@ -38,6 +38,13 @@ public class CompraRest {
         return Response.status(200).entity(service.getCompra(id)).build();
     }
 
+    @GET
+    @Path("/exportar")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response exportAllCompras(@Context UriInfo info) {
+        return Response.status(200).entity(service.exportAllCompras(info.getQueryParameters())).build();
+    }
+
     @POST
     @Consumes("application/json")
     public Response crearCompras(String content) {

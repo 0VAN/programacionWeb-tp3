@@ -24,6 +24,13 @@ public class ProveedoresRest {
     ProveedorService service;
 
     @GET
+    @Path("/exportar")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response exportAllProdveedores(@Context UriInfo info) {
+        return Response.status(200).entity(service.exportAllProdveedores(info.getQueryParameters())).build();
+    }
+
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVentas(@Context UriInfo info) {
         return Response.status(200).entity(service.getProveedores(info.getQueryParameters())).build();
