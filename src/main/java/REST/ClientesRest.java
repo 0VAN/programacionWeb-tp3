@@ -1,6 +1,5 @@
 package REST;
 
-import EJB.Helper.VentasResponse;
 import EJB.Jackson.Cliente;
 import EJB.Service.ClienteFileService;
 import EJB.Service.ClienteService;
@@ -8,7 +7,7 @@ import EJB.Service.FilesService;
 import JPA.ClienteEntity;
 import com.sun.jersey.multipart.FormDataParam;
 import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.*;
+import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import javax.ejb.EJB;

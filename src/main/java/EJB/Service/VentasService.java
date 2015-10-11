@@ -178,12 +178,12 @@ public class VentasService extends Service<VentaEntity> {
 
         // Fijamos la Ordenacion
         if ("asc".equals(ordenDeOrdenacion)) {
-            criteriaQuery.multiselect(ventas.<String>get("cliente"),
+            criteriaQuery.multiselect(ventas.<String>get("id"), ventas.<String>get("cliente"),
                     ventas.<String>get("monto"), ventas.<String>get("fecha"));
 
             criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.asc(ventas.get(ordenarPorColumna)));
         } else {
-            criteriaQuery.multiselect(ventas.<String>get("cliente"),
+            criteriaQuery.multiselect(ventas.<String>get("id"), ventas.<String>get("cliente"),
                     ventas.<String>get("monto"),
                     ventas.<String>get("fecha"));
 
@@ -191,7 +191,11 @@ public class VentasService extends Service<VentaEntity> {
         }
 
         Integer page;
-        page = Integer.valueOf(queryParams.getFirst("page")) - 1;
+        if(queryParams.getFirst("page") != null ) {
+            page = Integer.valueOf(queryParams.getFirst("page")) - 1;
+        } else {
+            page = 0;
+        }
 
         response.setEntidades(em.createQuery(criteriaQuery).setMaxResults(getMeta().getPage_size().intValue()).setFirstResult(page * getMeta().getPage_size().intValue()).getResultList());
         response.setMeta(getMeta());

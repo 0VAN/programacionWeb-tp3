@@ -79,6 +79,12 @@
                     <a class="item" data-ng-href="#/compras">Todas los compras</a>
                 </div>
             </div>
+            <div class="item">
+                <div class="header">Facturas</div>
+                <div class="menu">
+                    <a class="item" data-ng-href="#/facturas/">Gestion de Facturas</a>
+                </div>
+            </div>
         </div>
     </div>
     <div class="thirteen wide column">

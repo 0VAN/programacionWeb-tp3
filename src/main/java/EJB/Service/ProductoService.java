@@ -75,10 +75,6 @@ public class ProductoService extends Service<ProductoEntity> {
         return count;
     }
 
-    public List getAllProductos() {
-        Query query = em.createNamedQuery("producto.findAll");
-        return query.getResultList();
-    }
     /**
      * Retorna la entidad buscada por Id
      *
@@ -188,7 +184,11 @@ public class ProductoService extends Service<ProductoEntity> {
         }
 
         Integer page;
-        page = Integer.valueOf(queryParams.getFirst("page")) - 1;
+        if(queryParams.getFirst("page") != null ) {
+            page = Integer.valueOf(queryParams.getFirst("page")) - 1;
+        } else {
+            page = 0;
+        }
 
         response.setEntidades(em.createQuery(criteriaQuery).setMaxResults(getMeta().getPage_size().intValue()).setFirstResult(page * getMeta().getPage_size().intValue()).getResultList());
         response.setMeta(getMeta());

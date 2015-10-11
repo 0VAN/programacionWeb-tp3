@@ -4,7 +4,6 @@ import EJB.Jackson.Compra;
 import EJB.Service.CompraFileService;
 import EJB.Service.CompraService;
 import EJB.Util.StockInsuficienteException;
-import com.fasterxml.jackson.core.JsonFactory;
 import com.sun.jersey.multipart.FormDataParam;
 import org.codehaus.jackson.map.ObjectMapper;
 
