@@ -2,7 +2,8 @@
 	"compras":[
 		{
 			"fecha":"08152015",
-			"proveedor":"Oscar",
+			"monto":"15000",
+			"proveedor":"2",
 			"productos":[
 				{
 					"producto": "74",

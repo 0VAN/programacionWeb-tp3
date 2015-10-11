@@ -64,7 +64,7 @@ public class ProductoRest {
 
     @POST
     @Consumes("application/json")
-    public Response crearCliente(String content) {
+    public Response crearProducto(String content) {
         System.out.println(content);
         ObjectMapper mapper = new ObjectMapper();
         try {

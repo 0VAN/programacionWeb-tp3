@@ -196,7 +196,11 @@ public class VentasService extends Service<VentaEntity> {
         }
 
         Integer page;
-        page = Integer.valueOf(queryParams.getFirst("page")) - 1;
+        if(queryParams.getFirst("page") != null ) {
+            page = Integer.valueOf(queryParams.getFirst("page")) - 1;
+        } else {
+            page = 0;
+        }
 
         response.setEntidades(em.createQuery(criteriaQuery).setMaxResults(getMeta().getPage_size().intValue()).setFirstResult(page * getMeta().getPage_size().intValue()).getResultList());
         response.setMeta(getMeta());

@@ -62,13 +62,12 @@ public class Facturacion {
 
         List<VentaEntity> ventas = ventasService.getVentasFactura();
 
-        carpeta = new File("/tmp/reportes/reporte" + generarNumero());
+        carpeta = new File("/tmp/reportes/reporte_" + generarNumero());
         carpeta.mkdirs();
 
         int contador = 0;
 
         for (VentaEntity venta : ventas) {
-            System.out.println("Procesando ventas: " + contador + "/" + ventas.size());
             if (!context.wasCancelCalled()) {
                 if (venta.getId() != null) {
                     try {
@@ -86,18 +85,19 @@ public class Facturacion {
                     ventasService.update(venta);
                     pdf(venta, factura.getId().intValue());
                     contador++;
+                    System.out.println("Procesando ventas: " + contador + "/" + ventas.size());
                 }
             } else {
                 borrarDirectorio(carpeta);
                 carpeta.delete();
                 contextBD.setRollbackOnly();
-
                 System.out.println("Se aborto la exportacion");
                 return new AsyncResult<>("");
             }
         }
-        VentaEntity venta2 = (VentaEntity) ventasService.getVenta(1L);
-        pdf(venta2, 951);
+
+
+        //pdf((VentaEntity) ventasService.getVenta(1L), 978);
         System.out.println("Termino la exportacion");
 
         if (contador == 0) {
@@ -147,7 +147,7 @@ public class Facturacion {
 
             //se procesa el archivo jasper
             HashMap parametros = new HashMap();
-            parametros.put("factura", nro_factura.toString());
+            parametros.put("venta", venta.getId().toString());
             parametros.put("fecha", new Date());
             parametros.put("total", venta.getMonto());
             parametros.put("cliente", venta.getCliente().getNombre());
@@ -161,7 +161,7 @@ public class Facturacion {
                 det.setProducto(detalle.getProducto().getDescripcion());
                 det.setCantidad(detalle.getCantidad().intValue());
                 det.setPrecio(detalle.getProducto().getPrecio());
-                det.setFactura(nro_factura);
+                det.setventa(venta.getId().intValue());
                 det.setCantidad(detalle.getCantidad().intValue());
                 det.setCliente(venta.getCliente().getNombre());
                 det.setFecha(venta.getFecha());

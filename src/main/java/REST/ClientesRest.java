@@ -1,6 +1,7 @@
 package REST;
 
 import EJB.Jackson.Cliente;
+import EJB.Service.ClienteFileService;
 import EJB.Service.ClienteService;
 import EJB.Service.FilesService;
 import JPA.ClienteEntity;
@@ -112,17 +113,15 @@ public class ClientesRest {
     }
 
     @POST
-    @Path("/upload")
+    @Path("/uploadFileClientes")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response uploadFile(MultipartFormDataInput is) {
-//        String result = getStringFromInputStream(is);
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonFactory jfactory = objectMapper.getJsonFactory();
+    public Response uploadFile(@FormDataParam("fileCliente") InputStream is) {
+        String result = getStringFromInputStream(is);
+        jfactory = new JsonFactory();
 
-        JsonParser jParser = null;
-        String a = "";
         try {
-            jParser = jfactory.createJsonParser(a);
+            jParser = jfactory.createParser(is);
+
             jParser.nextToken(); // token '{'
             String texto1 = jParser.getText();
             jParser.nextToken(); // token 'clientes'
@@ -144,13 +143,35 @@ public class ClientesRest {
                     // token 'cedula'
                     // vamos al siguiente token, el valor de 'cedula'
                     jParser.nextToken();
-                    String cedula = jParser.getText();
+                    cedula = jParser.getText();
 
                     // como es el ultimo campo procesamos el cliente en persistencia
                     filesService.addCliente(nombre, cedula);
                 }
             }
             filesService.terminarStateful();
+        }catch(Exception e){
+            // Procesamos la excepcion
+        }
+
+        return Response.status(200).entity("ok").build();
+    }
+
+
+    // convert InputStream to String
+    private static String getStringFromInputStream(InputStream is) {
+
+        BufferedReader br = null;
+        StringBuilder sb = new StringBuilder();
+
+        String line;
+        try {
+
+            br = new BufferedReader(new InputStreamReader(is));
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

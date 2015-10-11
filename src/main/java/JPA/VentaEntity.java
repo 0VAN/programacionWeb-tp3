@@ -57,6 +57,13 @@ public class VentaEntity {
         // Constructor por defecto
     }
 
+    public VentaEntity(Long id, ClienteEntity cliente, String fecha, String monto ) {
+        this.id = id;
+        this.cliente = cliente;
+        this.fecha = fecha;
+        this.monto = monto;
+    }
+
     // Constructor
     public VentaEntity(ClienteEntity cliente, String fecha, String monto) {
         this.cliente = cliente;

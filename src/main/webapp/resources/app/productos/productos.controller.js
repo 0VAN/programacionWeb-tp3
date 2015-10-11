@@ -1,6 +1,4 @@
-/**
- * Created by alex on 28/09/15.
- */
+
 angular
     .module("storeApp")
     .controller("ProductosController", [

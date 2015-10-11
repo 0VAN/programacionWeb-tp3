@@ -1,14 +1,12 @@
-/**
- * Created by alex on 28/09/15.
- */
 angular
     .module("storeApp")
     .controller("FacturasController", [
         "$scope",
+        "$http",
         FacturasController
     ]);
 
-function FacturasController($scope) {
+function FacturasController($scope, $http) {
     $scope.var = {
         columns: [
             {name: 'Id', property: 'id', visible: true, sortable: true, searchable: true},
@@ -20,4 +18,34 @@ function FacturasController($scope) {
         title: 'Lista de facturas',
         detailViewTitle: 'Vista detalle de venta'
     };
+
+
+    $scope.estadoFacturacion = function () {
+
+        $http.get('http://localhost:8080/tp3/service/facturas/isRun').then(
+            function (response) {
+                $scope.mensaje = response.data;
+                $('#estado')
+                    .modal('show');
+            }
+        );
+    };
+
+    $scope.lanzarFacturacion = function() {
+
+        $http.get('http://localhost:8080/tp3/service/facturas/facturar');
+    }
+
+    $scope.detenerFacturacion = function () {
+
+        $http.get('http://localhost:8080/tp3/service/facturas/detener');
+
+    }
+
+    $scope.iniciarFacturacion = function () {
+        $('#inicio')
+            .modal('show');
+    }
+
+
 }

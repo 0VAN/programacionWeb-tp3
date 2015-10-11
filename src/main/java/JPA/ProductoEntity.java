@@ -12,9 +12,9 @@ import java.util.List;
  */
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "producto.findAll", query = "select p from ProductoEntity p"),
-        @NamedQuery(name = "producto.totalRegisters", query = "select count(v.id) from ProductoEntity v"),
-        @NamedQuery(name = "producto.findById", query = "select v from ProductoEntity v where v.id=:id")
+    @NamedQuery(name = "producto.findAll", query = "select p from ProductoEntity p"),
+    @NamedQuery(name = "producto.totalRegisters", query = "select count(p.id) from ProductoEntity p"),
+    @NamedQuery(name = "producto.findById", query = "select p from ProductoEntity p where p.id=:id")
 })
 @Table(name = "producto", schema = "public", catalog = "tienda")
 public class ProductoEntity {
