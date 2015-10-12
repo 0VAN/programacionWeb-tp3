@@ -26,9 +26,6 @@ public class CompraFileService {
 
     private CompraEntity compra = new CompraEntity();
 
-    @Inject
-    private ProveedorEntity proveedor;
-
 //    @Inject
 //    private CompraDetalleEntity compraDetalle;
 
@@ -134,6 +131,7 @@ public class CompraFileService {
     public void addCabeceraCompra(String fecha, String monto, String proveedorId) {
         compra.setFecha(fecha);
         compra.setMonto(monto);
+        ProveedorEntity proveedor;
         proveedor = em.find(ProveedorEntity.class, Long.parseLong(proveedorId));
         compra.setProveedor(proveedor);
     }
