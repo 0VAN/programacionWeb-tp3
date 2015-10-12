@@ -17,7 +17,8 @@ function ListServices($resource) {
                 },
                 'exportar': {
                     method: 'GET',
-                    params: {operacion: 'exportar'}
+                    params: {operacion: 'exportar'},
+                    isArray: true
                 }
             })
         }

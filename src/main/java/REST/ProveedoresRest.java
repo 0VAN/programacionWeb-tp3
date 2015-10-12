@@ -27,7 +27,9 @@ public class ProveedoresRest {
     @Path("/exportar")
     @Produces(MediaType.APPLICATION_JSON)
     public Response exportAllProdveedores(@Context UriInfo info) {
-        return Response.status(200).entity(service.exportAllProdveedores(info.getQueryParameters())).build();
+        return Response
+                .ok(service.exportAllProdveedores(info.getQueryParameters()))
+                .header("Content-Disposition", "attachment; filename=proveedores.json").build();
     }
 
     @GET

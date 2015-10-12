@@ -18,7 +18,7 @@ public class Response<T> {
     private Meta meta;
 
     public List<T> getEntidades() {
-        return entidades;
+        return this.entidades;
     }
 
     public void setEntidades(List<T> entidades) {
@@ -26,7 +26,7 @@ public class Response<T> {
     }
 
     public Meta getMeta() {
-        return meta;
+        return this.meta;
     }
 
     public void setMeta(Meta meta) {

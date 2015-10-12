@@ -130,9 +130,6 @@ function ListController($scope, ListServices) {
     };
 
     $scope.exportar = function () {
-        ListServices.salesServices($scope.config.URL).exportar(function (data) {
-            console.log(data);
-        });
-        console.log(params);
+        window.location = $scope.config.URL + "/exportar?" + $.param(params);
     };
 }

@@ -121,8 +121,7 @@ public class VentasService extends Service<VentaEntity> {
     public Object getVentas(MultivaluedMap<String, String> queryParams) {
         VentasResponse response = new VentasResponse();
         inicializarMeta();
-        getMeta().setTotal(this.getCount());
-        getMeta().calculateToTalPages();
+
 
         /**
          * Variables default values for the column sort
@@ -215,6 +214,8 @@ public class VentasService extends Service<VentaEntity> {
         }
 
         response.setEntidades(em.createQuery(criteriaQuery).setMaxResults(getMeta().getPage_size().intValue()).setFirstResult(page * getMeta().getPage_size().intValue()).getResultList());
+        getMeta().setTotal((long) em.createQuery(criteriaQuery).getResultList().size());
+        getMeta().calculateToTalPages();
         response.setMeta(getMeta());
         return response;
     }
@@ -222,7 +223,7 @@ public class VentasService extends Service<VentaEntity> {
     public Object exportAllVentas(MultivaluedMap<String, String> queryParams) {
         VentasResponse response = new VentasResponse();
         ObjectMapper mapper = new ObjectMapper();
-        String file = "/home/alex/IdeaProjects/tp3/src/main/webapp/export/ventas.json";
+        String file = "/ventas.json";
 
         /**
          * Variables default values for the column sort
@@ -295,11 +296,12 @@ public class VentasService extends Service<VentaEntity> {
         response.setEntidades(em.createQuery(criteriaQuery).getResultList());
         try {
 
+            File fileResponse = new File(file);
             // convert user object to json string, and save to a file
-            mapper.writeValue(new File(file), response.getEntidades());
+            mapper.writeValue(fileResponse, response.getEntidades());
 
-            // display to console
-            System.out.println(mapper.writeValueAsString(response.getEntidades()));
+            return fileResponse;
+
 
         } catch (JsonGenerationException e) {
 

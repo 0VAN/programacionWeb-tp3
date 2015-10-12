@@ -46,7 +46,7 @@ public class ProveedorService extends Service<ProveedorEntity> {
 
         ProveedorResponse response = new ProveedorResponse();
         ObjectMapper mapper = new ObjectMapper();
-        String file = "/home/alex/IdeaProjects/tp3/src/main/webapp/export/clientes.json";
+        String file = "/proveedores.json";
 
         /**
          * Variables default values for the column sort
@@ -97,12 +97,11 @@ public class ProveedorService extends Service<ProveedorEntity> {
 
         response.setEntidades(em.createQuery(criteriaQuery).getResultList());
         try {
-
+            File fileResponse = new File(file);
             // convert user object to json string, and save to a file
-            mapper.writeValue(new File(file), response.getEntidades());
+            mapper.writeValue(fileResponse, response.getEntidades());
+            return fileResponse;
 
-            // display to console
-            System.out.println(mapper.writeValueAsString(response.getEntidades()));
 
         } catch (JsonGenerationException e) {
 
@@ -117,8 +116,7 @@ public class ProveedorService extends Service<ProveedorEntity> {
             e.printStackTrace();
 
         }
-        return response;
-
+        return "No se pudo generar el archivo";
 
     }
 
@@ -126,8 +124,7 @@ public class ProveedorService extends Service<ProveedorEntity> {
 
         ProveedorResponse response = new ProveedorResponse();
         inicializarMeta();
-        getMeta().setTotal(this.getCount());
-        getMeta().calculateToTalPages();
+
 
         /**
          * Variables default values for the column sort
@@ -183,6 +180,8 @@ public class ProveedorService extends Service<ProveedorEntity> {
         }
 
         response.setEntidades(em.createQuery(criteriaQuery).setMaxResults(getMeta().getPage_size().intValue()).setFirstResult(page * getMeta().getPage_size().intValue()).getResultList());
+        getMeta().setTotal((long) em.createQuery(criteriaQuery).getResultList().size());
+        getMeta().calculateToTalPages();
         response.setMeta(getMeta());
         return response;
 

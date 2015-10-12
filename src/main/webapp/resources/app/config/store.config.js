@@ -47,6 +47,10 @@ angular
                 templateUrl: 'resources/app/compras/compras_carga_masiva.html',
                 controller: 'ComprasController'
             })
+            .when('/compras/solicitudes', {
+                templateUrl: 'resources/app/compras/compras_solicitudes.html',
+                controller: 'ComprasController'
+            })
             .when('/home', {
                 templateUrl: 'home.html',
                 controller: 'HomeController'

@@ -75,10 +75,19 @@ public class CompraRest {
     }
 
     @GET
+    @Path("/solicitudes")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getComprasSolicitudes(@Context UriInfo info) {
+        return Response.status(200).entity(service.getSolictudes(info.getQueryParameters())).build();
+    }
+
+    @GET
     @Path("/exportar")
     @Produces(MediaType.APPLICATION_JSON)
     public Response exportAllCompras(@Context UriInfo info) {
-        return Response.status(200).entity(service.exportAllCompras(info.getQueryParameters())).build();
+        return Response
+                .ok(service.exportAllCompras(info.getQueryParameters()))
+                .header("Content-Disposition", "attachment; filename=clientes.json").build();
     }
 
     @POST

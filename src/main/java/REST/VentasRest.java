@@ -65,7 +65,9 @@ public class VentasRest {
     @Path("/exportar")
     @Produces(MediaType.APPLICATION_JSON)
     public Response exportAllVentas(@Context UriInfo info) {
-        return Response.status(200).entity(ventasService.exportAllVentas(info.getQueryParameters())).build();
+        return Response
+                .ok(ventasService.exportAllVentas(info.getQueryParameters()))
+                .header("Content-Disposition", "attachment; filename=proveedores.json").build();
     }
 
     @GET

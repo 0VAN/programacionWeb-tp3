@@ -81,8 +81,7 @@ public class SolicitudCompraService extends Service<SolicitudCompraEntity> {
 
         SolicitudCompraResponse response = new SolicitudCompraResponse();
         inicializarMeta();
-        getMeta().setTotal(this.getCount());
-        getMeta().calculateToTalPages();
+
 
         /**
          * Variables default values for the column sort
@@ -148,6 +147,8 @@ public class SolicitudCompraService extends Service<SolicitudCompraEntity> {
         }
 
         response.setEntidades(em.createQuery(criteriaQuery).setMaxResults(getMeta().getPage_size().intValue()).setFirstResult(page * getMeta().getPage_size().intValue()).getResultList());
+        getMeta().setTotal((long) em.createQuery(criteriaQuery).getResultList().size());
+        getMeta().calculateToTalPages();
         response.setMeta(getMeta());
         return response;
 

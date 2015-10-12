@@ -23,6 +23,21 @@ function ComprasController($scope, $http) {
 
     };
 
+    $scope.var2 = {
+        columns: [
+            {name: 'Id', property: 'id', visible: false, sortable: true, searchable: true},
+            {name: 'producto', property: 'producto.descripcion', visible: true, sortable: true, searchable: true},
+            {name: 'fecha', property: 'fecha', visible: true, sortable: true, searchable: true},
+            {name: 'Atendido', property: 'atendido', visible: true, sortable: false, searchable: false}
+        ],
+        URL: 'http://localhost:8080/tp3/service/compras/solicitudes',
+        globalSearch: true,
+        title: 'Lista de solicitudes de compras',
+        detailViewTitle: 'Vista detalle de venta',
+        file: 'compras.json'
+
+    };
+
     $scope.proveedorSeleccionado = 0;
     $scope.productoSeleccionado = {};
     $scope.productosSeleccionados = [];

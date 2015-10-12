@@ -45,7 +45,9 @@ public class ClientesRest {
     @Path("/exportar")
     @Produces(MediaType.APPLICATION_JSON)
     public Response exportAllCliente(@Context UriInfo info) {
-        return Response.status(200).entity(service.exportAllClientes(info.getQueryParameters())).build();
+        return Response
+                .ok(service.exportAllClientes(info.getQueryParameters()))
+                .header("Content-Disposition", "attachment; filename=clientes.json").build();
     }
 
     @GET

@@ -194,11 +194,11 @@ public class ProductoService extends Service<ProductoEntity> {
         response.setEntidades(em.createQuery(criteriaQuery).getResultList());
         try {
 
+            File fileResponse = new File(file);
             // convert user object to json string, and save to a file
-            mapper.writeValue(new File(file), response.getEntidades());
+            mapper.writeValue(fileResponse, response.getEntidades());
 
-            // display to console
-            System.out.println(mapper.writeValueAsString(response.getEntidades()));
+            return fileResponse;
 
         } catch (JsonGenerationException e) {
 
@@ -221,8 +221,7 @@ public class ProductoService extends Service<ProductoEntity> {
 
         ProductoResponse response = new ProductoResponse();
         inicializarMeta();
-        getMeta().setTotal(this.getCount());
-        getMeta().calculateToTalPages();
+
 
         /**
          * Variables default values for the column sort
@@ -318,6 +317,8 @@ public class ProductoService extends Service<ProductoEntity> {
         }
 
         response.setEntidades(em.createQuery(criteriaQuery).setMaxResults(getMeta().getPage_size().intValue()).setFirstResult(page * getMeta().getPage_size().intValue()).getResultList());
+        getMeta().setTotal((long) em.createQuery(criteriaQuery).getResultList().size());
+        getMeta().calculateToTalPages();
         response.setMeta(getMeta());
         return response;
 

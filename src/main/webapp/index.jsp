@@ -76,7 +76,7 @@
                 <div class="menu">
                     <a class="item" data-ng-href="#/compras/alta">Alta</a>
                     <a class="item" data-ng-href="#/compras/file">Carga Masiva</a>
-                    <a class="item">Modificacion</a>
+                    <a class="item" data-ng-href="#/compras/solicitudes">Solicitudes</a>
                     <a class="item" data-ng-href="#/compras">Todas los compras</a>
                 </div>
             </div>

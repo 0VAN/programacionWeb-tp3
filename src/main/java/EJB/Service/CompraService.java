@@ -1,13 +1,11 @@
 package EJB.Service;
 
 import EJB.Helper.ComprasResponse;
+import EJB.Helper.SolicitudCompraResponse;
 import EJB.Jackson.Compra;
 import EJB.Jackson.CompraDetalle;
 import EJB.Util.StockInsuficienteException;
-import JPA.CompraDetalleEntity;
-import JPA.CompraEntity;
-import JPA.ProductoEntity;
-import JPA.ProveedorEntity;
+import JPA.*;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -172,11 +170,11 @@ public class CompraService extends Service<CompraEntity> {
         response.setEntidades(em.createQuery(criteriaQuery).getResultList());
         try {
 
+            File fileResponse = new File(file);
             // convert user object to json string, and save to a file
-            mapper.writeValue(new File(file), response.getEntidades());
+            mapper.writeValue(fileResponse, response.getEntidades());
 
-            // display to console
-            System.out.println(mapper.writeValueAsString(response.getEntidades()));
+            return fileResponse;
 
         } catch (JsonGenerationException e) {
 
@@ -206,8 +204,7 @@ public class CompraService extends Service<CompraEntity> {
 
         ComprasResponse response = new ComprasResponse();
         inicializarMeta();
-        getMeta().setTotal(this.getCount());
-        getMeta().calculateToTalPages();
+
 
         /**
          * Variables default values for the column sort
@@ -258,7 +255,7 @@ public class CompraService extends Service<CompraEntity> {
 
         // Filtrado por todas las columnas
         Predicate filtradoPorAllAttributes = criteriaBuilder.or(criteriaBuilder.like(compras.<String>get("monto"), "%" + by_all_attributes + "%"),
-                criteriaBuilder.like(compras.<String>get("proveedor").<String>get("descripcion"), "%" + by_proveedor + "%"),
+                criteriaBuilder.like(compras.<String>get("proveedor").<String>get("descripcion"), "%" + by_all_attributes + "%"),
                 criteriaBuilder.like(compras.<String>get("fecha"), "%" + by_all_attributes + "%"));
 
         // Filtrado por columna
@@ -279,6 +276,111 @@ public class CompraService extends Service<CompraEntity> {
                     compras.<String>get("monto"));
 
             criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(compras.get(ordenarPorColumna)));
+        }
+
+        Integer page;
+        if (queryParams.getFirst("page") != null) {
+            page = Integer.valueOf(queryParams.getFirst("page")) - 1;
+        } else {
+            page = 0;
+        }
+
+        response.setEntidades(em.createQuery(criteriaQuery).setMaxResults(getMeta().getPage_size().intValue()).setFirstResult(page * getMeta().getPage_size().intValue()).getResultList());
+        getMeta().setTotal((long) em.createQuery(criteriaQuery).getResultList().size());
+        getMeta().calculateToTalPages();
+        response.setMeta(getMeta());
+        return response;
+
+
+    }
+
+
+    /**
+     * Metodo para obtener la lista de entidades por filtro y
+     * orden aplicado a las columnas
+     *
+     * @param queryParams parametros de filtro y orden
+     * @return Lista de Clientes que coinciden con los parametros de filtro y orden
+     */
+    public Object getSolictudes(MultivaluedMap<String, String> queryParams) {
+
+        SolicitudCompraResponse response = new SolicitudCompraResponse();
+        inicializarMeta();
+        getMeta().setTotal(this.getCount());
+        getMeta().calculateToTalPages();
+
+        /**
+         * Variables default values for the column sort
+         */
+        String ordenarPorColumna = "id";
+        String ordenDeOrdenacion = "asc";
+
+        /**
+         * Retrieve one or none of the URI query params that have the column name and sort order values
+         */
+        if (queryParams.getFirst("producto.descripcion") != null) {
+            ordenarPorColumna = "producto";
+            ordenDeOrdenacion = queryParams.getFirst("producto.descripcion");
+        } else if (queryParams.getFirst("fecha") != null) {
+            ordenarPorColumna = "fecha";
+            ordenDeOrdenacion = queryParams.getFirst("fecha");
+        } else if (queryParams.getFirst("atendido") != null) {
+            ordenarPorColumna = "atendido";
+            ordenDeOrdenacion = queryParams.getFirst("atendido");
+        }
+
+        // Iniciamos las varialles para el filtrado
+        String by_all_attributes = queryParams.getFirst("by_all_attributes");
+        String by_fecha = queryParams.getFirst("by_fecha");
+        String by_producto = queryParams.getFirst("by_producto.descripcion");
+        String by_atendido = queryParams.getFirst("by_atendido");
+
+        if (by_atendido == null) {
+            by_atendido = "";
+        }
+
+        if (by_fecha == null) {
+            by_fecha = "";
+        }
+
+        if (by_producto == null) {
+            by_producto = "";
+        }
+
+        if (by_all_attributes == null) {
+            by_all_attributes = "";
+        }
+
+        /* Creamos el query para la consulta */
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<SolicitudCompraEntity> criteriaQuery = criteriaBuilder.createQuery(SolicitudCompraEntity.class);
+        Root<SolicitudCompraEntity> solicitudes = criteriaQuery.from(SolicitudCompraEntity.class);
+
+        // Filtrado por todas las columnas
+        Predicate filtradoPorAllAttributes = criteriaBuilder.or(
+//              criteriaBuilder.like(solicitudes.<String>get("atendido"), "%" + by_all_attributes + "%"),
+                criteriaBuilder.like(solicitudes.<String>get("producto").<String>get("descripcion"), "%" + by_all_attributes + "%"),
+                criteriaBuilder.like(solicitudes.<String>get("fecha"), "%" + by_all_attributes + "%"));
+
+        // Filtrado por columna
+        Predicate filtradoPorColumna = criteriaBuilder.and(
+//                criteriaBuilder.like(solicitudes.<String>get("atendido"), "%" + by_atendido + "%"),
+                criteriaBuilder.like(solicitudes.<String>get("producto").<String>get("descripcion"), "%" + by_producto + "%"),
+                criteriaBuilder.like(solicitudes.<String>get("fecha"), "%" + by_fecha + "%"));
+
+        // Fijamos la Ordenacion
+        if ("asc".equals(ordenDeOrdenacion)) {
+//            criteriaQuery.multiselect(solicitudes.<String>get("producto"),
+//                    solicitudes.<String>get("fecha"),
+//                    solicitudes.<String>get("atendido"));
+
+            criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.asc(solicitudes.get(ordenarPorColumna)));
+        } else {
+//            criteriaQuery.multiselect(solicitudes.<String>get("producto"),
+//                    solicitudes.<String>get("fecha"),
+//                    solicitudes.<String>get("atendido"));
+
+            criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(solicitudes.get(ordenarPorColumna)));
         }
 
         Integer page;

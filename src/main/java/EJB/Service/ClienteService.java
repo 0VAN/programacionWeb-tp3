@@ -38,13 +38,12 @@ public class ClienteService extends Service<ClienteEntity> {
     /**
      * Retorna la entidad buscada por Id
      *
-     * @param id Identificador del elemento buscado
      * @return Elemento cuyo identificador corresponda
      */
     public Object exportAllClientes(MultivaluedMap<String, String> queryParams) {
         ClienteResponse response = new ClienteResponse();
         ObjectMapper mapper = new ObjectMapper();
-        String file = "/home/alex/IdeaProjects/tp3/src/main/webapp/export/clientes.json";
+        String file = "/tmp/clientes.json";
 
         /**
          * Variables default values for the column sort
@@ -65,7 +64,7 @@ public class ClienteService extends Service<ClienteEntity> {
 
         // Iniciamos las variables parael filtrado
         String by_all_attributes = queryParams.getFirst("by_all_attributes");
-        String by_cedula_identidad = queryParams.getFirst("by_cedula_identidad");
+        String by_cedula_identidad = queryParams.getFirst("by_cedulaI   dentidad");
         String by_nombre = queryParams.getFirst("by_nombre");
 
         if (by_nombre == null) {
@@ -102,14 +101,11 @@ public class ClienteService extends Service<ClienteEntity> {
 
 
         response.setEntidades(em.createQuery(criteriaQuery).getResultList());
+        File fileResponse = new File(file);
+
         try {
-
             // convert user object to json string, and save to a file
-            mapper.writeValue(new File(file), response.getEntidades());
-
-            // display to console
-            System.out.println(mapper.writeValueAsString(response.getEntidades()));
-
+            mapper.writeValue(fileResponse, response.getEntidades());
         } catch (JsonGenerationException e) {
 
             e.printStackTrace();
@@ -123,7 +119,7 @@ public class ClienteService extends Service<ClienteEntity> {
             e.printStackTrace();
 
         }
-        return response;
+        return fileResponse;
     }
 
     /**
@@ -153,8 +149,7 @@ public class ClienteService extends Service<ClienteEntity> {
 
         ClienteResponse response = new ClienteResponse();
         inicializarMeta();
-        getMeta().setTotal(this.getCount());
-        getMeta().calculateToTalPages();
+
 
         /**
          * Variables default values for the column sort
@@ -220,6 +215,8 @@ public class ClienteService extends Service<ClienteEntity> {
         }
 
         response.setEntidades(em.createQuery(criteriaQuery).setMaxResults(getMeta().getPage_size().intValue()).setFirstResult(page * getMeta().getPage_size().intValue()).getResultList());
+        getMeta().setTotal((long) em.createQuery(criteriaQuery).getResultList().size());
+        getMeta().calculateToTalPages();
         response.setMeta(getMeta());
         return response;
     }
