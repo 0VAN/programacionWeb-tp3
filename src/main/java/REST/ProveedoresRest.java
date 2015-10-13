@@ -3,6 +3,7 @@ package REST;
 import EJB.Jackson.Proveedor;
 import EJB.Service.ProveedorService;
 import JPA.ProveedorEntity;
+import com.google.gson.Gson;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import javax.ejb.EJB;
@@ -45,6 +46,12 @@ public class ProveedoresRest {
         return Response.status(200).entity(service.getAllProveedores()).build();
     }
 
+    @DELETE
+    @Path("delete/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String deleteCliente(@PathParam("id") int id) {
+        return new Gson().toJson(service.deleteProveedor(id));
+    }
     @POST
     @Consumes("application/json")
     public Response crearProveedor(String content) {

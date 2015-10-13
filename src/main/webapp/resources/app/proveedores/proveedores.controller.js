@@ -28,6 +28,20 @@ function ProveedoresController($scope, $http) {
         descripcion: ""
     };
 
+    $http.get('http://localhost:8080/tp3/service/proveedores/all').then(function (response) {
+        console.log(response);
+        $scope.proveedores = response.data;
+    });
+
+    $scope.proveedorId = "";
+    $scope.confirmarEliminarProveedor = function () {
+        $http.delete('http://localhost:8080/tp3/service/proveedores/delete/' + $scope.proveedorId).then(function (response) {
+            window.alert(response.data);
+        }, function () {
+            window.alert("No se puedo eliminar el proveedor");
+        })
+    };
+
     $scope.confirmarNuevoProveedor = function () {
         var data = {
             descripcion: $scope.proveedor.descripcion

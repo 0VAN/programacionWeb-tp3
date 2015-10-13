@@ -5,6 +5,7 @@ import EJB.Service.ProductoService;
 import EJB.Service.ProveedorService;
 import JPA.ProductoEntity;
 import JPA.ProveedorEntity;
+import com.google.gson.Gson;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import javax.ejb.EJB;
@@ -28,6 +29,7 @@ public class ProductoRest {
     @EJB
     ProveedorService proveedorService;
 
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProductos(@Context UriInfo info) {
@@ -48,6 +50,13 @@ public class ProductoRest {
         return Response
                 .ok(service.exportAllProductos(info.getQueryParameters()))
                 .header("Content-Disposition", "attachment; filename=productos.json").build();
+    }
+
+    @DELETE
+    @Path("delete/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String deleteCliente(@PathParam("id") int id) {
+        return new Gson().toJson(service.deleteProducto(id));
     }
 
     @GET

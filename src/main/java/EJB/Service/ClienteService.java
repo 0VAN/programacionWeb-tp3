@@ -122,6 +122,10 @@ public class ClienteService extends Service<ClienteEntity> {
         return fileResponse;
     }
 
+    public String deleteCliente(int id) {
+        return delete(id, ClienteEntity.class);
+    }
+
     /**
      * Cantidad de Registros
      *
@@ -191,11 +195,11 @@ public class ClienteService extends Service<ClienteEntity> {
 
         // Filtrado por todas las columnas
         Predicate filtradoPorAllAttributes = criteriaBuilder.or(criteriaBuilder.like(clientes.<String>get("nombre"), "%" + by_all_attributes + "%"),
-                criteriaBuilder.like(clientes.<String>get("cedulaIdentidad"), "%" + by_all_attributes));
+                criteriaBuilder.like(clientes.<String>get("cedulaIdentidad"), "%" + by_all_attributes + "%"));
 
         // Filtrado por columna
         Predicate filtradoPorColumna = criteriaBuilder.and(criteriaBuilder.like(clientes.<String>get("nombre"), "%" + by_nombre + "%"),
-                criteriaBuilder.like(clientes.<String>get("cedulaIdentidad"), "%" + by_cedula_identidad));
+                criteriaBuilder.like(clientes.<String>get("cedulaIdentidad"), "%" + by_cedula_identidad + "%"));
 
         // Fijamos la Ordenacion
         if ("asc".equals(ordenDeOrdenacion)) {

@@ -185,15 +185,15 @@ public class VentasService extends Service<VentaEntity> {
 
         // Fijamos la Ordenacion
         if ("asc".equals(ordenDeOrdenacion)) {
-            criteriaQuery.multiselect(ventas.<String>get("cliente"),
-                    ventas.<String>get("fecha"),
-                    ventas.<String>get("monto"));
+//            criteriaQuery.multiselect(ventas.<String>get("cliente"),
+//                    ventas.<String>get("fecha"),
+//                    ventas.<String>get("monto"));
 
             criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.asc(ventas.get(ordenarPorColumna)));
         } else {
-            criteriaQuery.multiselect(ventas.<String>get("cliente"),
-                    ventas.<String>get("fecha"),
-                    ventas.<String>get("monto"));
+//            criteriaQuery.multiselect(ventas.<String>get("cliente"),
+//                    ventas.<String>get("fecha"),
+//                    ventas.<String>get("monto"));
 
             criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(ventas.get(ordenarPorColumna)));
         }

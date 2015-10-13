@@ -8,6 +8,7 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import java.io.Serializable;
 
 
@@ -28,20 +29,21 @@ public class Service<T> implements IService<T>, Serializable {
      * @return <b>True</b> Si el borrado fue exitoso, <b>False</b> caso contrario
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public boolean delete(int id, Class<T> clazz) {
+    public String delete(int id, Class<T> clazz) {
         try {
-            T data = em.find(clazz, id);
+            T data = em.find(clazz, (long) id);
             if (data != null) {
-                em.remove(data);
-                System.out.println("Borrado exitoso");
-                return true;
+                try {
+                    em.remove(data);
+                } catch (PersistenceException e2) {
+                    return ("Error al borrar la entidad, la entidad es una FK en otra entidad");
+                }
+                return ("Borrado exitoso");
             }
         } catch (Exception e) {
-            System.out.println("Error al borrar la entidad");
-            e.printStackTrace();
+            return ("Error al borrar la entidad, la entidad ya no existe");
         }
-
-        return false;
+        return ("Error al borrar la entidad");
     }
 
     /**

@@ -19,6 +19,10 @@ angular
                 templateUrl: 'resources/app/clientes/clientes.html',
                 controller: 'ClientesController'
             })
+            .when('/clientes/baja', {
+                templateUrl: 'resources/app/clientes/clientes_baja.html',
+                controller: 'ClientesController'
+            })
             .when('/clientes/alta', {
                 templateUrl: 'resources/app/clientes/clientes_form.html',
                 controller: 'ClientesController'
@@ -29,6 +33,10 @@ angular
             })
             .when('/productos', {
                 templateUrl: 'resources/app/productos/productos.html',
+                controller: 'ProductosController'
+            })
+            .when('/productos/baja', {
+                templateUrl: 'resources/app/productos/productos_baja.html',
                 controller: 'ProductosController'
             })
             .when('/productos/alta', {
@@ -61,6 +69,10 @@ angular
             })
             .when('/proveedores', {
                 templateUrl: 'resources/app/proveedores/proveedores.html',
+                controller: 'ProveedoresController'
+            })
+            .when('/proveedores/baja', {
+                templateUrl: 'resources/app/proveedores/proveedores_baja.html',
                 controller: 'ProveedoresController'
             })
             .when('/proveedores/alta', {

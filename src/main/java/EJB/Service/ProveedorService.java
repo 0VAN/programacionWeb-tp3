@@ -25,7 +25,9 @@ import java.util.List;
 @Stateless
 public class ProveedorService extends Service<ProveedorEntity> {
 
-
+    public String deleteProveedor(int id) {
+        return delete(id, ProveedorEntity.class);
+    }
     /**
      * Cantidad de Registros
      *

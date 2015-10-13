@@ -27,6 +27,21 @@ function ClientesController($scope, $http) {
         cedula: ""
     };
 
+    $scope.clienteId = "";
+
+
+    $http.get("http://localhost:8080/tp3/service/clientes/all").then(function (data) {
+        $scope.clientes = data.data;
+    });
+
+    $scope.confirmarEliminarCliente = function () {
+        $http.delete("http://localhost:8080/tp3/service/clientes/delete/" + $scope.clienteId).then(function (response) {
+            window.alert(response.data);
+        }, function () {
+            window.alert("No se puedo eliminar el cliente");
+        });
+    };
+
     $scope.confirmarNuevoCliente = function () {
         var data = {
             nombre: $scope.cliente.nombre,

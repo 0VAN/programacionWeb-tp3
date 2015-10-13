@@ -27,9 +27,12 @@ import java.util.List;
  */
 @Stateless
 public class ProductoService extends Service<ProductoEntity> {
-
     @EJB
     ProductoService productoService;
+
+    public String deleteProducto(int id) {
+        return delete(id, ProductoEntity.class);
+    }
 
     /**
      * Metodo para obtener los productos cuyo stock sean menores al stock minimo
