@@ -5,6 +5,7 @@ import EJB.Service.ClienteFileService;
 import EJB.Service.ClienteService;
 import EJB.Service.FilesService;
 import JPA.ClienteEntity;
+import com.google.gson.Gson;
 import com.sun.jersey.multipart.FormDataParam;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -27,15 +28,37 @@ import java.io.InputStreamReader;
 public class ClientesRest {
 
     @EJB
-    private ClienteFileService clienteFileService;
-
-    @EJB
     FilesService filesService;
     @EJB
     ClienteService service;
+    @EJB
+    private ClienteFileService clienteFileService;
     // datos clientes.json
     private String nombre;
 
+    // convert InputStream to String
+    private static String getStringFromInputStream(InputStream is) {
+        BufferedReader br = null;
+        StringBuilder sb = new StringBuilder();
+        String line;
+        try {
+            br = new BufferedReader(new InputStreamReader(is));
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return sb.toString();
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -66,6 +89,13 @@ public class ClientesRest {
         return Response.status(200).entity(service.getCliente(id)).build();
     }
 
+    @DELETE
+    @Path("delete/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String deleteCliente(@PathParam("id") int id) {
+        return new Gson().toJson(service.deleteCliente(id));
+    }
+
     @POST
     @Consumes("application/json")
     public Response crearCliente(String content) {
@@ -94,29 +124,6 @@ public class ClientesRest {
         String result = getStringFromInputStream(is);
         clienteFileService.parsear(result);
         return Response.status(200).entity("ok").build();
-    }
-    // convert InputStream to String
-    private static String getStringFromInputStream(InputStream is) {
-        BufferedReader br = null;
-        StringBuilder sb = new StringBuilder();
-        String line;
-        try {
-            br = new BufferedReader(new InputStreamReader(is));
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return sb.toString();
     }
 
 }

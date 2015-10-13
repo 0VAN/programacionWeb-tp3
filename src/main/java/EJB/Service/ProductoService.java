@@ -27,9 +27,12 @@ import java.util.List;
  */
 @Stateless
 public class ProductoService extends Service<ProductoEntity> {
-
     @EJB
     ProductoService productoService;
+
+    public String deleteProducto(int id) {
+        return delete(id, ProductoEntity.class);
+    }
 
     /**
      * Metodo para obtener los productos cuyo stock sean menores al stock minimo
@@ -302,11 +305,11 @@ public class ProductoService extends Service<ProductoEntity> {
 
         // Fijamos la Ordenacion
         if ("asc".equals(ordenDeOrdenacion)) {
-            criteriaQuery.multiselect(productos.<String>get("id"), productos.<String>get("proveedor"), productos.<Long>get("stock"), productos.<Long>get("precio"), productos.<String>get("descripcion"));
+            criteriaQuery.multiselect(productos.<String>get("proveedor"), productos.<Long>get("stock"), productos.<Long>get("precio"), productos.<String>get("descripcion"));
             criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.asc(productos.get(ordenarPorColumna)));
         } else {
-            criteriaQuery.multiselect(productos.<String>get("id"), productos.<String>get("proveedor"), productos.<Long>get("stock"), productos.<Long>get("precio"), productos.<String>get("descripcion"));
-            criteriaQuery.select(productos).where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(productos.get(ordenarPorColumna)));
+            criteriaQuery.multiselect(productos.<String>get("proveedor"), productos.<Long>get("stock"), productos.<Long>get("precio"), productos.<String>get("descripcion"));
+            criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(productos.get(ordenarPorColumna)));
         }
 
         Integer page;

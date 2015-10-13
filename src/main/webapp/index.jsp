@@ -40,7 +40,6 @@
                 <div class="menu">
                     <a class="item" data-ng-href="#/ventas/alta">Alta</a>
                     <a class="item" data-ng-href="#/ventas/file">Carga Masiva</a>
-                    <a class="item">Modificacion</a>
                     <a class="item" data-ng-href="#/ventas">Todas las ventas</a>
                 </div>
             </div>
@@ -49,7 +48,7 @@
                 <div class="menu">
                     <a class="item" data-ng-href="#/clientes/alta">Alta</a>
                     <a class="item" data-ng-href="#/clientes/file">Carga Masiva</a>
-                    <a class="item">Modificacion</a>
+                    <a class="item" data-ng-href="#/clientes/baja">Baja</a>
                     <a class="item" data-ng-href="#/clientes">Todos los clientes</a>
                 </div>
             </div>
@@ -57,8 +56,7 @@
                 <div class="header">Proveedores</div>
                 <div class="menu">
                     <a class="item" data-ng-href="#/proveedores/alta">Alta</a>
-                    <a class="item">Baja</a>
-                    <a class="item">Modificacion</a>
+                    <a class="item" data-ng-href="#/proveedores/baja">Baja</a>
                     <a class="item" data-ng-href="#/proveedores">Todos los proveedores</a>
                 </div>
             </div>
@@ -66,8 +64,7 @@
                 <div class="header">Productos</div>
                 <div class="menu">
                     <a class="item" data-ng-href="#/productos/alta">Alta</a>
-                    <a class="item">Baja</a>
-                    <a class="item">Modificacion</a>
+                    <a class="item" data-ng-href="#/productos/baja">Baja</a>
                     <a class="item" data-ng-href="#/productos">Todos los productos</a>
                 </div>
             </div>

@@ -20,8 +20,7 @@ public class SolicitudCompraEntity {
 
     @Id
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
-    @GeneratedValue(generator = "SEQ_SOLICITUD_COMPRA", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "SEQ_SOLICITUD_COMPRA", sequenceName = "seq_solicitud_compra")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Expose
     private long id;
 

@@ -16,8 +16,7 @@ public class CompraDetalleEntity {
     @Id
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     @Expose
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_compra_detalle")
-    @SequenceGenerator(name = "seq_compra_detalle", sequenceName = "seq_compra_detalle")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Basic
@@ -61,9 +60,9 @@ public class CompraDetalleEntity {
         this.cantidad = cantidad;
     }
 
-    public CompraEntity getCompra() {
-        return compra;
-    }
+//    public CompraEntity getCompra() {
+//        return compra;
+//    }
 
     public void setCompra(CompraEntity compra) {
         this.compra = compra;

@@ -122,6 +122,10 @@ public class ClienteService extends Service<ClienteEntity> {
         return fileResponse;
     }
 
+    public String deleteCliente(int id) {
+        return delete(id, ClienteEntity.class);
+    }
+
     /**
      * Cantidad de Registros
      *
@@ -191,19 +195,19 @@ public class ClienteService extends Service<ClienteEntity> {
 
         // Filtrado por todas las columnas
         Predicate filtradoPorAllAttributes = criteriaBuilder.or(criteriaBuilder.like(clientes.<String>get("nombre"), "%" + by_all_attributes + "%"),
-                criteriaBuilder.like(clientes.<String>get("cedulaIdentidad"), "%" + by_all_attributes));
+                criteriaBuilder.like(clientes.<String>get("cedulaIdentidad"), "%" + by_all_attributes + "%"));
 
         // Filtrado por columna
         Predicate filtradoPorColumna = criteriaBuilder.and(criteriaBuilder.like(clientes.<String>get("nombre"), "%" + by_nombre + "%"),
-                criteriaBuilder.like(clientes.<String>get("cedulaIdentidad"), "%" + by_cedula_identidad));
+                criteriaBuilder.like(clientes.<String>get("cedulaIdentidad"), "%" + by_cedula_identidad + "%"));
 
         // Fijamos la Ordenacion
         if ("asc".equals(ordenDeOrdenacion)) {
-            criteriaQuery.multiselect(clientes.<String>get("id"), clientes.<String>get("nombre"), clientes.<String>get("cedulaIdentidad"));
+            criteriaQuery.multiselect(clientes.<String>get("nombre"), clientes.<String>get("cedulaIdentidad"));
             criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.asc(clientes.get(ordenarPorColumna)));
         } else {
-            criteriaQuery.multiselect(clientes.<String>get("id"), clientes.<String>get("nombre"), clientes.<String>get("cedulaIdentidad"));
-            criteriaQuery.select(clientes).where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(clientes.get(ordenarPorColumna)));
+            criteriaQuery.multiselect(clientes.<String>get("nombre"), clientes.<String>get("cedulaIdentidad"));
+            criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(clientes.get(ordenarPorColumna)));
         }
 
         Integer page;

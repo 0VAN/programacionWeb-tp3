@@ -78,6 +78,9 @@ function VentasController($scope, $http) {
         $http.post('http://localhost:8080/tp3/service/ventas', data).then(successCallback, errorCallback);
 
         function successCallback(response) {
+            $scope.clienteSeleccionado = 0;
+            $scope.productoSeleccionado = {};
+            $scope.productosSeleccionados = [];
             console.log(1);
         }
 

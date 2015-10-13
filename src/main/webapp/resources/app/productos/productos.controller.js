@@ -1,4 +1,3 @@
-
 angular
     .module("storeApp")
     .controller("ProductosController", [
@@ -24,8 +23,21 @@ function ProductosController($scope, $http) {
 
     };
 
-    $scope.producto = {};
+    $scope.productoId = "";
+    $scope.confirmarEliminarProducto = function () {
+        $http.delete('http://localhost:8080/tp3/service/productos/delete/' + $scope.productoId).then(function (response) {
+            window.alert(response.data);
+        }, function () {
+            window.alert("No se puedo eliminar el producto");
+        })
+    };
 
+    $scope.producto = {};
+    $http.get('http://localhost:8080/tp3/service/productos/all').then(
+        function (response) {
+            $scope.productos = response.data;
+        }
+    );
     $http.get('http://localhost:8080/tp3/service/proveedores/all').then(
         function (proveedores) {
             $scope.proveedores = proveedores.data;
@@ -40,6 +52,7 @@ function ProductosController($scope, $http) {
         $http.post('http://localhost:8080/tp3/service/productos', data).then(successCallback, errorCallback);
 
         function successCallback(response) {
+            $scope.producto = {};
             console.log(1);
         }
 

@@ -11,7 +11,7 @@ import javax.ejb.Local;
 @Local
 public interface IService<T> {
 
-    boolean delete(int id, Class<T> clase) throws Throwable;
+    String delete(int id, Class<T> clase);
 
     boolean add(T entity);
 
