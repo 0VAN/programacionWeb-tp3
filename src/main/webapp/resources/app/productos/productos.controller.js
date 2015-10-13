@@ -40,6 +40,7 @@ function ProductosController($scope, $http) {
         $http.post('http://localhost:8080/tp3/service/productos', data).then(successCallback, errorCallback);
 
         function successCallback(response) {
+            $scope.producto = {};
             console.log(1);
         }
 

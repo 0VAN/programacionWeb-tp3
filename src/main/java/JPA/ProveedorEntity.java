@@ -18,8 +18,7 @@ public class ProveedorEntity {
     @Id
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     @Expose
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_proveedor")
-    @SequenceGenerator(name = "seq_proveedor", sequenceName = "seq_proveedor")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Basic

@@ -35,6 +35,9 @@ function ProveedoresController($scope, $http) {
         $http.post('http://localhost:8080/tp3/service/proveedores', data).then(successCallback, errorCallback);
 
         function successCallback(response) {
+            $scope.proveedor = {
+                descripcion: ""
+            };
             console.log(1);
         }
 

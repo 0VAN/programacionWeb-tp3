@@ -111,9 +111,9 @@ public class CompraService extends Service<CompraEntity> {
         /**
          * Retrieve one or none of the URI query params that have the column name and sort order values
          */
-        if (queryParams.getFirst("proveedor") != null) {
+        if (queryParams.getFirst("proveedor.descripcion") != null) {
             ordenarPorColumna = "proveedor";
-            ordenDeOrdenacion = queryParams.getFirst("proveedor");
+            ordenDeOrdenacion = queryParams.getFirst("proveedor.descripcion");
         } else if (queryParams.getFirst("monto") != null) {
             ordenarPorColumna = "monto";
             ordenDeOrdenacion = queryParams.getFirst("monto");
@@ -125,7 +125,7 @@ public class CompraService extends Service<CompraEntity> {
         // Iniciamos las varialles para el filtrado
         String by_all_attributes = queryParams.getFirst("by_all_attributes");
         String by_monto = queryParams.getFirst("by_monto");
-        String by_proveedor = queryParams.getFirst("by_proveedor");
+        String by_proveedor = queryParams.getFirst("by_proveedor.descripcion");
         String by_fecha = queryParams.getFirst("by_fecha");
 
         if (by_proveedor == null) {

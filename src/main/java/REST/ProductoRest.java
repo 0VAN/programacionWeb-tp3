@@ -47,7 +47,7 @@ public class ProductoRest {
     public Response exportAllProductos(@Context UriInfo info) {
         return Response
                 .ok(service.exportAllProductos(info.getQueryParameters()))
-                .header("Content-Disposition", "attachment; filename=proveedores.json").build();
+                .header("Content-Disposition", "attachment; filename=productos.json").build();
     }
 
     @GET

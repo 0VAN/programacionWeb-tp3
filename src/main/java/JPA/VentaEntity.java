@@ -23,8 +23,8 @@ import java.util.List;
 public class VentaEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_venta")
-    @SequenceGenerator(name = "seq_venta", sequenceName = "seq_venta")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @SequenceGenerator(name = "seq_venta", sequenceName = "seq_venta")
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     @Expose
     private Long id;
@@ -65,20 +65,12 @@ public class VentaEntity {
     }
 
     // Constructor
-    public VentaEntity(ClienteEntity cliente, String fecha, String monto, FacturaEntity factura) {
+    public VentaEntity(ClienteEntity cliente, String fecha, String monto) {
         this.cliente = cliente;
         this.fecha = fecha;
         this.monto = monto;
-        this.factura = factura;
-
     }
 
-    public VentaEntity(ClienteEntity cliente, String fecha, String monto, List<VentaDetalleEntity> detalles) {
-        this.cliente = cliente;
-        this.fecha = fecha;
-        this.monto = monto;
-//        this.detalles = detalles;
-    }
 
     public Long getId() {
         return id;

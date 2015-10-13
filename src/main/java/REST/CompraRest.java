@@ -87,7 +87,7 @@ public class CompraRest {
     public Response exportAllCompras(@Context UriInfo info) {
         return Response
                 .ok(service.exportAllCompras(info.getQueryParameters()))
-                .header("Content-Disposition", "attachment; filename=clientes.json").build();
+                .header("Content-Disposition", "attachment; filename=compras.json").build();
     }
 
     @POST

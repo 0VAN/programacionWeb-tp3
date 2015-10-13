@@ -91,7 +91,7 @@ public class ProveedorService extends Service<ProveedorEntity> {
             criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.asc(proveedores.get(ordenarPorColumna)));
         } else {
             criteriaQuery.multiselect(proveedores.<String>get("descripcion"));
-            criteriaQuery.select(proveedores).where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(proveedores.get(ordenarPorColumna)));
+            criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(proveedores.get(ordenarPorColumna)));
         }
 
 

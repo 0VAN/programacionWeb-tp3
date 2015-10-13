@@ -67,7 +67,7 @@ public class VentasRest {
     public Response exportAllVentas(@Context UriInfo info) {
         return Response
                 .ok(ventasService.exportAllVentas(info.getQueryParameters()))
-                .header("Content-Disposition", "attachment; filename=proveedores.json").build();
+                .header("Content-Disposition", "attachment; filename=ventas.json").build();
     }
 
     @GET

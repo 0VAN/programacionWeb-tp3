@@ -15,7 +15,7 @@ function VentasController($scope, $http) {
             {name: 'Id', property: "id", visible: false, sortable: true, searchable: true},
             {name: 'Cliente Id', property: "cliente.nombre", visible: true, sortable: true, searchable: true},
             {name: 'Fecha', property: 'fecha', visible: true, sortable: true, searchable: true},
-            {name: 'Factura Id', property: 'factura.id', visible: true, sortable: true, searchable: false},
+            {name: 'Factura Id', property: 'factura.id', visible: false, sortable: true, searchable: false},
             {name: 'Monto', property: 'monto', visible: true, sortable: true, searchable: true}
         ],
         URL: 'http://localhost:8080/tp3/service/ventas',
@@ -78,6 +78,9 @@ function VentasController($scope, $http) {
         $http.post('http://localhost:8080/tp3/service/ventas', data).then(successCallback, errorCallback);
 
         function successCallback(response) {
+            $scope.clienteSeleccionado = 0;
+            $scope.productoSeleccionado = {};
+            $scope.productosSeleccionados = [];
             console.log(1);
         }
 

@@ -22,8 +22,7 @@ public class ClienteEntity {
     @Id
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     @Expose
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cliente")
-    @SequenceGenerator(name = "seq_cliente", sequenceName = "seq_cliente")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Basic

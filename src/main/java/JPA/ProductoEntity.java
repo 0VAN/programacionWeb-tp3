@@ -22,8 +22,7 @@ public class ProductoEntity {
     @Id
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     @Expose
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_producto")
-    @SequenceGenerator(name = "seq_producto", sequenceName = "seq_producto")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Basic

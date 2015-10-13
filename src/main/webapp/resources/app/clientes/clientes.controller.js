@@ -28,21 +28,24 @@ function ClientesController($scope, $http) {
     };
 
     $scope.confirmarNuevoCliente = function () {
-        $('.ui.modal')
-            .modal('show')
-        ;
-        //var data = {
-        //    nombre: $scope.cliente.nombre,
-        //    cedula: $scope.cliente.cedula
-        //};
-        //$http.post('http://localhost:8080/tp3/service/clientes', data).then(successCallback, errorCallback);
-        //
-        //function successCallback(response) {
-        //    console.log(1);
-        //}
-        //
-        //function errorCallback(response) {
-        //    console.log(2);
-        //}
+        var data = {
+            nombre: $scope.cliente.nombre,
+            cedula: $scope.cliente.cedula
+        };
+        $http.post('http://localhost:8080/tp3/service/clientes', data).then(successCallback, errorCallback);
+
+        function successCallback(response) {
+            window.alert("Cliente agregado exitosamente");
+            $scope.cliente = {
+                nombre: "",
+                cedula: ""
+            };
+            console.log(1);
+        }
+
+        function errorCallback(response) {
+            window.alert("El Cliente no fue agregado exitosamente, vuelva a intentarlo mas tarde");
+            console.log(2);
+        }
     }
 }
