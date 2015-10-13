@@ -1,6 +1,4 @@
-/**
- * Created by alex on 19/08/15.
- */
+
 angular
     .module('GenericList')
     .controller('ListController', [
@@ -85,10 +83,11 @@ function ListController($scope, ListServices) {
             }
 
         };
-        //Pagination methods
+
 
     });
 
+    //Pagination methods
     $scope.goBackPage = function () {
 
         $scope.page -= 1;

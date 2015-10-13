@@ -2,9 +2,6 @@ package EJB.Jackson;
 
 import java.util.List;
 
-/**
- * Created by alex on 03/10/15.
- */
 public class Venta {
     private Integer clienteId;
     private String fecha;

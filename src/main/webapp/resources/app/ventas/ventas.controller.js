@@ -21,7 +21,7 @@ function VentasController($scope, $http) {
         URL: 'http://localhost:8080/tp3/service/ventas',
         globalSearch: true,
         title: 'Lista de ventas',
-        detailViewTitle: 'Vista detalle de venta',
+        detailViewTitle: 'Detalles de Ventas',
         file: 'ventas.json'
 
     };

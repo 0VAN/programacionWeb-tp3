@@ -3,10 +3,16 @@ package EJB.Service;
 import JPA.VentaDetalleEntity;
 
 import javax.ejb.Stateless;
+import javax.persistence.Query;
+import java.util.List;
 
-/**
- * Created by szalimben on 23/09/15.
- */
+
 @Stateless
 public class VentaDetalleService extends Service<VentaDetalleEntity> {
+
+
+	public List getDetallesByVenta(Long id) {
+		Query query = em.createNamedQuery("ventaDetalle.findDetalleVenta").setParameter("id", id);
+		return query.getResultList();
+	}
 }

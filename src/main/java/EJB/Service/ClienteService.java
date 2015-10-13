@@ -150,7 +150,6 @@ public class ClienteService extends Service<ClienteEntity> {
         ClienteResponse response = new ClienteResponse();
         inicializarMeta();
 
-
         /**
          * Variables default values for the column sort
          */
@@ -200,10 +199,10 @@ public class ClienteService extends Service<ClienteEntity> {
 
         // Fijamos la Ordenacion
         if ("asc".equals(ordenDeOrdenacion)) {
-            criteriaQuery.multiselect(clientes.<String>get("nombre"), clientes.<String>get("cedulaIdentidad"));
+            criteriaQuery.multiselect(clientes.<String>get("id"), clientes.<String>get("nombre"), clientes.<String>get("cedulaIdentidad"));
             criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.asc(clientes.get(ordenarPorColumna)));
         } else {
-            criteriaQuery.multiselect(clientes.<String>get("nombre"), clientes.<String>get("cedulaIdentidad"));
+            criteriaQuery.multiselect(clientes.<String>get("id"), clientes.<String>get("nombre"), clientes.<String>get("cedulaIdentidad"));
             criteriaQuery.select(clientes).where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(clientes.get(ordenarPorColumna)));
         }
 

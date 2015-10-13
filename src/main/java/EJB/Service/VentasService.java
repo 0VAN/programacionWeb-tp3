@@ -21,6 +21,7 @@ import javax.persistence.criteria.Root;
 import javax.ws.rs.core.MultivaluedMap;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 @Stateless
@@ -50,13 +51,15 @@ public class VentasService extends Service<VentaEntity> {
 
         VentaEntity ventaEntity = new VentaEntity();
         ventaEntity.setCliente(clienteService.find(venta.getClienteId(), ClienteEntity.class));
-        ventaEntity.setFecha(venta.getFecha());
+        ventaEntity.setFecha(new Date().toString());
 
         long montoAcumulador = 0;
 
         for (VentaDetalle detalle : venta.getDetalles()) {
             ProductoEntity productoEntity = productoService.find(detalle.getProductoId(), ProductoEntity.class);
-            if (productoEntity.getStock() < detalle.getCantidad()) {
+            Long stock = productoEntity.getStock();
+
+            if (stock < detalle.getCantidad()) {
                 throw new StockInsuficienteException("Stock del producto " + productoEntity.getDescripcion() + " insuficiente");
             } else {
                 productoEntity.setStock(productoEntity.getStock() - detalle.getCantidad());
@@ -122,7 +125,6 @@ public class VentasService extends Service<VentaEntity> {
         VentasResponse response = new VentasResponse();
         inicializarMeta();
 
-
         /**
          * Variables default values for the column sort
          */
@@ -166,11 +168,6 @@ public class VentasService extends Service<VentaEntity> {
             by_monto = "";
         }
 
-        if (by_factura == null) {
-            by_factura = "";
-        }
-
-
         if (by_all_attributes == null) {
             by_all_attributes = "";
         }
@@ -194,24 +191,27 @@ public class VentasService extends Service<VentaEntity> {
 
         // Fijamos la Ordenacion
         if ("asc".equals(ordenDeOrdenacion)) {
-            criteriaQuery.multiselect(ventas.<String>get("cliente"),
-                    ventas.<String>get("fecha"), ventas.<String>get("monto"), ventas.<String>get("factura"));
+            criteriaQuery.multiselect(
+                    ventas.<String>get("id"),
+                    ventas.<String>get("cliente"),
+                    ventas.<String>get("fecha"),
+                    ventas.<String>get("monto"),
+                    ventas.<String>get("factura"));
 
             criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.asc(ventas.get(ordenarPorColumna)));
         } else {
-            criteriaQuery.multiselect(ventas.<String>get("cliente"),
+            criteriaQuery.multiselect(
+                    ventas.<String>get("id"),
+                    ventas.<String>get("cliente"),
                     ventas.<String>get("fecha"),
-                    ventas.<String>get("monto"), ventas.<String>get("factura"));
+                    ventas.<String>get("monto"),
+                    ventas.<String>get("factura"));
 
             criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(ventas.get(ordenarPorColumna)));
         }
 
         Integer page;
-        if (queryParams.getFirst("page") != null) {
-            page = Integer.valueOf(queryParams.getFirst("page")) - 1;
-        } else {
-            page = 0;
-        }
+        page = Integer.valueOf(queryParams.getFirst("page")) - 1;
 
         response.setEntidades(em.createQuery(criteriaQuery).setMaxResults(getMeta().getPage_size().intValue()).setFirstResult(page * getMeta().getPage_size().intValue()).getResultList());
         getMeta().setTotal((long) em.createQuery(criteriaQuery).getResultList().size());
@@ -223,7 +223,7 @@ public class VentasService extends Service<VentaEntity> {
     public Object exportAllVentas(MultivaluedMap<String, String> queryParams) {
         VentasResponse response = new VentasResponse();
         ObjectMapper mapper = new ObjectMapper();
-        String file = "/ventas.json";
+        String file = "/tmp/ventas.json";
 
         /**
          * Variables default values for the column sort

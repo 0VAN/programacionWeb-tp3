@@ -118,6 +118,11 @@ public class JsonObjectIterator implements Iterator<Map<String, Object>>, Closea
     }
 
     @Override
+    public void remove() {
+        return;
+    }
+
+    @Override
     public void close() throws IOException {
         IOUtils.closeQuietly(this.jsonParser);
         IOUtils.closeQuietly(this.inputStream);

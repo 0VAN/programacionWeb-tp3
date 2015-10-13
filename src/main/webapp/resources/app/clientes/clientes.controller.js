@@ -17,7 +17,7 @@ function ClientesController($scope, $http) {
         URL: 'http://localhost:8080/tp3/service/clientes',
         globalSearch: true,
         title: 'Lista de clientes',
-        detailViewTitle: 'Vista detalle de venta',
+        detailViewTitle: 'Detalles de Clientes',
         file: 'clientes.json'
     };
 

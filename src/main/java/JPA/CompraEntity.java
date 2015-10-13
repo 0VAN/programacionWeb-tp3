@@ -54,6 +54,14 @@ public class CompraEntity {
         this.monto = monto;
     }
 
+    // Constructor Sin detalles
+    public CompraEntity(Long id, ProveedorEntity proveedor, String fecha, String monto) {
+        this.id = id;
+        this.fecha = fecha;
+        this.proveedor = proveedor;
+        this.monto = monto;
+    }
+
     // Constructor con detalles
 //    public CompraEntity(String fecha, ProveedorEntity proveedor, String monto, List<CompraDetalleEntity> detalles) {
 //        this.fecha = fecha;

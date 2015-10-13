@@ -1,13 +1,10 @@
 package REST;
 
-import EJB.Helper.VentasResponse;
 import EJB.Jackson.Venta;
 import EJB.Service.FilesService;
 import EJB.Service.VentaFileService;
 import EJB.Service.VentasService;
 import EJB.Util.StockInsuficienteException;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
 import com.sun.jersey.multipart.FormDataParam;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -22,9 +19,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-/**
- * Created by alex on 31/08/15.
- */
 
 @Path("/ventas")
 public class VentasRest {
@@ -56,7 +50,7 @@ public class VentasRest {
     public Response exportAllVentas(@Context UriInfo info) {
         return Response
                 .ok(ventasService.exportAllVentas(info.getQueryParameters()))
-                .header("Content-Disposition", "attachment; filename=proveedores.json").build();
+                .header("Content-Disposition", "attachment; filename=ventas.json").build();
     }
 
     @GET

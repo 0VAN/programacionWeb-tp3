@@ -10,7 +10,6 @@ angular
 function ComprasController($scope, $http) {
     $scope.var = {
         columns: [
-            {name: 'Id', property: 'id', visible: false, sortable: true, searchable: true},
             {name: 'proveedorId', property: 'proveedor.descripcion', visible: true, sortable: true, searchable: true},
             {name: 'fecha', property: 'fecha', visible: true, sortable: true, searchable: true},
             {name: 'monto', property: 'monto', visible: true, sortable: true, searchable: true}
@@ -18,14 +17,13 @@ function ComprasController($scope, $http) {
         URL: 'http://localhost:8080/tp3/service/compras',
         globalSearch: true,
         title: 'Lista de compras',
-        detailViewTitle: 'Vista detalle de venta',
+        detailViewTitle: 'Detalles de Compras',
         file: 'compras.json'
 
     };
 
     $scope.var2 = {
         columns: [
-            {name: 'Id', property: 'id', visible: false, sortable: true, searchable: true},
             {name: 'producto', property: 'producto.descripcion', visible: true, sortable: true, searchable: true},
             {name: 'fecha', property: 'fecha', visible: true, sortable: true, searchable: true},
             {name: 'Atendido', property: 'atendido', visible: true, sortable: false, searchable: false}
@@ -33,8 +31,8 @@ function ComprasController($scope, $http) {
         URL: 'http://localhost:8080/tp3/service/compras/solicitudes',
         globalSearch: true,
         title: 'Lista de solicitudes de compras',
-        detailViewTitle: 'Vista detalle de venta',
-        file: 'compras.json'
+        detailViewTitle: 'Detalles de Solicitudes de Compra',
+        file: 'solicitudes.json'
 
     };
 

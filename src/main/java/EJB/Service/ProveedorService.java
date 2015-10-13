@@ -46,7 +46,7 @@ public class ProveedorService extends Service<ProveedorEntity> {
 
         ProveedorResponse response = new ProveedorResponse();
         ObjectMapper mapper = new ObjectMapper();
-        String file = "/proveedores.json";
+        String file = "/tmp/proveedores.json";
 
         /**
          * Variables default values for the column sort
@@ -165,10 +165,10 @@ public class ProveedorService extends Service<ProveedorEntity> {
 
         // Fijamos la Ordenacion
         if ("asc".equals(ordenDeOrdenacion)) {
-            criteriaQuery.multiselect(proveedores.<String>get("descripcion"));
+            criteriaQuery.multiselect(proveedores.<String>get("id"), proveedores.<String>get("descripcion"));
             criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.asc(proveedores.get(ordenarPorColumna)));
         } else {
-            criteriaQuery.multiselect(proveedores.<String>get("descripcion"));
+            criteriaQuery.multiselect(proveedores.<String>get("id"), proveedores.<String>get("descripcion"));
             criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(proveedores.get(ordenarPorColumna)));
         }
 

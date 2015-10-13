@@ -52,6 +52,14 @@ public class ProductoEntity {
         // Constructor por defecto
     }
 
+    public ProductoEntity(Long id, ProveedorEntity proveedor, long stock, long precio, String descripcion) {
+        this.id = id;
+        this.stock = stock;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.proveedor = proveedor;
+    }
+
     public ProductoEntity(long stock, String descripcion, long precio) {
         this.stock = stock;
         this.descripcion = descripcion;
