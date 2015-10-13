@@ -22,6 +22,7 @@ import javax.persistence.criteria.Root;
 import javax.ws.rs.core.MultivaluedMap;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * Servicios para la gestion de las compras
@@ -42,7 +43,7 @@ public class CompraService extends Service<CompraEntity> {
 
         CompraEntity compraEntity = new CompraEntity();
         compraEntity.setProveedor(proveedorService.find(compra.getProveedorId(), ProveedorEntity.class));
-        compraEntity.setFecha(compra.getFecha());
+        compraEntity.setFecha(new Date().toString());
 
         long montoAcumulador = 0;
 
@@ -205,7 +206,6 @@ public class CompraService extends Service<CompraEntity> {
         ComprasResponse response = new ComprasResponse();
         inicializarMeta();
 
-
         /**
          * Variables default values for the column sort
          */
@@ -265,13 +265,15 @@ public class CompraService extends Service<CompraEntity> {
 
         // Fijamos la Ordenacion
         if ("asc".equals(ordenDeOrdenacion)) {
-            criteriaQuery.multiselect(compras.<String>get("proveedor"),
+            criteriaQuery.multiselect(compras.<String>get("id"),
+                    compras.<String>get("proveedor"),
                     compras.<String>get("fecha"),
                     compras.<String>get("monto"));
 
             criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.asc(compras.get(ordenarPorColumna)));
         } else {
-            criteriaQuery.multiselect(compras.<String>get("proveedor"),
+            criteriaQuery.multiselect(compras.<String>get("id"),
+                    compras.<String>get("proveedor"),
                     compras.<String>get("fecha"),
                     compras.<String>get("monto"));
 

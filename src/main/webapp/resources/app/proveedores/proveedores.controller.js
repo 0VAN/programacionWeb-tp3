@@ -18,7 +18,7 @@ function ProveedoresController($scope, $http) {
         URL: 'http://localhost:8080/tp3/service/proveedores',
         globalSearch: true,
         title: 'Lista de proveedores',
-        detailViewTitle: 'Vista detalle de venta',
+        detailViewTitle: 'Detalles de Proveedores',
         file: 'proveedores.json'
 
     };

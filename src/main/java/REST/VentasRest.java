@@ -1,12 +1,11 @@
 package REST;
 
-import EJB.Helper.VentasResponse;
 import EJB.Jackson.Venta;
 import EJB.Service.FilesService;
+import EJB.Service.VentaFileService;
 import EJB.Service.VentasService;
 import EJB.Util.StockInsuficienteException;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
+import com.sun.jersey.multipart.FormDataParam;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import javax.ejb.EJB;
@@ -15,38 +14,22 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
-/**
- * Created by alex on 31/08/15.
- */
 
 @Path("/ventas")
 public class VentasRest {
 
     @EJB
+    VentaFileService ventaFileService;
+
+    @EJB
     FilesService filesService;
     @EJB
     VentasService ventasService;
-    private VentasResponse response;
-    private JsonFactory jfactory;
-    private JsonParser jParser;
-    // datos clientes.json
-    private String nombre;
-    private String cedula;
-    // datos compras.json
-    private String fechaCompra;
-    private String montoCompra;
-    private String proveedorCompra;
-    private String productoIdCompra;
-    private String cantidadCompra;
-    // datos ventas.json
-    private String fechaVenta;
-    private String facturaIdVenta;
-    private String clienteIdVenta;
-    private String montoVenta;
-    private String productoIdVenta;
-    private String cantidadVenta;
 
 //    @GET
 //    @Produces(MediaType.APPLICATION_JSON)
@@ -82,7 +65,6 @@ public class VentasRest {
     public Response getVentas(@Context UriInfo info) {
         return Response.status(200).entity(ventasService.getVentas(info.getQueryParameters())).build();
     }
-
 
 //
 //
@@ -174,6 +156,19 @@ public class VentasRest {
 //    }
 //
 
+
+
+
+    @POST
+    @Path("/uploadFileVentas")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response uploadFile(@FormDataParam("fileVenta") InputStream is) {
+        String result = getStringFromInputStream(is);
+        ventaFileService.parsear(result);
+
+        return Response.status(200).entity("ok").build();
+    }
+
     @POST
     @Consumes("application/json")
     public Response crearVentas(String content) {
@@ -195,6 +190,35 @@ public class VentasRest {
                     .entity(e.getMessage()).build();
         }
         return Response.status(201).build();
+    }
+
+    // convert InputStream to String
+    private static String getStringFromInputStream(InputStream is) {
+
+        BufferedReader br = null;
+        StringBuilder sb = new StringBuilder();
+
+        String line;
+        try {
+
+            br = new BufferedReader(new InputStreamReader(is));
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return sb.toString();
     }
 
 }

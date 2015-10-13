@@ -19,7 +19,7 @@ function ProductosController($scope, $http) {
         URL: 'http://localhost:8080/tp3/service/productos',
         globalSearch: true,
         title: 'Lista de productos',
-        detailViewTitle: 'Vista detalle de venta',
+        detailViewTitle: 'Detalles de Productos',
         file: 'productos.json'
 
     };

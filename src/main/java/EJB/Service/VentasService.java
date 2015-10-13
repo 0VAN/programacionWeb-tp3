@@ -21,6 +21,7 @@ import javax.persistence.criteria.Root;
 import javax.ws.rs.core.MultivaluedMap;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 @Stateless
@@ -50,13 +51,15 @@ public class VentasService extends Service<VentaEntity> {
 
         VentaEntity ventaEntity = new VentaEntity();
         ventaEntity.setCliente(clienteService.find(venta.getClienteId(), ClienteEntity.class));
-        ventaEntity.setFecha(venta.getFecha());
+        ventaEntity.setFecha(new Date().toString());
 
         long montoAcumulador = 0;
 
         for (VentaDetalle detalle : venta.getDetalles()) {
             ProductoEntity productoEntity = productoService.find(detalle.getProductoId(), ProductoEntity.class);
-            if (productoEntity.getStock() < detalle.getCantidad()) {
+            Long stock = productoEntity.getStock();
+
+            if (stock < detalle.getCantidad()) {
                 throw new StockInsuficienteException("Stock del producto " + productoEntity.getDescripcion() + " insuficiente");
             } else {
                 productoEntity.setStock(productoEntity.getStock() - detalle.getCantidad());
@@ -121,7 +124,6 @@ public class VentasService extends Service<VentaEntity> {
     public Object getVentas(MultivaluedMap<String, String> queryParams) {
         VentasResponse response = new VentasResponse();
         inicializarMeta();
-
 
         /**
          * Variables default values for the column sort

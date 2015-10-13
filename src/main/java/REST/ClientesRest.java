@@ -1,9 +1,11 @@
 package REST;
 
 import EJB.Jackson.Cliente;
+import EJB.Service.ClienteFileService;
 import EJB.Service.ClienteService;
 import EJB.Service.FilesService;
 import JPA.ClienteEntity;
+import com.sun.jersey.multipart.FormDataParam;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import javax.ejb.EJB;
@@ -12,7 +14,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * Rest para Clientes
@@ -20,6 +25,10 @@ import java.io.IOException;
  */
 @Path("/clientes")
 public class ClientesRest {
+
+    @EJB
+    private ClienteFileService clienteFileService;
+
     @EJB
     FilesService filesService;
     @EJB
@@ -76,6 +85,38 @@ public class ClientesRest {
                     .entity(e.getMessage()).build();
         }
         return Response.status(201).build();
+    }
+
+    @POST
+    @Path("/upload")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response uploadFile(@FormDataParam("fileCliente") InputStream is) {
+        String result = getStringFromInputStream(is);
+        clienteFileService.parsear(result);
+        return Response.status(200).entity("ok").build();
+    }
+    // convert InputStream to String
+    private static String getStringFromInputStream(InputStream is) {
+        BufferedReader br = null;
+        StringBuilder sb = new StringBuilder();
+        String line;
+        try {
+            br = new BufferedReader(new InputStreamReader(is));
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return sb.toString();
     }
 
 }

@@ -42,6 +42,12 @@ public class ClienteEntity {
         // Constructor por defecto
     }
 
+    public ClienteEntity(Long id, String nombre, String cedulaIdentidad) {
+        this.id = id;
+        this.nombre = nombre;
+        this.cedulaIdentidad = cedulaIdentidad;
+    }
+
     // Constructor sin ventas
     public ClienteEntity(String nombre, String cedulaIdentidad) {
         this.nombre = nombre;

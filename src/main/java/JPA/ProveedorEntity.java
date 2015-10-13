@@ -35,6 +35,11 @@ public class ProveedorEntity {
         // Constructor por defecto
     }
 
+    public ProveedorEntity(Long id, String descripcion) {
+        this.id = id;
+        this.descripcion = descripcion;
+    }
+
     public ProveedorEntity(String descripcion) {
         this.descripcion = descripcion;
     }

@@ -1,5 +1,6 @@
 <h1>{{config.title}}</h1>
 <div class="ui divider"></div>
+
 <div data-ng-if="config.globalSearch" class="ui fluid category search" id="global-search">
     <div class="ui icon input">
         <input class="prompt" type="text" placeholder="Search..." data-ng-model="searchValue"
@@ -8,6 +9,7 @@
     </div>
     <div class="ui divider"></div>
 </div>
+
 <div class="ui stackable centered grid container">
     <div class="thirteen wide column">
         <table class="ui selectable celled table">
@@ -81,6 +83,7 @@
             </div>
         </div>
     </div>
+
 </div>
 
 <button class="ui small blue icon button" target="_blank" data-ng-click="exportar()"

@@ -150,7 +150,6 @@ public class ClienteService extends Service<ClienteEntity> {
         ClienteResponse response = new ClienteResponse();
         inicializarMeta();
 
-
         /**
          * Variables default values for the column sort
          */
