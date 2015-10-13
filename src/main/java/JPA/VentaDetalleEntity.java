@@ -8,6 +8,9 @@ import javax.persistence.*;
  * Clase que representa los detalles que pertenecen a la VentaEntity
  * Created by szalimben on 22/09/15.
  */
+@NamedQueries({
+      @NamedQuery(name = "ventaDetalle.findDetalleVenta", query = "select vd from VentaDetalleEntity vd where vd.venta = :id")
+})
 @Entity
 @Table(name = "venta_detalle", schema = "public", catalog = "tienda")
 public class VentaDetalleEntity {
@@ -58,10 +61,10 @@ public class VentaDetalleEntity {
         this.producto = producto;
     }
 
-    public VentaEntity getVenta() {
-        return venta;
-    }
-
+    //    public VentaEntity getVenta() {
+//        return venta;
+//    }
+//
     public void setVenta(VentaEntity venta) {
         this.venta = venta;
     }

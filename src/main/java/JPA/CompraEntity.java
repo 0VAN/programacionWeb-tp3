@@ -3,6 +3,7 @@ package JPA;
 import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -40,7 +41,7 @@ public class CompraEntity {
     private ProveedorEntity proveedor;
 
     @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL)
-    private List<CompraDetalleEntity> detalles;
+    private List<CompraDetalleEntity> detalles = new ArrayList<>();
 
     public CompraEntity() {
         // Constructor por defecto
@@ -53,13 +54,21 @@ public class CompraEntity {
         this.monto = monto;
     }
 
-    // Constructor con detalles
-    public CompraEntity(String fecha, ProveedorEntity proveedor, String monto, List<CompraDetalleEntity> detalles) {
+    // Constructor Sin detalles
+    public CompraEntity(Long id, ProveedorEntity proveedor, String fecha, String monto) {
+        this.id = id;
         this.fecha = fecha;
         this.proveedor = proveedor;
         this.monto = monto;
-        this.detalles = detalles;
     }
+
+    // Constructor con detalles
+//    public CompraEntity(String fecha, ProveedorEntity proveedor, String monto, List<CompraDetalleEntity> detalles) {
+//        this.fecha = fecha;
+//        this.proveedor = proveedor;
+//        this.monto = monto;
+////        this.detalles = detalles;
+//    }
 
     public Long getId() {
         return id;
@@ -93,9 +102,9 @@ public class CompraEntity {
         this.proveedor = proveedor;
     }
 
-    public List<CompraDetalleEntity> getDetalles() {
-        return detalles;
-    }
+//    public List<CompraDetalleEntity> getDetalles() {
+//        return detalles;
+//    }
 
     public void setDetalles(CompraDetalleEntity detalle) {
         this.detalles.add(detalle);

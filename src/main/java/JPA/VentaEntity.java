@@ -44,7 +44,7 @@ public class VentaEntity {
     @Expose
     private ClienteEntity cliente;
 
-    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Expose
     private List<VentaDetalleEntity> detalles = new ArrayList<>();
 
@@ -57,18 +57,28 @@ public class VentaEntity {
         // Constructor por defecto
     }
 
-    // Constructor
-    public VentaEntity(ClienteEntity cliente, String fecha, String monto) {
+    public VentaEntity(Long id, ClienteEntity cliente, String fecha, String monto,FacturaEntity factura) {
+        this.id = id;
         this.cliente = cliente;
         this.fecha = fecha;
         this.monto = monto;
+        this.factura = factura;
+    }
+
+    // Constructor
+    public VentaEntity(ClienteEntity cliente, String fecha, String monto, FacturaEntity factura) {
+        this.cliente = cliente;
+        this.fecha = fecha;
+        this.monto = monto;
+        this.factura = factura;
+
     }
 
     public VentaEntity(ClienteEntity cliente, String fecha, String monto, List<VentaDetalleEntity> detalles) {
         this.cliente = cliente;
         this.fecha = fecha;
         this.monto = monto;
-        this.detalles = detalles;
+//        this.detalles = detalles;
     }
 
     public Long getId() {

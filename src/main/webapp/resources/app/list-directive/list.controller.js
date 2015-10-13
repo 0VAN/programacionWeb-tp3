@@ -1,6 +1,4 @@
-/**
- * Created by alex on 19/08/15.
- */
+
 angular
     .module('GenericList')
     .controller('ListController', [
@@ -10,10 +8,10 @@ angular
     ]);
 
 function ListController($scope, ListServices) {
-
     var params = {
         page: 1
     };
+
     var sortIconsClass = ["circular inverted sort content icon ascending", "circular inverted sort content icon descending"];
     var sortIconsClassDisabled = ["sort content icon ascending", "sort content icon descending "];
 
@@ -89,10 +87,11 @@ function ListController($scope, ListServices) {
             }
 
         };
-        //Pagination methods
+
 
     });
 
+    //Pagination methods
     $scope.goBackPage = function () {
 
         $scope.page -= 1;
@@ -125,8 +124,15 @@ function ListController($scope, ListServices) {
     $scope.showProperty = function (object, string) {
         var explodedString = string.split('.');
         for (i = 0, l = explodedString.length; i < l; i++) {
-            object = object[explodedString[i]];
+            if (object != null)
+                object = object[explodedString[i]];
+            else
+                object = ""
         }
         return object;
-    }
+    };
+
+    $scope.exportar = function () {
+        window.location = $scope.config.URL + "/exportar?" + $.param(params);
+    };
 }

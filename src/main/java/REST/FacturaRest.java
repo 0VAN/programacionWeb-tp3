@@ -29,21 +29,21 @@ public class FacturaRest {
     }
 
     @GET
-    @Path("facturar")
+    @Path("/facturar")
     @Produces(MediaType.APPLICATION_JSON)
     public String facturar() {
         return service.facturar();
     }
 
     @GET
-    @Path("isRun")
+    @Path("/isRun")
     @Produces(MediaType.APPLICATION_JSON)
     public String isRun() {
         return service.isRun();
     }
 
     @GET
-    @Path("detener")
+    @Path("/detener")
     @Produces(MediaType.APPLICATION_JSON)
     public String detener() {
         return service.detener();

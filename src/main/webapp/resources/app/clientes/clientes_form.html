@@ -1,0 +1,53 @@
+<h1 class="ui dividing header">
+    Formulario de cliente
+</h1>
+
+<form class="ui form" name="personForm">
+    <div class="fields">
+        <div class="three wide field">
+            <label for="clientes">Ingrese el nombre del cliente: </label>
+
+            <div class="ui input">
+                <input id="clientes" type="text" placeholder="Nombre..." data-ng-model="cliente.nombre">
+            </div>
+        </div>
+        <div class="four wide field">
+            <label for="ci">Ingrese el numero de cedula del cliente: </label>
+
+            <div class="ui input">
+                <input id="ci" type="text" placeholder="Cedula..." data-ng-model="cliente.cedula">
+            </div>
+        </div>
+    </div>
+
+    <br/>
+    <button class="ui button blue" data-ng-click="confirmarNuevoCliente()">Confirmar</button>
+</form>
+
+<div class="ui modal">
+    <i class="close icon"></i>
+
+    <div class="header">
+        Profile Picture
+    </div>
+    <div class=" content">
+
+        <div class="description">
+            <div class="ui header">We've auto-chosen a profile image for you.</div>
+            <p>We've grabbed the following image from the <a href="https://www.gravatar.com"
+                                                             target="_blank">gravatar</a> image associated with your
+                registered e-mail address.</p>
+
+            <p>Is it okay to use this photo?</p>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            Nope
+        </div>
+        <div class="ui positive right labeled icon button">
+            Yep, that's me
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</div>

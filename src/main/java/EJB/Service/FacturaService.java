@@ -52,8 +52,6 @@ public class FacturaService extends Service<FacturaEntity> {
 
         FacturasResponse response = new FacturasResponse();
         inicializarMeta();
-        getMeta().setTotal(this.getCount());
-        getMeta().calculateToTalPages();
 
         /**
          * Variables default values for the column sort
@@ -104,20 +102,23 @@ public class FacturaService extends Service<FacturaEntity> {
 
         // Fijamos la Ordenacion
         if ("asc".equals(ordenDeOrdenacion)) {
-            criteriaQuery.multiselect(facturas.<String>get("monto"), facturas.<String>get("fecha"));
             criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.asc(facturas.get(ordenarPorColumna)));
         } else {
-            criteriaQuery.multiselect(facturas.<String>get("proveedor"), facturas.<String>get("monto"), facturas.<String>get("fecha"));
-            criteriaQuery.select(facturas).where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(facturas.get(ordenarPorColumna)));
+            criteriaQuery.where(filtradoPorAllAttributes, filtradoPorColumna).orderBy(criteriaBuilder.desc(facturas.get(ordenarPorColumna)));
         }
 
         Integer page;
-        page = Integer.valueOf(queryParams.getFirst("page")) - 1;
+        if (queryParams.getFirst("page") != null) {
+            page = Integer.valueOf(queryParams.getFirst("page")) - 1;
+        } else {
+            page = 0;
+        }
 
         response.setEntidades(em.createQuery(criteriaQuery).setMaxResults(getMeta().getPage_size().intValue()).setFirstResult(page * getMeta().getPage_size().intValue()).getResultList());
+        getMeta().setTotal((long) em.createQuery(criteriaQuery).getResultList().size());
+        getMeta().calculateToTalPages();
         response.setMeta(getMeta());
         return response;
-
 
     }
 
@@ -127,22 +128,22 @@ public class FacturaService extends Service<FacturaEntity> {
         } catch (Exception e) {
             return e.getMessage();
         }
-        return "Facturando";
+        return "\"Facturando\"";
     }
 
     public String isRun() {
         if (estadoFacturacion == null || estadoFacturacion.isDone() || estadoFacturacion.isCancelled())
-            return "Detenido";
+            return "\"Detenido\"";
         else
-            return "Corriendo";
+            return "\"Corriendo\"";
     }
 
     public String detener() {
         if (estadoFacturacion != null) {
             estadoFacturacion.cancel(true);
-            return "Detenido";
+            return "\"Detenido\"";
         }
-        return "No se puede detener";
+        return "\"No se puede detener\"";
     }
 
 }

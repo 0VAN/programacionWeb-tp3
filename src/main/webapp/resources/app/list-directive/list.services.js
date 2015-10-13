@@ -11,9 +11,14 @@ angular
 function ListServices($resource) {
     return {
         salesServices: function (URL) {
-            return $resource(URL, {}, {
+            return $resource(URL + "/:operacion", {}, {
                 'get': {
                     method: 'GET'
+                },
+                'exportar': {
+                    method: 'GET',
+                    params: {operacion: 'exportar'},
+                    isArray: true
                 }
             })
         }

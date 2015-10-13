@@ -4,16 +4,16 @@ package EJB.Jackson;
  * Created by alex on 04/10/15.
  */
 public class Producto {
-    private Integer stock;
+    private Integer proveedorId;
     private Integer precio;
     private String descripcion;
 
-    public Integer getStock() {
-        return stock;
+    public Integer getProveedorId() {
+        return proveedorId;
     }
 
-    public void setStock(Integer stock) {
-        this.stock = stock;
+    public void setProveedorId(Integer stock) {
+        this.proveedorId = stock;
     }
 
     public Integer getPrecio() {

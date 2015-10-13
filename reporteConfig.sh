@@ -2,4 +2,4 @@
 
 
 sudo mkdir /tmp/Jasper/
-cp Detalles.jrxml /tmp/Jasper/Detalles.jrxml
+sudo cp Detalles.jrxml /tmp/Jasper/Detalles.jrxml
