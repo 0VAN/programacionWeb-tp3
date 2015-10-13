@@ -100,7 +100,7 @@ public class CompraService extends Service<CompraEntity> {
 
         ComprasResponse response = new ComprasResponse();
         ObjectMapper mapper = new ObjectMapper();
-        String file = "/home/alex/IdeaProjects/tp3/src/main/webapp/export/compras.json";
+        String file = "/tmp/compras.json";
 
         /**
          * Variables default values for the column sort

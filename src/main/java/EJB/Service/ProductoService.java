@@ -100,7 +100,7 @@ public class ProductoService extends Service<ProductoEntity> {
 
         ProductoResponse response = new ProductoResponse();
         ObjectMapper mapper = new ObjectMapper();
-        String file = "/home/alex/IdeaProjects/tp3/src/main/webapp/export/productos.json";
+        String file = "/tmp/productos.json";
 
         /**
          * Variables default values for the column sort

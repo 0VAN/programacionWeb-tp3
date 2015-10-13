@@ -46,7 +46,7 @@ public class ProveedorService extends Service<ProveedorEntity> {
 
         ProveedorResponse response = new ProveedorResponse();
         ObjectMapper mapper = new ObjectMapper();
-        String file = "/proveedores.json";
+        String file = "/tmp/proveedores.json";
 
         /**
          * Variables default values for the column sort

@@ -223,7 +223,7 @@ public class VentasService extends Service<VentaEntity> {
     public Object exportAllVentas(MultivaluedMap<String, String> queryParams) {
         VentasResponse response = new VentasResponse();
         ObjectMapper mapper = new ObjectMapper();
-        String file = "/ventas.json";
+        String file = "/tmp/ventas.json";
 
         /**
          * Variables default values for the column sort
