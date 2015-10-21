@@ -6,8 +6,9 @@ import EJB.Service.ClienteService;
 import EJB.Service.FilesService;
 import JPA.ClienteEntity;
 import com.google.gson.Gson;
-import com.sun.jersey.multipart.FormDataParam;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
+import org.jboss.resteasy.annotations.providers.multipart.PartType;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -117,13 +118,93 @@ public class ClientesRest {
         return Response.status(201).build();
     }
 
+//    @POST
+//    @Path("/upload")
+//    @Consumes(MediaType.MULTIPART_FORM_DATA)
+//    public Response uploadFile(@FormDataParam("fileCliente") InputStream is) {
+//        String result = getStringFromInputStream(is);
+//        clienteFileService.parsear(result);
+//        return Response.status(200).entity("ok").build();
+//    }
+//@POST
+//@Path("/upload")
+//@Consumes(MediaType.MULTIPART_FORM_DATA)
+//public Response uploadFile(
+//        @FormDataParam("fileCliente") InputStream uploadedInputStream,
+//        @FormDataParam("fileCliente") FormDataContentDisposition fileDetail) {
+//
+//    String uploadedFileLocation = "d://uploaded/" + fileDetail.getFileName();
+//
+//    // save it
+//    writeToFile(uploadedInputStream, uploadedFileLocation);
+//
+//    String output = "File uploaded to : " + uploadedFileLocation;
+//
+//    return Response.status(200).entity(output).build();
+//
+//}
+//
+//    // save uploaded file to new location
+//    private void writeToFile(InputStream uploadedInputStream,
+//                             String uploadedFileLocation) {
+//
+//        try {
+//            OutputStream out = new FileOutputStream(new File(uploadedFileLocation));
+//            int read = 0;
+//            byte[] bytes = new byte[1024];
+//
+//            out = new FileOutputStream(new File(uploadedFileLocation));
+//            while ((read = uploadedInputStream.read(bytes)) != -1) {
+//                out.write(bytes, 0, read);
+//            }
+//            out.flush();
+//            out.close();
+//        } catch (IOException e) {
+//
+//            e.printStackTrace();
+//        }
+//
+//    }
+
     @POST
     @Path("/upload")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response uploadFile(@FormDataParam("fileCliente") InputStream is) {
-        String result = getStringFromInputStream(is);
-        clienteFileService.parsear(result);
-        return Response.status(200).entity("ok").build();
+    @Consumes("multipart/form-data")
+    public Response uploadFile(@MultipartForm FileUploadForm form) {
+
+        String fileName = "d:\\anything";
+
+//        try {
+//            writeFile(form.getData(), fileName);
+//        } catch (IOException e) {
+//
+//            e.printStackTrace();
+//        }
+
+        System.out.println("Done");
+
+        return Response.status(200)
+                .entity("uploadFile is called, Uploaded file name : " + fileName).build();
+
+    }
+
+}
+
+
+class FileUploadForm {
+
+    private byte[] data;
+
+    public FileUploadForm() {
+    }
+
+    public byte[] getData() {
+        return data;
+    }
+
+    @FormParam("uploadedFile")
+    @PartType("application/octet-stream")
+    public void setData(byte[] data) {
+        this.data = data;
     }
 
 }

@@ -12,8 +12,8 @@ function ProductosController($scope, $http) {
             {name: 'Id', property: 'id', visible: false, sortable: true, searchable: true},
             {name: 'descripcion', property: 'descripcion', visible: true, sortable: true, searchable: true},
             {name: 'proveedor', property: 'proveedor.descripcion', visible: true, sortable: true, searchable: true},
-            {name: 'stock', property: 'stock', visible: true, sortable: true, searchable: true},
-            {name: 'precio', property: 'precio', visible: true, sortable: true, searchable: true}
+            {name: 'stock', property: 'stock', visible: true, sortable: true, searchable: false},
+            {name: 'precio', property: 'precio', visible: true, sortable: true, searchable: false}
         ],
         URL: 'http://localhost:8080/tp3/service/productos',
         globalSearch: true,
